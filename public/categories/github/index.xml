@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub on 打工笔记</title>
+    <link>https://amrom66.github.io/categories/github/</link>
+    <description>Recent content in GitHub on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/categories/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitHub博客教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</guid>
+      <description>GitHub博客 作为一名程序员，每天的学习必不可少，但是，如果只是乱糟糟的学习，而不懂得如何去记笔记，那效率可想而知。一个技术博客，是大多数程序员的必须品。漂亮的博客，让工作顺心，让学习更有效率，更有动力。今天，我来教大家如何利用GitHub提供的免费服务，打造自己的专属博客，白嫖美滋滋。
+前期准备   GitHub账号
+  Hugo 软件
+  Git客户端
+  掌握Markdown语法
+需要准备的东西就是这么多，账号去官网注册就行，几个软件下载安装就可以，具体怎么安装，以及如何跨平台啥的，这里不作阐述。需要注意的是Markdown语法一定要会，起码简单的语法懂得，因为写文章都要用Markdown来写，.md是他的标志。
+  第一篇文章 准备好以上条件后，我们来写一篇博客</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>base64转码 - 打工笔记</title>
+<meta name="description" content="2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 &#43; 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-15-base64-usage/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 &#43; 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java." />
+<meta name="twitter:title" content="base64转码 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="base64转码 - 打工笔记" property="og:title">
+<meta content="2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 &#43; 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-15-base64-usage/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="JAVA" /><meta property="article:section" content="后端" />
+<meta property="article:published_time" content="2019-10-15 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "base64转码",
+    "genre": "JAVA后端",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-15-base64-usage\/",
+    "datePublished": "2019-10-15 00:00:00 \u002b0000 UTC",
+    "description": "2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。\n编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 \u002b 15 P 31 f 47 v 63 \/ JAVA中Base64编码使用 涉及jdk工具类，java.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">base64转码</h1>
+            <p class="post-meta"><time datetime='2019-10-15T00:00:00Z' itemprop="datePublished">October 15, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="2019-10-15-base64转码">2019-10-15-base64转码</h2>
+<h2 id="名词解释">名词解释</h2>
+<p>Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">编号     字符     编号     字符     编号     字符     编号     字符
+0         A         16         Q         32         g         48         w
+1         B         17         R         33         h         49         x
+2         C         18         S         34         i         50         y
+3         D         19         T         35         j         51         z
+4         E         20         U         36         k         52         0
+5         F         21         V         37         l         53         1
+6         G         22         W         38         m         54         2
+7         H         23         X         39         n         55         3
+8         I         24         Y         40         o         56         4
+9         J         25         Z         41         p         57         5
+10         K         26         a         42         q         58         6
+11         L         27         b         43         r         59         7
+12         M         28         c         44         s         60         8
+13         N         29         d         45         t         61         9
+14         O         30         e         46         u         62         +
+15         P         31         f         47         v         63         /
+</code></pre></div><h2 id="java中base64编码使用">JAVA中Base64编码使用</h2>
+<p>涉及jdk工具类，<code>java.util.Base64</code></p>
+<h2 id="示例代码">示例代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> util<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.UnsupportedEncodingException<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Base64<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Base64Util</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> UnsupportedEncodingException <span style="color:#f92672">{</span>
+
+        String str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;密&#34;</span><span style="color:#f92672">;</span>
+        String str1 <span style="color:#f92672">=</span> testEncode<span style="color:#f92672">(</span>str<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str1<span style="color:#f92672">);</span>
+        String str2 <span style="color:#f92672">=</span> testDecode<span style="color:#f92672">(</span>str1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str2<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">testEncode</span><span style="color:#f92672">(</span>String str<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> UnsupportedEncodingException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Base64<span style="color:#f92672">.</span><span style="color:#a6e22e">getEncoder</span><span style="color:#f92672">().</span><span style="color:#a6e22e">encodeToString</span><span style="color:#f92672">(</span>str<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">testDecode</span><span style="color:#f92672">(</span>String str<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> UnsupportedEncodingException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>Base64<span style="color:#f92672">.</span><span style="color:#a6e22e">getDecoder</span><span style="color:#f92672">().</span><span style="color:#a6e22e">decode</span><span style="color:#f92672">(</span>str<span style="color:#f92672">),</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>示例代码，转文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">imageToBase64</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+    String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;F:\\a.png&#34;</span><span style="color:#f92672">;</span>
+    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>url<span style="color:#f92672">);</span>
+
+    FileInputStream fin <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> all <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span> file<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">()];</span>
+    fin<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>all<span style="color:#f92672">);</span>
+    fin<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    String str1 <span style="color:#f92672">=</span>   Base64<span style="color:#f92672">.</span><span style="color:#a6e22e">getEncoder</span><span style="color:#f92672">().</span><span style="color:#a6e22e">encodeToString</span><span style="color:#f92672">(</span>all<span style="color:#f92672">);</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str1<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> out <span style="color:#f92672">=</span> Base64<span style="color:#f92672">.</span><span style="color:#a6e22e">getDecoder</span><span style="color:#f92672">().</span><span style="color:#a6e22e">decode</span><span style="color:#f92672">(</span>str1<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span> out<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>out<span style="color:#f92672">[</span>i<span style="color:#f92672">]&lt;</span>0<span style="color:#f92672">)</span> out<span style="color:#f92672">[</span>i<span style="color:#f92672">]+=</span>256<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    FileOutputStream fou <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;F:\\b.png&#34;</span><span style="color:#f92672">));</span>
+    fou<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>out<span style="color:#f92672">);</span>
+    fou<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/">&laquo; RabbitMQ示例代码</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-15-windows-open-share/">windows共享开启 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

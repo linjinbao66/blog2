@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>mysql权限高级 - 打工笔记</title>
+<meta name="description" content="问题： 如何创建一个新用户，并屏蔽旧库权限？
+答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。
+操作实例
+create user &#39;test&#39;@&#39;%&#39; identified by &#39;123456&#39;; grant all privileges on `test%` to &#39;test&#39;@&#39;%&#39;; 以上操作会给予test用户，作用域test开头的所有库的所有权限。"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-03-13-mysql-privileges/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="问题： 如何创建一个新用户，并屏蔽旧库权限？
+答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。
+操作实例
+create user &#39;test&#39;@&#39;%&#39; identified by &#39;123456&#39;; grant all privileges on `test%` to &#39;test&#39;@&#39;%&#39;; 以上操作会给予test用户，作用域test开头的所有库的所有权限。" />
+<meta name="twitter:title" content="mysql权限高级 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="mysql权限高级 - 打工笔记" property="og:title">
+<meta content="问题： 如何创建一个新用户，并屏蔽旧库权限？
+答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。
+操作实例
+create user &#39;test&#39;@&#39;%&#39; identified by &#39;123456&#39;; grant all privileges on `test%` to &#39;test&#39;@&#39;%&#39;; 以上操作会给予test用户，作用域test开头的所有库的所有权限。" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-03-13-mysql-privileges/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-03-12 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "mysql权限高级",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-03-13-mysql-privileges\/",
+    "datePublished": "2022-03-12 00:00:00 \u002b0000 UTC",
+    "description": "问题： 如何创建一个新用户，并屏蔽旧库权限？\n答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。\n操作实例\ncreate user \u0027test\u0027@\u0027%\u0027 identified by \u0027123456\u0027; grant all privileges on `test%` to \u0027test\u0027@\u0027%\u0027; 以上操作会给予test用户，作用域test开头的所有库的所有权限。",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">mysql权限高级</h1>
+            <p class="post-meta"><time datetime='2022-03-12T00:00:00Z' itemprop="datePublished">March 12, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p><strong>问题：</strong>
+如何创建一个新用户，并屏蔽旧库权限？</p>
+<p><strong>答案：</strong>
+问题是对mysql的权限理解有问题。
+mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。</p>
+<p>操作实例</p>
+<pre><code class="language-code" data-lang="code">create user 'test'@'%' identified by '123456';
+grant all privileges on `test%` to 'test'@'%';
+</code></pre><p>以上操作会给予test用户，作用域test开头的所有库的所有权限。</p>
+<pre><code class="language-code" data-lang="code">revoke all privileges on test.* from 'sql'@'%';
+</code></pre><p>以上操作撤销test用于针对test库的操作。</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-03-31-pod-configmap/">&laquo; pod挂载configmap</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/">关于pv pvc的新认识 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

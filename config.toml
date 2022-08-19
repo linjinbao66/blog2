@@ -1,0 +1,59 @@
+baseURL = "https://amrom66.github.io"
+languageCode = "en-us"
+title = "打工笔记"
+theme = "hugo-cards"
+summaryLength = 20
+staticDir = ["content/images", "static"]
+paginate = 9
+enableEmoji = true
+
+googleAnalytics = "UA-160203449-2"
+
+[blackfriday]
+  hrefTargetBlank = true
+  nofollowLinks = true
+  noreferrerLinks = true
+
+[Permalinks]
+  posts = "/:year/:filename/"
+
+[menu]
+  [[menu.main]]
+    name = "博客"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    name = "分类"
+    url = "/categories/"
+    weight = 2
+  [[menu.main]]
+    name = "标签"
+    url = "/tags/"
+    weight = 3
+
+[params]
+  since = 2019
+  author = "linjinbao66"
+  avatar = "/images/me/touxiang.jpeg"
+  subtitle = "Across the great wall, we can reach the world"
+  home_mode = "post"
+  description = "打工笔记"
+  keywords = "博客 个人 笔记"
+  defaultImage = "wallhaven-q2ypkl.jpg"
+
+[params.utter]
+  enable = true
+  repo = "amrom66/amrom66.github.io"
+  issueTerm = "title"
+  theme = "github-dark-orange"
+  label= "utterance"
+
+[params.social]
+  GitHub = "amrom66"
+  Twitter = "linjinbao66"
+  Email = "linjinbao66@gmail.com"
+  Instagram = "null"
+  Wechat = "/images/me/wechat.png"
+  Facebook = "https://www.facebook.com/linjinbao666"
+  Telegram = "null"
+	

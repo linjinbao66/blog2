@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>k8s on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/k8s/</link>
+    <description>Recent content in k8s on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>k8s in action 阅读笔记</title>
+      <link>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</link>
+      <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</guid>
+      <description>如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client.</description>
+    </item>
+    
+  </channel>
+</rss>

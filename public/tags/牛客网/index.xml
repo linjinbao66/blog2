@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>牛客网 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/</link>
+    <description>Recent content in 牛客网 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>包含min函数的栈</title>
+      <link>https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/</guid>
+      <description>牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+解法一 双栈实现，数据栈加最小值栈 代码如下：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; dataStack = new Stack(); Stack&amp;lt;Integer&amp;gt; minStack = new Stack&amp;lt;&amp;gt;(); public void push(int node) { dataStack.</description>
+    </item>
+    
+  </channel>
+</rss>

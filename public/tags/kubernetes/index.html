@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>kubernetes</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/tags/kubernetes/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:title" content="kubernetes - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta content="kubernetes - 打工笔记" property="og:title">
+<meta content="" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/tags/kubernetes/" />
+<meta property="og:site_name" content="打工笔记" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        
+           
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">multiple-container-in-one …</h3><span class="post-meta pull-right"><small>June 11, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">kubernetes二进制部署升级</h3><span class="post-meta pull-right"><small>June 7, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-02-28-etcd-clean/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">etcd强制删除k8s数据</h3><span class="post-meta pull-right"><small>February 28, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    k8s由于各种原因，导致pod等数据一直处于terminting状态中，可以考虑到etcd中强制删除
+#检索pod数据 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">kubernetes多用户切换</h3><span class="post-meta pull-right"><small>June 30, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-05-10-log-metrics-in-cloud-native-environment/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">云原生时代日志采集方案浅谈</h3><span class="post-meta pull-right"><small>May 10, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    引言 本文基于kubernetes容器平台，分析容器日志采集的前因后果，通过比对EFK和Loki的方案，讨论云原生时代容器日志收集与分析的重点所在。
+当服务从裸机部署进入容器时代，容器的强大隔离性与封装性，使得服务的日志变得不稳定。原本裸机运行的程序使用容器运行时，极易由于自动重启，或者自动重建等特性而丢失日志，即便采用了持久化挂载，依然无法根本问题：日志易 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">k8s整合glusterfs做后端存储</h3><span class="post-meta pull-right"><small>March 25, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">k8s in action 阅读笔记</h3><span class="post-meta pull-right"><small>January 28, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+          
+
+    </div> 
+    
+<div class="row">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+        
+
+    </div>
+    <div class="col-md-4">  </div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学习 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 学习 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>webpack学习</title>
+      <link>https://amrom66.github.io/2019/2019-10-10-webpack/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-10-webpack/</guid>
+      <description>webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package.</description>
+    </item>
+    
+  </channel>
+</rss>

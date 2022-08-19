@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MYSQL on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/mysql/</link>
+    <description>Recent content in MYSQL on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mysql 定时备份</title>
+      <link>https://amrom66.github.io/2019/2019-11-23-mysql-backup-cron/</link>
+      <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-23-mysql-backup-cron/</guid>
+      <description>mysql 定时备份 第一步：写备份脚本 backup_full.sh
+#!/bin/bash BACKUP_ROOT=/home/ljbao/myback BACKUP_FILEDIR=$BACKUP_ROOT/files BACKUP_LOGDIR=$BACKUP_ROOT/logs #当前日期 DATE=$(date +%Y%m%d) DATABASES=$(mysql -uroot -p*** -e &amp;#34;show databases&amp;#34; | grep -Ev &amp;#34;Database|sys|information_schema&amp;#34;) echo $DATABASES #循环数据库进行备份 for db in $DATABASES do echo echo ----------$BACKUP_FILEDIR/${db}_$DATE.</description>
+    </item>
+    
+    <item>
+      <title>MySQL 分库分表-ShardingSphere使用</title>
+      <link>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</link>
+      <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</guid>
+      <description>MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.</description>
+    </item>
+    
+    <item>
+      <title>MySQL一键备份脚本</title>
+      <link>https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/</guid>
+      <description>MySQL一键备份脚本 备份脚本-Windows版本 脚本下载
+@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\ set host=localhost set user=root set password=123321 set mysqlpath=D:\epoint_mysql_5.</description>
+    </item>
+    
+    <item>
+      <title>MYSQL笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-28-mysql-note/</link>
+      <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-28-mysql-note/</guid>
+      <description>MYSQL笔记 UUID select uuid(); 存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。 创建存储过程
+DELIMITER // CREATE PROCEDURE getAllUsers() BEGIN SELECT * FROM `user`; END // DELIMITER ; CALL getAllUsers(); 调用存储过程</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>学习</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/categories/%E5%AD%A6%E4%B9%A0/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:title" content="学习 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta content="学习 - 打工笔记" property="og:title">
+<meta content="" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/categories/%E5%AD%A6%E4%B9%A0/" />
+<meta property="og:site_name" content="打工笔记" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        
+           
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">jdk1.15编译</h3><span class="post-meta pull-right"><small>December 30, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    jdk1.15编译 github下载项目 https://github.com/openjdk/jdk
+安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-11-16-containerd-image-import/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">containerd手动导入镜像</h3><span class="post-meta pull-right"><small>November 16, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题
+docker pull mirrorgooglecontainers/pause:3.1 docker tag mirrorgooglecontainers/pause:3.1 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-11-10-nginx-reffer/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">nginx拦截空reffer</h3><span class="post-meta pull-right"><small>November 10, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。
+解决方案 方案一：引入完善的权限框架，例如shiro
+方案二：nginx控制reffer，禁止直接访问
+配置实例：
+location /login.html { root …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/about/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">关于</h3><span class="post-meta pull-right"><small>November 3, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    Across the great wall, we can reach the world.
+越过长城，走向世界。</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-10-16-k8s-rbac/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">k8s的rbac权限控制</h3><span class="post-meta pull-right"><small>October 16, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    简介 rbac权限控制是role based access control的简写，中文名基于角色的权限控制。
+RBAC API 对象 Kubernetes有一个很基本的特性就是它的所有资源对象都是模型化的 API 对象，允许执行 CRUD(Create、Read、Update、Delete)操作(也就是我们常说的增、删、改、查操作)，比如下面的这下资源： …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-10-14-linux-cgroups/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">linux cgroups简单使用</h3><span class="post-meta pull-right"><small>October 14, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    简介 cgroups 是Linux内核提供的一种可以限制单个进程或者多个进程所使用资源的机制，可以对 cpu，内存等资源实现精细化的控制，目前越来越火的轻量级容器 Docker 就使用了 cgroups 提供的资源限制能力来完成cpu，内存等部分的资源控制。另外，开发者也可以使用 cgroups 提供的精细化控制能力，限制某一个或者某一组进程的资源使用。比如 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-09-05-websocket-useage-in-java-practice/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">spring 使用websocket主动推送日志到 …</h3><span class="post-meta pull-right"><small>September 5, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。
+相关流程  logback日志切割 阻塞队列/环形队列处理并发读写 websocket推送  方案一实现 很明显， …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-07-17-the-new-beginning/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">新的开始</h3><span class="post-meta pull-right"><small>July 17, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    新的开始 面试了两次
+ 端点 腾讯  感觉，能力还是不够，研究不够深入的全当做会的写在简历上了。
+面试题整理
+[mysql]联合索引字段顺序会产生影响吗？什么情况下需要建索引？什么情况下不建？mysql 查看连接数和进程数?慢查询是什么？[linux]Linux 端口数一共多少，怎么确定的？sh 和 bash 的区别脚本首行的#!</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2020/2020-03-09-linux-memory-free/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">服务器内存优化</h3><span class="post-meta pull-right"><small>March 9, 2020</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    服务器内存优化  释放缓存  sync echo 3 &amp;gt; /proc/sys/vm/drop_caches  排序  ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -r | less  查看启动的服务  systemctl list-unit-files --type=service …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+          
+
+    </div> 
+    
+<div class="row">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+        
+        <ul class="pagination">
+          
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/4/">&laquo; Prev</a></li>
+          
+
+          
+           
+
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/">1</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/2/">2</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/3/">3</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/4/">4</a></li>
+            
+          
+            
+              <li class="active"><span><em>5</em></span></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/6/">6</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/7/">7</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/8/">8</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/9/">9</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/10/">10</a></li>
+            
+          
+
+          
+            <li><a href="/categories/%E5%AD%A6%E4%B9%A0/page/6/">Next &raquo;</a></li>
+          
+          </ul>
+        
+
+    </div>
+    <div class="col-md-4">  </div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

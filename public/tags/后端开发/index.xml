@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>后端开发 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 后端开发 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-13-linux-note/</link>
+      <pubDate>Fri, 13 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-13-linux-note/</guid>
+      <description>笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n +10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp.</description>
+    </item>
+    
+    <item>
+      <title>ssm整合</title>
+      <link>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</guid>
+      <description>ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

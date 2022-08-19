@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>缓存 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E7%BC%93%E5%AD%98/</link>
+    <description>Recent content in 缓存 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E7%BC%93%E5%AD%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-29-redis-note/</link>
+      <pubDate>Mon, 29 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-29-redis-note/</guid>
+      <description>Redis笔记 key-value结构 Redis目前有5种数据类型，分别是：
+String（字符串） List（列表） Hash（字典） Set（集合） Sorted Set（有序集合） 不同的数据类型，有不同的命令方式
+String 操作
+set google http://www.google append google .com get google set visitors 0 incr visitors incr visitors get visitors incrby visitors 100 get visitors type google type visitors ttl google rename google google-site get google get google-site String 手册</description>
+    </item>
+    
+  </channel>
+</rss>

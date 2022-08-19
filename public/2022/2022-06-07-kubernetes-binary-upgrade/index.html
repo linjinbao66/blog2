@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>kubernetes二进制部署升级 - 打工笔记</title>
+<meta name="description" content="前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。
+   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。
+   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1." />
+<meta name="twitter:title" content="kubernetes二进制部署升级 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="kubernetes二进制部署升级 - 打工笔记" property="og:title">
+<meta content="前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。
+   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-06-07 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "kubernetes二进制部署升级",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-06-07-kubernetes-binary-upgrade\/",
+    "datePublished": "2022-06-07 00:00:00 \u002b0000 UTC",
+    "description": "前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。\n   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">kubernetes二进制部署升级</h1>
+            <p class="post-meta"><time datetime='2022-06-07T00:00:00Z' itemprop="datePublished">June 7, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="前提">前提</h2>
+<p>k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用<code>kubeadm upgrade plan</code>获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>升级前</th>
+<th>升级后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Etcd</td>
+<td>3.4.15</td>
+<td>3.4.15</td>
+</tr>
+<tr>
+<td>kube-apiserver</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+<tr>
+<td>kube-scheduler</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+<tr>
+<td>kube-controller-manager</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+<tr>
+<td>kube-proxy</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+<tr>
+<td>kubelet</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+<tr>
+<td>kubectl</td>
+<td>1.20.3</td>
+<td>1.21.7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第一步-下载二进制文件">第一步 下载二进制文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget https://storage.googleapis.com/kubernetes-release/release/v1.21.7/kubernetes-server-linux-amd64.tar.gz 
+tar -xf kubernetes-server-linux-amd64.tar.gz
+</code></pre></div><h2 id="第二步-移除节点">第二步 移除节点</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl uncordon node2 
+</code></pre></div><h2 id="第三步-停止服务">第三步 停止服务</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">systemctl stop kubelet kube-apiserver kube-scheduler kube-proxy  kube-controller-manager
+</code></pre></div><h2 id="第四步-替换二进制文件">第四步 替换二进制文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">scp copy/* root@node2:/opt/k8s/bin/
+</code></pre></div><h2 id="第五步-启动服务">第五步 启动服务</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">systemctl start kubelet kube-apiserver kube-scheduler kube-proxy  kube-controller-manager
+</code></pre></div><p>重复以上步骤，直到所有节点的文件替换完成即可</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">&laquo; multiple-container-in-one-pod</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-05-19-upgrade-kernel/">cetos升级内核 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

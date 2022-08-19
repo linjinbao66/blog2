@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>maven on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/maven/</link>
+    <description>Recent content in maven on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/maven/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mvn-generate-project</title>
+      <link>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</link>
+      <pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</guid>
+      <description>use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  </description>
+    </item>
+    
+  </channel>
+</rss>

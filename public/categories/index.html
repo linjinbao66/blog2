@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Categories</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/categories/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:title" content="Categories - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta content="Categories - 打工笔记" property="og:title">
+<meta content="" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/categories/" />
+<meta property="og:site_name" content="打工笔记" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        
+           
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">mvn-generate-project</h3><span class="post-meta pull-right"><small>August 16, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">mysql生成宽表脚本</h3><span class="post-meta pull-right"><small>July 14, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    需求描述 生成一张有1000个字段的表，每个字段的类型随机，用测试使用。
+解决方案 shell脚本生成建表sql generate_sql.sh
+#!/bin/bash echo &amp;#34;USE amrom;&amp;#34; echo &amp;#34;CREATE TABLE ONE_K_COLS (&amp;#34; for (( i = 0; i &amp;lt; 999; …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">multiple-container-in-one …</h3><span class="post-meta pull-right"><small>June 11, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">kubernetes二进制部署升级</h3><span class="post-meta pull-right"><small>June 7, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-05-19-upgrade-kernel/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">cetos升级内核</h3><span class="post-meta pull-right"><small>May 19, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    背景 发现了一个netns的问题，在v站提问了https://v2ex.com/t/853722#reply2，最后决定升级内核.
+upgrade-kernel.sh # 载入公钥 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org # 安装ELRepo rpm -Uvh …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-05-12-use-deployment-simuator-daemonset/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">使用deployment来模拟daemonset</h3><span class="post-meta pull-right"><small>May 12, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    一个yaml文件
+apiVersion: apps/v1 kind: Deployment metadata: creationTimestamp: null labels: id: very-important name: deploy-important namespace: project-tiger spec: replicas: 3 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-04-26-linux-namespace-overview/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">linux network namespace 详 …</h3><span class="post-meta pull-right"><small>April 26, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    网络名称空间 linux 网络空间用于管理容器的网络，编排工具创建容器的时候往往会为容器创建一个独立的namespace，然后将容器的网络与宿主机的网络打通，即可实现容器与外部网络的通信。
+linux namespace的操作命令是ip netns
+使用实例   创建一个namespace
+[root@localhost ~]# ip netns add …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-04-22-multus-cni/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">k8sd多网卡方案</h3><span class="post-meta pull-right"><small>April 22, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。
+方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-04-03-network-policy/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">network-policy</h3><span class="post-meta pull-right"><small>April 3, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    一个网络隔离策略讲解 apiVersion: networking.k8s.io/v1 kind: NetworkPolicy metadata: name: my-networkpolicy namespace: mysql spec: podSelector: {} policyTypes: - Ingress ingress: - from: - …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+          
+
+    </div> 
+    
+<div class="row">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+        
+        <ul class="pagination">
+          
+            <li><span>&laquo; Prev</span></li>
+          
+
+          
+           
+
+          
+            
+              <li class="active"><span><em>1</em></span></li>
+            
+          
+            
+            <li><a href="/categories/page/2/">2</a></li>
+            
+          
+            
+            <li><a href="/categories/page/3/">3</a></li>
+            
+          
+            
+            <li><a href="/categories/page/4/">4</a></li>
+            
+          
+            
+            <li><a href="/categories/page/5/">5</a></li>
+            
+          
+            
+            <li><a href="/categories/page/6/">6</a></li>
+            
+          
+            
+            <li><a href="/categories/page/7/">7</a></li>
+            
+          
+            
+            <li><a href="/categories/page/8/">8</a></li>
+            
+          
+            
+            <li><a href="/categories/page/9/">9</a></li>
+            
+          
+            
+            <li><a href="/categories/page/10/">10</a></li>
+            
+          
+
+          
+            <li><a href="/categories/page/2/">Next &raquo;</a></li>
+          
+          </ul>
+        
+
+    </div>
+    <div class="col-md-4">  </div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

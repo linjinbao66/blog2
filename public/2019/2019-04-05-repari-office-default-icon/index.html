@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>修复Office文件默认图标 - 打工笔记</title>
+<meta name="description" content="修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\ :: 修复word图标 reg add &amp;#34;HKCR\Word.Document.8\DefaultIcon&amp;#34; /ve /t REG_SZ /d &amp;#34;%officepath%WORDICON.EXE,1&amp;#34; reg delete &amp;#34;HKCR\Word."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\ :: 修复word图标 reg add &amp;#34;HKCR\Word.Document.8\DefaultIcon&amp;#34; /ve /t REG_SZ /d &amp;#34;%officepath%WORDICON.EXE,1&amp;#34; reg delete &amp;#34;HKCR\Word." />
+<meta name="twitter:title" content="修复Office文件默认图标 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="修复Office文件默认图标 - 打工笔记" property="og:title">
+<meta content="修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\ :: 修复word图标 reg add &amp;#34;HKCR\Word.Document.8\DefaultIcon&amp;#34; /ve /t REG_SZ /d &amp;#34;%officepath%WORDICON.EXE,1&amp;#34; reg delete &amp;#34;HKCR\Word." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="小工具" />
+<meta property="article:published_time" content="2019-04-05 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "修复Office文件默认图标",
+    "genre": "小工具",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-04-05-repari-office-default-icon\/",
+    "datePublished": "2019-04-05 00:00:00 \u002b0000 UTC",
+    "description": "修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\\Program Files\\Microsoft Office\\root\\vfs\\Windows\\Installer\\{90160000-000F-0000-1000-0000000FF1CE}\\ :: 修复word图标 reg add \u0026#34;HKCR\\Word.Document.8\\DefaultIcon\u0026#34; \/ve \/t REG_SZ \/d \u0026#34;%officepath%WORDICON.EXE,1\u0026#34; reg delete \u0026#34;HKCR\\Word.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">修复Office文件默认图标</h1>
+            <p class="post-meta"><time datetime='2019-04-05T00:00:00Z' itemprop="datePublished">April 5, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="修复office文件默认图标">修复office文件默认图标</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">rem 修复office文件默认图标.bat
+
+:: office图标文件路径，请根据自己电脑上的安装目录设置
+set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\
+
+:: 修复word图标
+reg add &#34;HKCR\Word.Document.8\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%WORDICON.EXE,1&#34;
+reg delete &#34;HKCR\Word.Document.8\DefaultIcon&#34; /v .ksobak
+
+reg add &#34;HKCR\Word.Document.12\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%WORDICON.EXE,13&#34;
+:: 此行为删除wps残留注册表文件，下同
+reg delete &#34;HKCR\Word.Document.12\DefaultIcon&#34; /v .ksobak
+
+
+:: 修复EXCEL图标
+reg add &#34;HKCR\Excel.Sheet.8\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%XLICONS.EXE,28&#34;
+reg delete &#34;HKCR\Excel.Sheet.8\DefaultIcon&#34; /v .ksobak
+
+reg add &#34;HKCR\Excel.Sheet.12\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%XLICONS.EXE,1&#34;
+reg delete &#34;HKCR\Excel.Sheet.12\DefaultIcon&#34; /v .ksobak
+
+:: 修复POWERPNT图标
+reg add &#34;HKCR\PowerPoint.Show.8\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%PPTICO.EXE,17&#34;
+reg delete &#34;HKCR\PowerPoint.Show.8\DefaultIcon&#34; /v .ksobak
+
+reg add &#34;HKCR\PowerPoint.Show.12\DefaultIcon&#34; /ve /t REG_SZ /d &#34;%officepath%PPTICO.EXE,10&#34;
+reg delete &#34;HKCR\PowerPoint.Show.12\DefaultIcon&#34; /v .ksobak
+
+
+:: 清理图标缓存，重启explorer
+taskkill /f /im explorer.exe
+CD /d %userprofile%\AppData\Local
+DEL IconCache.db /a
+start explorer.exe
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-06-11-android/">&laquo; Android学习笔记</a></li>
+              
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

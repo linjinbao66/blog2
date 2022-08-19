@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>关于镜像oci规范 - 打工笔记</title>
+<meta name="description" content="早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：
+{ &amp;#34;target&amp;#34;: { &amp;#34;docker-metadata-action&amp;#34;: { &amp;#34;tags&amp;#34;: [ &amp;#34;ghcr.io/linjinbao666/conda-base:main&amp;#34; ], &amp;#34;labels&amp;#34;: { &amp;#34;org.opencontainers.image.title&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.description&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.url&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org.opencontainers.image.source&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-08-18-oci/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：
+{ &amp;#34;target&amp;#34;: { &amp;#34;docker-metadata-action&amp;#34;: { &amp;#34;tags&amp;#34;: [ &amp;#34;ghcr.io/linjinbao666/conda-base:main&amp;#34; ], &amp;#34;labels&amp;#34;: { &amp;#34;org.opencontainers.image.title&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.description&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.url&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org.opencontainers.image.source&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org." />
+<meta name="twitter:title" content="关于镜像oci规范 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="关于镜像oci规范 - 打工笔记" property="og:title">
+<meta content="早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：
+{ &amp;#34;target&amp;#34;: { &amp;#34;docker-metadata-action&amp;#34;: { &amp;#34;tags&amp;#34;: [ &amp;#34;ghcr.io/linjinbao666/conda-base:main&amp;#34; ], &amp;#34;labels&amp;#34;: { &amp;#34;org.opencontainers.image.title&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.description&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.url&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org.opencontainers.image.source&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-08-18-oci/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-08-18 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "关于镜像oci规范",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-08-18-oci\/",
+    "datePublished": "2021-08-18 00:00:00 \u002b0000 UTC",
+    "description": "早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：\n{ \u0026#34;target\u0026#34;: { \u0026#34;docker-metadata-action\u0026#34;: { \u0026#34;tags\u0026#34;: [ \u0026#34;ghcr.io\/linjinbao666\/conda-base:main\u0026#34; ], \u0026#34;labels\u0026#34;: { \u0026#34;org.opencontainers.image.title\u0026#34;: \u0026#34;conda-base\u0026#34;, \u0026#34;org.opencontainers.image.description\u0026#34;: \u0026#34;conda-base\u0026#34;, \u0026#34;org.opencontainers.image.url\u0026#34;: \u0026#34;https:\/\/github.com\/linjinbao666\/conda-base\u0026#34;, \u0026#34;org.opencontainers.image.source\u0026#34;: \u0026#34;https:\/\/github.com\/linjinbao666\/conda-base\u0026#34;, \u0026#34;org.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">关于镜像oci规范</h1>
+            <p class="post-meta"><time datetime='2021-08-18T00:00:00Z' itemprop="datePublished">August 18, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;target&#34;</span>: {
+    <span style="color:#f92672">&#34;docker-metadata-action&#34;</span>: {
+      <span style="color:#f92672">&#34;tags&#34;</span>: [
+        <span style="color:#e6db74">&#34;ghcr.io/linjinbao666/conda-base:main&#34;</span>
+      ],
+      <span style="color:#f92672">&#34;labels&#34;</span>: {
+        <span style="color:#f92672">&#34;org.opencontainers.image.title&#34;</span>: <span style="color:#e6db74">&#34;conda-base&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.description&#34;</span>: <span style="color:#e6db74">&#34;conda-base&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.url&#34;</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/conda-base&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.source&#34;</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/conda-base&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.version&#34;</span>: <span style="color:#e6db74">&#34;main&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.created&#34;</span>: <span style="color:#e6db74">&#34;2021-08-19T05:27:05.157Z&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.revision&#34;</span>: <span style="color:#e6db74">&#34;cc3b1c3c0527c0e0dd81b379d35bddbe4f992681&#34;</span>,
+        <span style="color:#f92672">&#34;org.opencontainers.image.licenses&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+      },
+      <span style="color:#f92672">&#34;args&#34;</span>: {
+        <span style="color:#f92672">&#34;DOCKER_META_IMAGES&#34;</span>: <span style="color:#e6db74">&#34;ghcr.io/linjinbao666/conda-base&#34;</span>,
+        <span style="color:#f92672">&#34;DOCKER_META_VERSION&#34;</span>: <span style="color:#e6db74">&#34;main&#34;</span>
+      }
+    }
+  }
+}
+</code></pre></div><p>这几个标签应该就是OCI规范要求的了，同理在centos官方镜像中也发现了这几个标签：</p>
+<pre><code class="language-code" data-lang="code"> org.opencontainers.image.title=&quot;CentOS Base Image&quot; 
+ org.opencontainers.image.vendor=&quot;CentOS&quot; 
+ org.opencontainers.image.licenses=&quot;GPL-2.0-only&quot; 
+ org.opencontainers.image.created=&quot;2020-11-13 00:00:00+00:00&quot;
+</code></pre><p>这些标签能否发展成为具有<code>自证明</code>性质的标签，还有待期待。</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-08-20-golang-build/">&laquo; golang交叉编译</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/">一个gitlab ci文件 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

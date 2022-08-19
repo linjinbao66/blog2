@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>jdk的代理Proxy使用 - 打工笔记</title>
+<meta name="description" content="使用jdk的代理-Proxy动态代理 核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程
+CalculatorProxy.java
+public class CalculatorProxy { /** * 代理 * @param calcultor * @return */ public static Calcultor getCaluctor(Calcultor calcultor) { ClassLoader loader = calcultor."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-12-jdk-proxy-sample/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="使用jdk的代理-Proxy动态代理 核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程
+CalculatorProxy.java
+public class CalculatorProxy { /** * 代理 * @param calcultor * @return */ public static Calcultor getCaluctor(Calcultor calcultor) { ClassLoader loader = calcultor." />
+<meta name="twitter:title" content="jdk的代理Proxy使用 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="jdk的代理Proxy使用 - 打工笔记" property="og:title">
+<meta content="使用jdk的代理-Proxy动态代理 核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程
+CalculatorProxy.java
+public class CalculatorProxy { /** * 代理 * @param calcultor * @return */ public static Calcultor getCaluctor(Calcultor calcultor) { ClassLoader loader = calcultor." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-12-jdk-proxy-sample/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-12 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "jdk的代理Proxy使用",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-12-jdk-proxy-sample\/",
+    "datePublished": "2019-10-12 00:00:00 \u002b0000 UTC",
+    "description": "使用jdk的代理-Proxy动态代理 核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程\nCalculatorProxy.java\npublic class CalculatorProxy { \/** * 代理 * @param calcultor * @return *\/ public static Calcultor getCaluctor(Calcultor calcultor) { ClassLoader loader = calcultor.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">jdk的代理Proxy使用</h1>
+            <p class="post-meta"><time datetime='2019-10-12T00:00:00Z' itemprop="datePublished">October 12, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="使用jdk的代理-proxy动态代理">使用jdk的代理-Proxy动态代理</h2>
+<p>核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程</p>
+<p>CalculatorProxy.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CalculatorProxy</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">       *    代理
+</span><span style="color:#75715e">     * @param calcultor
+</span><span style="color:#75715e">     * @return
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Calcultor <span style="color:#a6e22e">getCaluctor</span><span style="color:#f92672">(</span>Calcultor calcultor<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ClassLoader loader <span style="color:#f92672">=</span> calcultor<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">();</span>
+        Class<span style="color:#f92672">&lt;?&gt;[]</span> interfaces <span style="color:#f92672">=</span> calcultor<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getInterfaces</span><span style="color:#f92672">();</span>
+        InvocationHandler h <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InvocationHandler<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>Object proxy<span style="color:#f92672">,</span> Method method<span style="color:#f92672">,</span> Object<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;代理对象执行中，，，，，，，，，&#34;</span><span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">return</span> method<span style="color:#f92672">.</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>calcultor<span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">};</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>Calcultor<span style="color:#f92672">)</span> Proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">newProxyInstance</span><span style="color:#f92672">(</span>loader<span style="color:#f92672">,</span> interfaces<span style="color:#f92672">,</span> h<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>TestAOP.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestAOP</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test01</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        Calcultor calcultor <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyMathCaluctor<span style="color:#f92672">();</span>
+        Calcultor Proxy <span style="color:#f92672">=</span> CalculatorProxy<span style="color:#f92672">.</span><span style="color:#a6e22e">getCaluctor</span><span style="color:#f92672">(</span>calcultor<span style="color:#f92672">);</span>
+        Proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> 3<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="proxy动态代理缺陷">Proxy动态代理缺陷</h2>
+<ol>
+<li>编写困难</li>
+<li>如果目标对象没有实现任何接口，则无法创建代理对象<code>Proxy.newProxyInstance(loader, interfaces, h);</code> <code>interfaces</code> 无法传参</li>
+</ol>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-14-factory-model/">&laquo; 简单工程模式</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-11-dart/">Dart学习 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

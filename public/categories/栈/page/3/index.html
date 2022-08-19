@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>栈</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/categories/%E6%A0%88/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:title" content="栈 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta content="栈 - 打工笔记" property="og:title">
+<meta content="" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/categories/%E6%A0%88/" />
+<meta property="og:site_name" content="打工笔记" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        
+           
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-20-golang-build/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">golang交叉编译</h3><span class="post-meta pull-right"><small>August 20, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    Golang 支持在一个平台下生成另一个平台可执行程序的交叉编译功能。
+1、Mac下编译Linux, Windows平台的64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-18-oci/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">关于镜像oci规范</h3><span class="post-meta pull-right"><small>August 18, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：
+{ &amp;#34;target&amp;#34;: { &amp;#34;docker-metadata-action&amp;#34;: { &amp;#34;tags&amp;#34;: [ …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">一个gitlab ci文件</h3><span class="post-meta pull-right"><small>August 12, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    一个golang项目典型的gitlab ci文件
+image: golang:latest before_script: - export GOPROXY=https://goproxy.io,direct stages: - build - release - note build: stage: build script: - go build -o …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-10-shell/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">一个shell程序</h3><span class="post-meta pull-right"><small>August 10, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    一个简单的shell程序： app.sh
+#!/bin/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data/${file_name} } clean() { …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-06-hcloud-sdk-trip/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">华为云sdk踩坑</h3><span class="post-meta pull-right"><small>August 6, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    简介 工作中用到了华为云，想使用华为云的sdk实现批量启动流水线，分发代码等任务，简单试用了下，发现问题太多。
+问题   api区域开放问题
+华为云的api调用大致有3种方式，apiexplorer在线调用、hcloud命令行调用，以及通过sdk调用。而同时华为云有区域的区分，比如华东-上海二，华东-北京一这种。api在有些区域开放了调用，但是在另一区域则不 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-05-bubble-ports/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">冒号端口</h3><span class="post-meta pull-right"><small>August 5, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    Linux程序监听网卡端口的时候会有各种缩写，其中有一种叫做冒号端口的写法。
+现象 首先，我们看一段netstat的输出：
+root@VM-0-4-debian:~# netstat -tunlp Active Internet connections (only servers) Proto Recv-Q Send-Q Local Address …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-07-15-one-complex-sql/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">一条复杂的sql</h3><span class="post-meta pull-right"><small>July 15, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    USE zentao; SELECT zt_task.id AS &amp;#39;编号&amp;#39;, zt_projectproduct.product AS &amp;#39;所属产品&amp;#39;, zt_product.`name` AS &amp;#39;产品名称&amp;#39;, zt_project.NAME AS &amp;#39;所属项目&amp;#39;, zt_story.title …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">kubernetes多用户切换</h3><span class="post-meta pull-right"><small>June 30, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-06-15-gitops/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">GitOps入门</h3><span class="post-meta pull-right"><small>June 15, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+          
+
+    </div> 
+    
+<div class="row">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+        
+        <ul class="pagination">
+          
+            <li><a href="/categories/%E6%A0%88/page/2/">&laquo; Prev</a></li>
+          
+
+          
+           
+
+          
+            
+            <li><a href="/categories/%E6%A0%88/">1</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/2/">2</a></li>
+            
+          
+            
+              <li class="active"><span><em>3</em></span></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/4/">4</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/5/">5</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/6/">6</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/7/">7</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/8/">8</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/9/">9</a></li>
+            
+          
+            
+            <li><a href="/categories/%E6%A0%88/page/10/">10</a></li>
+            
+          
+
+          
+            <li><a href="/categories/%E6%A0%88/page/4/">Next &raquo;</a></li>
+          
+          </ul>
+        
+
+    </div>
+    <div class="col-md-4">  </div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Vmware虚拟机Linux修改磁盘大小 - 打工笔记</title>
+<meta name="description" content="Linux修改磁盘大小 注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样
+第一步 在Vmware中进行分配磁盘大小 如图所示： 第二步：fdisk命令 fdisk /dev/sda p　查看已分区数量（我看到有两个 /dev/sda1 /dev/sda2） n　新增加一个分区 p　分区类型我们选择为主分区 分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3） 回车　默认（起始扇区） 回车　默认（结束扇区） t　修改分区类型 选分区3 8e　修改为LVM（8e就是LVM） w　写分区表 q　完成，退出fdisk命令 第三步：添加新LVM到已有的LVM组，实现扩容 lvm　进入lvm管理 lvm&amp;gt;pvcreate /dev/sda3　这是初始化刚才的分区3 lvm&amp;gt;vgextend centos /dev/sda3 将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) vm&amp;gt;vgdisplay lvm&amp;gt;lvextend -l&#43;6793 /dev/mapper/centos-root　扩展已有卷的容量（6793 是通过vgdisplay查看free PE /Site的大小） lvm&amp;gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了 lvm&amp;gt;quit 退出 第四步：文件系统的扩容 xfs_growfs /dev/mapper/centos-root 查看结果-扩容了30G [root@192-168-200-130 ~]# df -h Filesystem Size Used Avail Use% Mounted on /dev/mapper/centos-root 47G 17G 31G 36% / devtmpfs 475M 0 475M 0% /dev tmpfs 487M 0 487M 0% /dev/shm tmpfs 487M 7."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-18-linux-scale-disk/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Linux修改磁盘大小 注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样
+第一步 在Vmware中进行分配磁盘大小 如图所示： 第二步：fdisk命令 fdisk /dev/sda p　查看已分区数量（我看到有两个 /dev/sda1 /dev/sda2） n　新增加一个分区 p　分区类型我们选择为主分区 分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3） 回车　默认（起始扇区） 回车　默认（结束扇区） t　修改分区类型 选分区3 8e　修改为LVM（8e就是LVM） w　写分区表 q　完成，退出fdisk命令 第三步：添加新LVM到已有的LVM组，实现扩容 lvm　进入lvm管理 lvm&amp;gt;pvcreate /dev/sda3　这是初始化刚才的分区3 lvm&amp;gt;vgextend centos /dev/sda3 将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) vm&amp;gt;vgdisplay lvm&amp;gt;lvextend -l&#43;6793 /dev/mapper/centos-root　扩展已有卷的容量（6793 是通过vgdisplay查看free PE /Site的大小） lvm&amp;gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了 lvm&amp;gt;quit 退出 第四步：文件系统的扩容 xfs_growfs /dev/mapper/centos-root 查看结果-扩容了30G [root@192-168-200-130 ~]# df -h Filesystem Size Used Avail Use% Mounted on /dev/mapper/centos-root 47G 17G 31G 36% / devtmpfs 475M 0 475M 0% /dev tmpfs 487M 0 487M 0% /dev/shm tmpfs 487M 7." />
+<meta name="twitter:title" content="Vmware虚拟机Linux修改磁盘大小 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="Vmware虚拟机Linux修改磁盘大小 - 打工笔记" property="og:title">
+<meta content="Linux修改磁盘大小 注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样
+第一步 在Vmware中进行分配磁盘大小 如图所示： 第二步：fdisk命令 fdisk /dev/sda p　查看已分区数量（我看到有两个 /dev/sda1 /dev/sda2） n　新增加一个分区 p　分区类型我们选择为主分区 分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3） 回车　默认（起始扇区） 回车　默认（结束扇区） t　修改分区类型 选分区3 8e　修改为LVM（8e就是LVM） w　写分区表 q　完成，退出fdisk命令 第三步：添加新LVM到已有的LVM组，实现扩容 lvm　进入lvm管理 lvm&amp;gt;pvcreate /dev/sda3　这是初始化刚才的分区3 lvm&amp;gt;vgextend centos /dev/sda3 将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) vm&amp;gt;vgdisplay lvm&amp;gt;lvextend -l&#43;6793 /dev/mapper/centos-root　扩展已有卷的容量（6793 是通过vgdisplay查看free PE /Site的大小） lvm&amp;gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了 lvm&amp;gt;quit 退出 第四步：文件系统的扩容 xfs_growfs /dev/mapper/centos-root 查看结果-扩容了30G [root@192-168-200-130 ~]# df -h Filesystem Size Used Avail Use% Mounted on /dev/mapper/centos-root 47G 17G 31G 36% / devtmpfs 475M 0 475M 0% /dev tmpfs 487M 0 487M 0% /dev/shm tmpfs 487M 7." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-18-linux-scale-disk/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-18 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "Vmware虚拟机Linux修改磁盘大小",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-18-linux-scale-disk\/",
+    "datePublished": "2019-10-18 00:00:00 \u002b0000 UTC",
+    "description": "Linux修改磁盘大小 注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样\n第一步 在Vmware中进行分配磁盘大小 如图所示： 第二步：fdisk命令 fdisk \/dev\/sda p　查看已分区数量（我看到有两个 \/dev\/sda1 \/dev\/sda2） n　新增加一个分区 p　分区类型我们选择为主分区 分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3） 回车　默认（起始扇区） 回车　默认（结束扇区） t　修改分区类型 选分区3 8e　修改为LVM（8e就是LVM） w　写分区表 q　完成，退出fdisk命令 第三步：添加新LVM到已有的LVM组，实现扩容 lvm　进入lvm管理 lvm\u0026gt;pvcreate \/dev\/sda3　这是初始化刚才的分区3 lvm\u0026gt;vgextend centos \/dev\/sda3 将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) vm\u0026gt;vgdisplay lvm\u0026gt;lvextend -l\u002b6793 \/dev\/mapper\/centos-root　扩展已有卷的容量（6793 是通过vgdisplay查看free PE \/Site的大小） lvm\u0026gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了 lvm\u0026gt;quit 退出 第四步：文件系统的扩容 xfs_growfs \/dev\/mapper\/centos-root 查看结果-扩容了30G [root@192-168-200-130 ~]# df -h Filesystem Size Used Avail Use% Mounted on \/dev\/mapper\/centos-root 47G 17G 31G 36% \/ devtmpfs 475M 0 475M 0% \/dev tmpfs 487M 0 487M 0% \/dev\/shm tmpfs 487M 7.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">Vmware虚拟机Linux修改磁盘大小</h1>
+            <p class="post-meta"><time datetime='2019-10-18T00:00:00Z' itemprop="datePublished">October 18, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="linux修改磁盘大小">Linux修改磁盘大小</h2>
+<p>注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样</p>
+<h2 id="第一步-在vmware中进行分配磁盘大小">第一步 在Vmware中进行分配磁盘大小</h2>
+<p>如图所示： <img src="https://raw.githubusercontent.com/linjinbao666/resources/master/amromPicture/Vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%89%A9%E5%AE%B9.png" alt="&#x793A;&#x610F;&#x56FE;"></p>
+<h2 id="第二步fdisk命令">第二步：fdisk命令</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">fdisk /dev/sda
+p　　　　　　　查看已分区数量（我看到有两个 /dev/sda1 /dev/sda2）
+n　　　　　　　新增加一个分区
+p　　　　　　　分区类型我们选择为主分区
+　　　　　　     分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3）
+回车　　　　　  默认（起始扇区）
+回车　　　　　  默认（结束扇区）
+t　　　　　　　 修改分区类型
+　　　　　　     选分区3
+8e　　　　　 　修改为LVM（8e就是LVM）
+w　　　　　  　写分区表
+q　　　　　  　完成，退出fdisk命令
+</code></pre></div><h2 id="第三步添加新lvm到已有的lvm组实现扩容">第三步：添加新LVM到已有的LVM组，实现扩容</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">lvm　　　　　　　　　　　　           进入lvm管理
+
+lvm&gt;pvcreate /dev/sda3　　           这是初始化刚才的分区3
+
+lvm&gt;vgextend centos /dev/sda3     将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) 
+
+vm&gt;vgdisplay 
+
+lvm&gt;lvextend -l+6793 /dev/mapper/centos-root　　扩展已有卷的容量（6793 是通过vgdisplay查看free PE /Site的大小）
+
+lvm&gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了
+
+lvm&gt;quit 　退出
+</code></pre></div><h2 id="第四步文件系统的扩容">第四步：文件系统的扩容</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">xfs_growfs /dev/mapper/centos-root
+</code></pre></div><h2 id="查看结果-扩容了30g">查看结果-扩容了30G</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[root@192-168-200-130 ~]# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root   47G   17G   31G  36% /
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M     0  487M   0% /dev/shm
+tmpfs                    487M  7.7M  479M   2% /run
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+/dev/sda1               1014M  133M  882M  14% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+[root@192-168-200-130 ~]#
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-22-how-to-build-openjdk/">&laquo; Centos 7 下编译openjdk</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/">RabbitMQ示例代码 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

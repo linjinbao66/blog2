@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>jvm学习02 - 打工笔记</title>
+<meta name="description" content="jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-12-07-jvm-note/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava." />
+<meta name="twitter:title" content="jvm学习02 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="jvm学习02 - 打工笔记" property="og:title">
+<meta content="jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-12-07-jvm-note/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-12-07 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "jvm学习02",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-12-07-jvm-note\/",
+    "datePublished": "2019-12-07 00:00:00 \u002b0000 UTC",
+    "description": "jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数\n示例：\nC:\\Users\\linjinbao666\\Desktop\u0026gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\\Users\\linjinbao666\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0 -Dcatalina.home=D:\\tomcat\\apache-tomcat-7.0.92 -Dwtp.deploy=C:\\Users\\linjinbao666\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps -Djava.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">jvm学习02</h1>
+            <p class="post-meta"><time datetime='2019-12-07T00:00:00Z' itemprop="datePublished">December 7, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="jvm学习02-jdk自带工具使用">jvm学习02-jdk自带工具使用</h2>
+<h2 id="jps">jps</h2>
+<p>解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数</p>
+<p>示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666\Desktop&gt;jps -v
+11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava.endorsed.dirs=D:\tomcat\apache-tomcat-7.0.92\endorsed -Dfile.encoding=GBK
+7280 Jps -Dapplication.home=C:\Program Files\Java\jdk1.8.0_171 -Xms8m
+11700  -Dosgi.requiredJavaVersion=1.8 -Dosgi.instance.area.default=@user.home/eclipse-workspace -XX:+UseG1GC -XX:+UseStringDeduplication -Dosgi.requiredJavaVersion=1.8 -Dosgi.dataAreaRequiresExplicitInit=true -Xms256m -Xmx1024m -Declipse.p2.max.threads=10 -Doomph.update.url=http://download.eclipse.org/oomph/updates/milestone/latest -Doomph.redirection.index.redirection=index:/-&gt;http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/
+
+C:\Users\linjinbao666\Desktop&gt;
+</code></pre></div><h2 id="jstat">jstat</h2>
+<p>解释：虚拟机统计信息监视工具 参数： -class 监视类装载，卸载数量，总空间以及装在所消耗的时间 -gc 监视Java堆状况，包括eden区，两个survivor区，老年代，永久代的容量，已用空间，gc时间合计等信息 -gccapacity 监视内容与-gc基本相同，但输出主要关注java堆各个区域使用到的最大最小空间 -gcutil 监视内容同上，输出关注已使用空间占总空间的百分比 -gccause 同上，额外加上导致上次gc的产生原因 -gcnew 监视新生代gc的状况 -gcnewcapacity -gcold 监视老年代gc状况 -gcoldcapacity -gcpermcapacity监视永久代 -compiler 输出JIT编译器编译过的方法，耗时等信息 -printcompilation 输出已经被JIT编译的方法</p>
+<p>示例:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666\Desktop&gt;jstat -gc 11776  250 10
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+5120.0 5120.0 5092.0  0.0   32768.0  20853.5   86016.0    10271.3   15360.0 14966.2 1792.0 1714.0      2    0.032   0      0.000    0.032
+
+C:\Users\linjinbao666\Desktop&gt;
+</code></pre></div><h2 id="jinfo">jinfo</h2>
+<p>解释：Java配置信息工具 参数： -flags 示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666\Desktop&gt;jinfo -flags 11776
+Attaching to process ID 11776, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.171-b11
+Non-default VM flags: -XX:CICompilerCount=4 -XX:InitialHeapSize=132120576 -XX:MaxHeapSize=2103443456 -XX:MaxNewSize=700973056 -XX:MinHeapDeltaBytes=524288 -XX:NewSize=44040192 -XX:OldSize=88080384 -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseFastUnorderedTimeStamps -XX:-UseLargePagesIndividualAllocation -XX:+UseParallelGC
+Command line:  -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava.endorsed.dirs=D:\tomcat\apache-tomcat-7.0.92\endorsed -Dfile.encoding=GBK
+
+C:\Users\linjinbao666\Desktop&gt;
+</code></pre></div><h2 id="jmap">jmap</h2>
+<p>解释：Java内存映像工具 参数： -dump 生成Java堆存储快照 -finalizerinfo 显示等待finalize方法的对象 -heap 显示Java堆详细信息 -histo 显示堆中对象统计信息，包括类，实例数量，合计容量 -permstat 已classloader为统计口径，显示永生代内存状态 -F 强制dump 示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666\Desktop&gt;jmap -dump:format=b,file=out.bin 11776
+Dumping heap to C:\Users\linjinbao666\Desktop\out.bin ...
+Heap dump file created
+
+C:\Users\linjinbao666\Desktop&gt;
+</code></pre></div><h2 id="jhat">jhat</h2>
+<p>解释：虚拟机堆转储快照分析工具，与jmap搭配使用，运行时启动http服务，在浏览器查看 参数：无 示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666\Desktop&gt;jhat out.bin
+Reading from out.bin...
+Dump file created Sat Dec 07 20:21:08 CST 2019
+Snapshot read, resolving...
+Resolving 162034 objects...
+Chasing references, expect 32 dots................................
+Eliminating duplicate references................................
+Snapshot resolved.
+Started HTTP server on port 7000
+Server is ready.
+</code></pre></div><p>在浏览器查看即可</p>
+<h2 id="jstack">jstack</h2>
+<p>解释：Java堆栈跟踪工具 参数： -F -l 除堆栈外，显示锁的信息 -m 显示C/C++的堆栈 示例：省略</p>
+<h2 id="hsdis">hsdis</h2>
+<p>解释：JIT生成代码反汇编 参数： 示例：</p>
+<h2 id="jconsole">jconsole</h2>
+<p>解释：Java监视与管理控制台-可视化</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2020/2020-01-07-the-ignorance-of-www/">&laquo; 互联网的遗忘</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/">jvmGC日志分析 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

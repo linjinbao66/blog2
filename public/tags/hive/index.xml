@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hive on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/hive/</link>
+    <description>Recent content in hive on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/hive/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hive on spark 测试</title>
+      <link>https://amrom66.github.io/2020/2020-01-09-hive/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-09-hive/</guid>
+      <description>hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒</description>
+    </item>
+    
+  </channel>
+</rss>

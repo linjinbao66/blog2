@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hadoop on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/hadoop/</link>
+    <description>Recent content in hadoop on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/hadoop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hive on spark 测试</title>
+      <link>https://amrom66.github.io/2020/2020-01-09-hive/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-09-hive/</guid>
+      <description>hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒</description>
+    </item>
+    
+    <item>
+      <title>spark on hive 踩坑</title>
+      <link>https://amrom66.github.io/2020/2020-01-08-spark/</link>
+      <pubDate>Wed, 08 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-08-spark/</guid>
+      <description>spark on hive 踩坑 搭建hadoop环境 掠过
+搭建hive环境 掠过
+搭建spark  注意版本兼容  在pom文件中查看
+ 下载spark-2.0.0-bin-hadoop2.4-without-hive版本，without-hive必须  我的版本 hive:2.3.6 spark :spark-2.0.0-bin-hadoop2.4-without-hive hadoop:2.</description>
+    </item>
+    
+  </channel>
+</rss>

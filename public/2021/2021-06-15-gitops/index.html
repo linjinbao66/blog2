@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>GitOps入门 - 打工笔记</title>
+<meta name="description" content="GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。
+参考：https://about.gitlab.com/topics/gitops/
+GitOps与CI/CD GitOps和CI/CD是十分重要的工作伙伴。CI/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI/CD模型，从而将运维层面带入部署/交付中。
+但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知/声明的运行状态。
+注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。
+GitOps和应用程序生命周期 让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：
+  代码
+  构建
+  创建镜像
+  测试"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-06-15-gitops/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。
+参考：https://about.gitlab.com/topics/gitops/
+GitOps与CI/CD GitOps和CI/CD是十分重要的工作伙伴。CI/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI/CD模型，从而将运维层面带入部署/交付中。
+但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知/声明的运行状态。
+注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。
+GitOps和应用程序生命周期 让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：
+  代码
+  构建
+  创建镜像
+  测试" />
+<meta name="twitter:title" content="GitOps入门 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="GitOps入门 - 打工笔记" property="og:title">
+<meta content="GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。
+参考：https://about.gitlab.com/topics/gitops/
+GitOps与CI/CD GitOps和CI/CD是十分重要的工作伙伴。CI/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI/CD模型，从而将运维层面带入部署/交付中。
+但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知/声明的运行状态。
+注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。
+GitOps和应用程序生命周期 让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：
+  代码
+  构建
+  创建镜像
+  测试" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-06-15-gitops/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-06-15 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "GitOps入门",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-06-15-gitops\/",
+    "datePublished": "2021-06-15 00:00:00 \u002b0000 UTC",
+    "description": "GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。\n参考：https:\/\/about.gitlab.com\/topics\/gitops\/\nGitOps与CI\/CD GitOps和CI\/CD是十分重要的工作伙伴。CI\/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署\/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI\/CD模型，从而将运维层面带入部署\/交付中。\n但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知\/声明的运行状态。\n注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。\nGitOps和应用程序生命周期 让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：\n  代码\n  构建\n  创建镜像\n  测试",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">GitOps入门</h1>
+            <p class="post-meta"><time datetime='2021-06-15T00:00:00Z' itemprop="datePublished">June 15, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="gitops概念">GitOps概念</h2>
+<p>GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。</p>
+<p>参考：<a href="https://about.gitlab.com/topics/gitops/">https://about.gitlab.com/topics/gitops/</a></p>
+<h2 id="gitops与cicd">GitOps与CI/CD</h2>
+<p>GitOps和CI/CD是十分重要的工作伙伴。CI/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI/CD模型，从而将运维层面带入部署/交付中。</p>
+<p>但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知/声明的运行状态。</p>
+<p>注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。</p>
+<h2 id="gitops和应用程序生命周期">GitOps和应用程序生命周期</h2>
+<p>让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：</p>
+<ul>
+<li>
+<p>代码</p>
+</li>
+<li>
+<p>构建</p>
+</li>
+<li>
+<p>创建镜像</p>
+</li>
+<li>
+<p>测试</p>
+</li>
+<li>
+<p>发布</p>
+</li>
+</ul>
+<p>而使用GitOps，这些状态将会扩展为：</p>
+<ul>
+<li>
+<p>部署</p>
+</li>
+<li>
+<p>在Git仓库中监控更改</p>
+</li>
+<li>
+<p>日志更改和事件</p>
+</li>
+<li>
+<p>发生更改时发出警报，并于现有的监控/告警系统集成</p>
+</li>
+<li>
+<p>更新</p>
+</li>
+</ul>
+<p>在GitOps操作模型下，当应用程序发布时，Kubernetes需要确保其按预期运行。同时，Kubernetes通过确保其稳定性和可用性来管理应用程序的运维工作。如果一个开发人员通过Git更改了该应用程序，Kubernetes将会接受声明并根据需要应用它。</p>
+<h2 id="gitops">GitOps</h2>
+<p>GitOps为应用程序提供一个操作模型，它可以确保Git提供一个框架来统一应用程序的运行、操作和持续开发。</p>
+<p>作为CI/CD流水线的一部分，GitOps为应用程序构建/交付与运行它的位置之间提供了粘合剂。</p>
+<p>在Kubernetes平台中，Git为应用程序的开发和运维提供了唯一的事实来源。</p>
+<p>应用程序交付和平台管理都是声明式的，同时还能通过Git进行版本控制</p>
+<p>Git可以控制回滚、升级以及更改</p>
+<p>开发人员不需要知道如何操作运维平台（如Kubernetes），无需了解复杂的部署交付流程，仅需使用熟悉的工具发布新功能即可。极大提升开发者体验。</p>
+<p>Git控制并修证差异或“漂移”</p>
+<p>GitOps利用审核、监控以及回滚功能来增加应用程序发布的可靠性和稳定性</p>
+<p>最后，尽管在GitOps模式下还有很多工作要做，但是GitOps、DevOps以及现有CI/CD模式之间存在十分明显的协同作用。GitOps提供了一种用于将应用程序交付到Kubernetes平台的模型，该模型确保了Git是唯一的事实来源并且充分利用Kubernetes平台上的功能。但值得注意的是，GitOps不能替代工具。恰恰相反，GitOps通过声明性的流程和工具来强化流程、提高其成熟度并帮助团队交付应用程序。</p>
+<p>实践参考：<a href="https://www.qikqiak.com/post/gitlab-ci-argo-cd-gitops/">https://www.qikqiak.com/post/gitlab-ci-argo-cd-gitops/</a></p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/">&laquo; kubernetes多用户切换</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-06-01-golang-fallthrough/">golang fallthrough用法 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

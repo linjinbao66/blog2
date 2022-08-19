@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>一个shell程序 - 打工笔记</title>
+<meta name="description" content="一个简单的shell程序： app.sh
+#!/bin/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data/${file_name} } clean() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序运行中，请先停止程序&amp;#34; exit; fi docker rm ${app_name} } start() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序已经在运行，请先停止&amp;#34; exit; fi ip=`ip a | grep -v docker0 |grep inet|grep -v 127."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-08-10-shell/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="一个简单的shell程序： app.sh
+#!/bin/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data/${file_name} } clean() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序运行中，请先停止程序&amp;#34; exit; fi docker rm ${app_name} } start() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序已经在运行，请先停止&amp;#34; exit; fi ip=`ip a | grep -v docker0 |grep inet|grep -v 127." />
+<meta name="twitter:title" content="一个shell程序 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="一个shell程序 - 打工笔记" property="og:title">
+<meta content="一个简单的shell程序： app.sh
+#!/bin/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data/${file_name} } clean() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序运行中，请先停止程序&amp;#34; exit; fi docker rm ${app_name} } start() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序已经在运行，请先停止&amp;#34; exit; fi ip=`ip a | grep -v docker0 |grep inet|grep -v 127." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-08-10-shell/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-08-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "一个shell程序",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-08-10-shell\/",
+    "datePublished": "2021-08-10 00:00:00 \u002b0000 UTC",
+    "description": "一个简单的shell程序： app.sh\n#!\/bin\/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data\/${file_name} } clean() { old_container=`docker container ls | grep ${app_name}` if [ -n \u0026#34;${old_container}\u0026#34; ]; then echo \u0026#34;程序运行中，请先停止程序\u0026#34; exit; fi docker rm ${app_name} } start() { old_container=`docker container ls | grep ${app_name}` if [ -n \u0026#34;${old_container}\u0026#34; ]; then echo \u0026#34;程序已经在运行，请先停止\u0026#34; exit; fi ip=`ip a | grep -v docker0 |grep inet|grep -v 127.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">一个shell程序</h1>
+            <p class="post-meta"><time datetime='2021-08-10T00:00:00Z' itemprop="datePublished">August 10, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>一个简单的shell程序：
+app.sh</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+action<span style="color:#f92672">=</span>$1
+version<span style="color:#f92672">=</span>$2
+app_name<span style="color:#f92672">=</span>shuqi-public-<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span>
+
+load<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  file_name<span style="color:#f92672">=</span>shuqi-public-<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span>.tar
+  docker load -i data/<span style="color:#e6db74">${</span>file_name<span style="color:#e6db74">}</span>
+<span style="color:#f92672">}</span>
+
+clean<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  old_container<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>docker container ls | grep <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>old_container<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;程序运行中，请先停止程序&#34;</span>
+    exit;
+  <span style="color:#66d9ef">fi</span>
+  docker rm <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span>  
+<span style="color:#f92672">}</span>
+
+start<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  old_container<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>docker container ls | grep <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>old_container<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;程序已经在运行，请先停止&#34;</span>
+    exit;
+  <span style="color:#66d9ef">fi</span>
+  ip<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>ip a | grep -v docker0 |grep inet|grep -v 127.0.0.1| grep -v inet6|awk <span style="color:#e6db74">&#39;{print $2}&#39;</span>|tr -d <span style="color:#e6db74">&#34;addr:&#34;</span> | awk -F <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#e6db74">&#39;{print $1}&#39;</span><span style="color:#e6db74">`</span>
+  account_url<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>ip<span style="color:#e6db74">}</span>
+  echo <span style="color:#e6db74">&#34;启动程序</span><span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>
+  docker run --privileged --name shuqi-public-<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span> -dit -e account_url<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>account_url<span style="color:#e6db74">}</span> -p80:80 -p3306 shuqi-public:<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span> /usr/sbin/init  <span style="color:#f92672">&amp;&amp;</span> docker exec -it shuqi-public-<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span> sh /root/config.sh <span style="color:#f92672">&amp;&amp;</span> docker exec -it shuqi-public-<span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span> sh /root/init.sh
+  echo <span style="color:#e6db74">&#34;启动中...&#34;</span>
+  sleep <span style="color:#ae81ff">100</span>
+  echo <span style="color:#e6db74">&#34;启动完成&#34;</span>
+
+<span style="color:#f92672">}</span>
+
+stop<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  old_container<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>docker container ls | grep <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -n <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>old_container<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;程序不存在，请先启动程序&#34;</span>
+    exit;
+  <span style="color:#66d9ef">fi</span>
+  docker stop <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span>
+<span style="color:#f92672">}</span>
+
+restart<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  old_container<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>docker container ls | grep <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -n <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>old_container<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;程序不存在，请先启动程序&#34;</span>
+    exit;
+  <span style="color:#66d9ef">fi</span>
+  docker restart <span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;参数是 start、stop、restart&#34;</span>
+    exit;
+<span style="color:#66d9ef">fi</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -n <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+  echo <span style="color:#e6db74">&#34;请输入版本号&#34;</span>
+  exit;
+<span style="color:#66d9ef">fi</span>
+
+echo <span style="color:#e6db74">&#34;程序名: </span><span style="color:#e6db74">${</span>app_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+echo <span style="color:#e6db74">&#34;操作: </span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+echo <span style="color:#e6db74">&#34;版本: </span><span style="color:#e6db74">${</span>version<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;start&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+  start
+<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;stop&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+  stop
+<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;restart&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+  restart
+<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;load&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+  load
+<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>action<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;clean&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+  clean
+<span style="color:#66d9ef">else</span>
+  echo <span style="color:#e6db74">&#34;command error&#34;</span>
+<span style="color:#66d9ef">fi</span>
+
+progress<span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>
+  printf <span style="color:#e6db74">&#34;\e[?25l&#34;</span> 
+  i<span style="color:#f92672">=</span>0;
+  str<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+  arr<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;|&#34;</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;\\&#34;</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> $i -le <span style="color:#ae81ff">100</span> <span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">do</span>
+    let index<span style="color:#f92672">=</span>i%4
+    let indexcolor<span style="color:#f92672">=</span>i%8
+    let color<span style="color:#f92672">=</span>30+indexcolor
+    <span style="color:#75715e">#打印进度</span>
+    printf <span style="color:#e6db74">&#34;\r\e[0;</span>$color<span style="color:#e6db74">;1m[%-100s][%d%%]%c\e[0m&#34;</span> <span style="color:#e6db74">&#34;</span>$str<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$i<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>arr[$index]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+    sleep 0.1
+    let i++
+    str<span style="color:#f92672">+=</span><span style="color:#e6db74">&#39;=&#39;</span>
+  <span style="color:#66d9ef">done</span>
+  <span style="color:#75715e">#显示光标</span>
+  wait
+  printf <span style="color:#e6db74">&#34;\e[?25h&#34;&#34;\n&#34;</span> 
+<span style="color:#f92672">}</span>
+
+progress
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/">&laquo; 一个gitlab ci文件</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-08-06-hcloud-sdk-trip/">华为云sdk踩坑 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

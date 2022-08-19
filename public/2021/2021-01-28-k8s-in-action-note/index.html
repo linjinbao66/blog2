@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>k8s in action 阅读笔记 - 打工笔记</title>
+<meta name="description" content="如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client." />
+<meta name="twitter:title" content="k8s in action 阅读笔记 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="k8s in action 阅读笔记 - 打工笔记" property="og:title">
+<meta content="如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-01-28 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "k8s in action 阅读笔记",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-01-28-k8s-in-action-note\/",
+    "datePublished": "2021-01-28 00:00:00 \u002b0000 UTC",
+    "description": "如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">k8s in action 阅读笔记</h1>
+            <p class="post-meta"><time datetime='2021-01-28T00:00:00Z' itemprop="datePublished">January 28, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="如何保证多次请求命中同一个pod">如何保证多次请求命中同一个pod？</h2>
+<blockquote>
+<p>If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client. If, on the other hand, you want all requests made by a certain client to be redirected to the same pod every time, you can set the service’s sessionAffinity property to ClientIP (instead of None, which is the default), as shown in the following listing</p>
+</blockquote>
+<p>答案：</p>
+<p>使用<code>sessionAffinity</code></p>
+<p>示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">spec</span>:
+ <span style="color:#f92672">sessionAffinity</span>: <span style="color:#ae81ff">ClientIP</span>
+ <span style="color:#ae81ff">...</span>
+</code></pre></div><p>sessionAffinity 有两个可选值， none和ClientIP，clientIP可以控制请求到达同一个pod。</p>
+<blockquote>
+<p>This makes the service proxy redirect all requests originating from the same client IP to the same pod. As an exercise, you can create an additional service with session affinity set to ClientIP and try sending requests to it. Kubernetes supports only two types of service session affinity: None and ClientIP. You may be surprised it doesn’t have a cookie-based session affinity option, but you need to understand that Kubernetes services don’t operate at the HTTP level. Services deal with TCP and UDP packets and don’t care about the payload they carry. Because cookies are a construct of the HTTP protocol, services don’t know about them, which explains why session affinity cannot be based on cookies.</p>
+</blockquote>
+<h2 id="curl请求与浏览器请求区别">curl请求与浏览器请求区别</h2>
+<blockquote>
+<p>Session affinity and web browsers Because your service is now exposed externally, you may try accessing it with your web browser. You’ll see something that may strike you as odd—the browser will hit the exact same pod every time. Did the service’s session affinity change in the meantime? With kubectl explain, you can double-check that the service’s session affinity is still set to None, so why don’t different browser requests hit different pods, as is the case when using curl? Let me explain what’s happening. The browser is using keep-alive connections and sends all its requests through a single connection, whereas curl opens a new connection every time. Services work at the connection level, so when a connection to a service is first opened, a random pod is selected and then all network packets belonging to that connection are all sent to that single pod. Even if session affinity is set to None, users will always hit the same pod (until the connection is closed).</p>
+</blockquote>
+<p>解释：curl请求不会带有keep-alive头参数，所以无法保持连续的请求命中同一个pod。但是一般的浏览器可以通过带有这个参数，保证多次请求命中统一pod，nginx中也有此项配置。</p>
+<h2 id="外部请求nodeport或者loadbalancer服务如何保证流量分配在本机">外部请求NodePort或者loadbalancer服务如何保证流量分配在本机？</h2>
+<p>详细描述：例如通过NodePort=30089暴露服务，该服务后端有3个pod，分布在3个节点，此时默认场景通过任意${IP}:${NodePort}都可以访问该服务，具体由那个节点的pod提供服务，由kube-proxy公平分配。此时如果想要指定响应的pod为${IP}节点的，该如何才做？</p>
+<blockquote>
+<p>UNDERSTANDING AND PREVENTING UNNECESSARY NETWORK HOPS When an external client connects to a service through the node port (this also includes cases when it goes through the load balancer first), the randomly chosen pod may or may not be running on the same node that received the connection. An additional network hop is required to reach the pod, but this may not always be desirable. You can prevent this additional hop by configuring the service to redirect external traffic only to pods running on the node that received the connection. This is done by setting the externalTrafficPolicy field in the service’s spec section:</p>
+<p>spec: externalTrafficPolicy: Local &hellip;</p>
+<p>If a service definition includes this setting and an external connection is opened through the service’s node port, the service proxy will choose a locally running pod. If no local pods exist, the connection will hang (it won’t be forwarded to a random global pod, the way connections are when not using the annotation). You therefore need to ensure the load balancer forwards connections only to nodes that have at least one such pod.</p>
+</blockquote>
+<p>答案： 使用externalTrafficPolicy，该属性允许2个值：Cluster和Local，前者默认，表示kube-proxy公平分发流量，后者流量只发给本机的Pod。</p>
+<p><strong>需要特别注意的是以下场景：3节点，启动一个pod，设置externalTrafficPolicy为Local，则虽然3个节点都占用了${NodePort}，但是只有真实运行了pod的节点在可以访问，其他的节点并不能访问。</strong></p>
+<h2 id="liveness-probes区别-readiness-probes">Liveness probes区别 readiness probes</h2>
+<p>前者用于探针，即定时检测服务是否可用，已经重启；后者用于判断服务是否启东完成允许访问。</p>
+<blockquote>
+<p>Unlike liveness probes, if a container fails the readiness check, it won’t be killed or restarted. This is an important distinction between liveness and readiness probes. Liveness probes keep pods healthy by killing off unhealthy containers and replacing them with new, healthy ones, whereas readiness probes make sure that only pods that are ready to serve requests receive them. This is mostly necessary during container start up, but it’s also useful after the container has been running for a while.</p>
+</blockquote>
+<h2 id="无头服务headless">无头服务headless</h2>
+<blockquote>
+<p>有时不需要或不想要负载均衡，以及单独的 Service IP。 遇到这种情况，可以通过指定 Cluster IP（<code>spec.clusterIP</code>）的值为 <code>&quot;None&quot;</code> 来创建 <code>Headless</code> Service。</p>
+<p>你可以使用无头 Service 与其他服务发现机制进行接口，而不必与 Kubernetes 的实现捆绑在一起。</p>
+<p>对这无头 Service 并不会分配 Cluster IP，kube-proxy 不会处理它们， 而且平台也不会为它们进行负载均衡和路由。 DNS 如何实现自动配置，依赖于 Service 是否定义了选择算符。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kubia-headless</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">clusterIP</span>: <span style="color:#ae81ff">None</span>
+  <span style="color:#f92672">ports</span>:
+  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8080</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">kubia</span>
+</code></pre></div><blockquote>
+<p>Setting the clusterIP field in a service spec to None makes the service headless, as Kubernetes won’t assign it a cluster IP through which clients could connect to the pods backing it. You’ll create a h</p>
+<p>After you create the service with kubectl create, you can inspect it with kubectl get and kubectl describe. You’ll see it has no cluster IP and its endpoints include (part of)</p>
+<p>the pods matching its pod selector. I say “part of” because your pods contain a readiness probe, so only pods that are ready will be listed as endpoints of the service.</p>
+</blockquote>
+<h2 id="emptydir使用内存直接读写">emptyDir使用内存直接读写</h2>
+<blockquote>
+<p>The emptyDir you used as the volume was created on the actual disk of the worker node hosting your pod, so its performance depends on the type of the node’s disks. But you can tell Kubernetes to create the emptyDir on a tmpfs filesystem (in memory instead of on disk). To do this, set the emptyDir’s medium to Memory like this:</p>
+<pre><code class="language-code" data-lang="code">volumes:
+  - name: html
+  emptyDir:
+    medium: Memory
+</code></pre><p>An emptyDir volume is the simplest type of volume, but other types build upon it. After the empty directory is created, they populate it with data. One such volume type is the gitRepo volume type, which we’ll introduce next.</p>
+</blockquote>
+<p>当挂载存储为emptyDir的时候，可以设置 medium: Memory达到直接使用内存读写的效果。</p>
+<h2 id="存储挂载git-repository">存储挂载git repository</h2>
+<p>git repository可以由一种取巧用法，由于每次创建pod都会自动从git拉取最新的提交，所以可以将git repository整合到CI，CD中。例如可以交由deployment托管pod，pod中执行镜像构建，镜像推送等操作，，，，</p>
+<blockquote>
+<p>For example, you can use a Git repository to store static HTML files of your website and create a pod containing a web server container and a gitRepo volume. Every time the pod is created, it pulls the latest version of your website and starts serving it. The only drawback to this is that you need to delete the pod every time you push changes to the gitRepo and want to start serving the new version of the website. Let’s do this right now. It’s not that different from what you did before</p>
+</blockquote>
+<h2 id="sidecar">sidecar</h2>
+<p>用于附加到容器上，做一些附加操作，例如istio中使用的envoy</p>
+<h2 id="storageclass">storageclass</h2>
+<p>storageclass用于动态创建存储卷，即充当集群管理员的角色，一旦检测到pvc，即按照申请创建pv。</p>
+<p>storageclass-fast-gcepd.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">storage.k8s.io/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">StorageClass</span>
+<span style="color:#f92672">metadata</span>:
+ <span style="color:#f92672">name</span>: <span style="color:#ae81ff">fast</span>
+<span style="color:#f92672">provisioner</span>: <span style="color:#ae81ff">kubernetes.io/gce-pd</span>
+<span style="color:#f92672">parameters</span>:
+ <span style="color:#f92672">type</span>: <span style="color:#ae81ff">pd-ssd</span>
+ <span style="color:#f92672">zone</span>: <span style="color:#ae81ff">europe-west1-b</span>
+</code></pre></div><p>provisioner: kubernetes.io/gce-pd 需要重点关注。</p>
+<blockquote>
+<p>The StorageClass resource specifies which provisioner should be used for provisioning the PersistentVolume when a PersistentVolumeClaim requests this StorageClass. The parameters defined in the StorageClass definition are passed to the provisioner and are specific to each provisioner plugin.</p>
+<p>The StorageClass uses the Google Compute Engine (GCE) Persistent Disk (PD) provisioner, which means it can be used when Kubernetes is running in GCE. For other cloud providers, other provisioners need to be used.</p>
+</blockquote>
+<h2 id="存在动态存储卷的情况下强制pvc绑定手动创建的pv">存在动态存储卷的情况下强制pvc绑定手动创建的pv</h2>
+<blockquote>
+<p>FORCING A PERSISTENTVOLUMECLAIM TO BE BOUND TO ONE OF THE PRE-PROVISIONED PERSISTENTVOLUMES This finally brings us to why you set storageClassName to an empty string in listing 6.11 (when you wanted the PVC to bind to the PV you’d provisioned manually). Let me repeat the relevant lines of that PVC definition here:</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+<span style="color:#f92672">spec</span>:
+ <span style="color:#f92672">storageClassName</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</code></pre></div><p>答案：在pvc中设置storageClassName为&quot;&quot;，如果该项不设置则会寻找默认的sc。</p>
+<h2 id="k8s存储总结">k8s存储总结</h2>
+<ol>
+<li>k8s的挂载由pod进行挂载，同一个pod中多容器可以共享该pv。容器使用volume挂载，pod使用pv的概念。</li>
+<li>EmpDir也属于一种挂载方式，区别于persistenceVolume存在。</li>
+<li>PersistenceVolume是存储的最小单位，属于集群共享的资源，由集群管理员事先创建好。</li>
+<li>hostPath属于PersistentVolume的一种，还有nfs等</li>
+<li>pvc用于范围为存储卷申明，用于寻找特定的pv，由使用存储卷的人写。</li>
+<li>动态存储卷storageclass中最关键的为provisioner，动态存储卷的作用是替代集群管理员来创建pv。provisioner的不同实现有fuseim.pri/ifs等。</li>
+</ol>
+<h2 id="configmap示例">ConfigMap示例</h2>
+<p>fortune-config.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1 </span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">fortune-config</span>
+<span style="color:#f92672">data</span>: 
+  <span style="color:#f92672">sleep-interval</span>: <span style="color:#e6db74">&#34;25&#34;</span>
+</code></pre></div><p>my-config.yaml （从文件创建）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">data</span>:
+  <span style="color:#f92672">a.txt</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">    </span>    <span style="color:#ae81ff">a</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">creationTimestamp</span>: <span style="color:#e6db74">&#34;2021-02-01T12:03:48Z&#34;</span>
+  <span style="color:#f92672">managedFields</span>:
+  - <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+    <span style="color:#f92672">fieldsType</span>: <span style="color:#ae81ff">FieldsV1</span>
+    <span style="color:#f92672">fieldsV1</span>:
+      <span style="color:#f92672">f:data</span>:
+        <span style="color:#f92672">.</span>: {}
+        <span style="color:#f92672">f:a.txt</span>: {}
+    <span style="color:#f92672">manager</span>: <span style="color:#ae81ff">kubectl-create</span>
+    <span style="color:#f92672">operation</span>: <span style="color:#ae81ff">Update</span>
+    <span style="color:#f92672">time</span>: <span style="color:#e6db74">&#34;2021-02-01T12:03:48Z&#34;</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my-config</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+  <span style="color:#f92672">resourceVersion</span>: <span style="color:#e6db74">&#34;4987639&#34;</span>
+  <span style="color:#f92672">selfLink</span>: <span style="color:#ae81ff">/api/v1/namespaces/default/configmaps/my-config</span>
+  <span style="color:#f92672">uid</span>: <span style="color:#ae81ff">b2307e0a-a78c-4e84-9154-0a671f5f9535</span>
+</code></pre></div><h2 id="configmap挂载示例">ConfigMap挂载示例</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">...
+      <span style="color:#f92672">containers</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">postgres</span>
+          <span style="color:#f92672">image</span>: <span style="color:#ae81ff">postgres:10.4</span>
+          <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#e6db74">&#34;IfNotPresent&#34;</span>
+          <span style="color:#f92672">ports</span>:
+            - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">5432</span>
+          <span style="color:#f92672">envFrom</span>:
+            - <span style="color:#f92672">configMapRef</span>:
+                <span style="color:#f92672">name</span>: <span style="color:#ae81ff">postgres-config</span>
+          <span style="color:#f92672">volumeMounts</span>:
+            - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/lib/postgresql/data</span>
+              <span style="color:#f92672">name</span>: <span style="color:#ae81ff">postgredb</span>
+...
+</code></pre></div><p>fortune-pod-env-configmap.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+<span style="color:#f92672">name</span>: <span style="color:#ae81ff">fortune-env-from-configmap</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">luksa/fortune:env</span>
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">INTERVAL</span>
+    <span style="color:#f92672">valueFrom</span>:
+      <span style="color:#f92672">configMapKeyRef</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">fortune-config</span>
+      <span style="color:#f92672">key</span>: <span style="color:#ae81ff">sleep-interval</span>
+...
+</code></pre></div><h2 id="configmap对-的处理">ConfigMap对-的处理</h2>
+<p>key中不能包含横杠。</p>
+<blockquote>
+<p>Did you notice I said two variables, but earlier, I said the ConfigMap has three entries
+(FOO, BAR, and FOO-BAR)? Why is there no environment variable for the FOO-BAR
+ConfigMap entry?
+The reason is that CONFIG_FOO-BAR isn’t a valid environment variable name
+because it contains a dash. Kubernetes doesn’t convert the keys in any way (it doesn’t
+convert dashes to underscores, for example). If a ConfigMap key isn’t in the proper
+format, it skips the entry (but it does record an event informing you it skipped it).</p>
+</blockquote>
+<h2 id="configmap用作存储nginx配置">ConfigMap用作存储nginx配置</h2>
+<p>fortune-config.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">data</span>:
+  <span style="color:#f92672">my-nginx-config.conf</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">    server {
+</span><span style="color:#e6db74">        listen 80;
+</span><span style="color:#e6db74">        server_name www.kubia-example.com;
+</span><span style="color:#e6db74">        gzip on;
+</span><span style="color:#e6db74">        gzip_types text/plain application/xml;
+</span><span style="color:#e6db74">        location / {
+</span><span style="color:#e6db74">        root /usr/share/nginx/html;
+</span><span style="color:#e6db74">        index index.html index.htm;
+</span><span style="color:#e6db74">        }
+</span><span style="color:#e6db74">    }</span>    
+  <span style="color:#f92672">sleep-interval</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">    </span>    <span style="color:#ae81ff">25</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</code></pre></div><p>fortune-configmap-volume.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+<span style="color:#f92672">name</span>: <span style="color:#ae81ff">fortune-configmap-volume</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:alpine</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">web-server</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    <span style="color:#ae81ff">...</span>
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">config</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/etc/nginx/conf.d</span>
+      <span style="color:#f92672">readOnly</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#ae81ff">...</span>
+  <span style="color:#f92672">volumes</span>:
+  <span style="color:#ae81ff">...</span>
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">config</span>
+    <span style="color:#f92672">configMap</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">fortune-config</span>
+...
+</code></pre></div><p>完整示例：</p>
+<p>nginx.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-configmap</span>
+<span style="color:#f92672">data</span>:
+  <span style="color:#f92672">my-nginx-confg.conf</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">    server {
+</span><span style="color:#e6db74">      listen 80;
+</span><span style="color:#e6db74">      server_name localhost; 
+</span><span style="color:#e6db74">      location / {
+</span><span style="color:#e6db74">        proxy_pass  http://172.16.1.223:8981/;
+</span><span style="color:#e6db74">        proxy_set_header   X-Forwarded-Proto $scheme;
+</span><span style="color:#e6db74">        proxy_set_header   Host              $host;
+</span><span style="color:#e6db74">        proxy_set_header   X-Real-IP         $remote_addr;
+</span><span style="color:#e6db74">        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span style="color:#e6db74">        proxy_http_version 1.1;
+</span><span style="color:#e6db74">        proxy_set_header   Connection &#34;&#34;;
+</span><span style="color:#e6db74">      }  
+</span><span style="color:#e6db74">    }</span>    
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">volumes</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">config</span>
+        <span style="color:#f92672">configMap</span>:
+           <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-configmap</span>
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+        <span style="color:#f92672">volumeMounts</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">config</span>
+          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/etc/nginx/conf.d</span>
+          <span style="color:#f92672">readOnly</span>: <span style="color:#66d9ef">true</span>
+        <span style="color:#f92672">resources</span>:
+          <span style="color:#f92672">requests</span>:
+            <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;164Mi&#34;</span>
+            <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;400m&#34;</span>
+          <span style="color:#f92672">limits</span>:
+            <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;200Mi&#34;</span>
+            <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;400m&#34;</span>
+        <span style="color:#f92672">ports</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+          <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">ports</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+    <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-02-01-cidr/">&laquo; 子网掩码表示</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/">jdk1.15编译 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

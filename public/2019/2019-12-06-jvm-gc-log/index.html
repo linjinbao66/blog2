@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>jvmGC日志分析 - 打工笔记</title>
+<meta name="description" content="jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出" />
+<meta name="twitter:title" content="jvmGC日志分析 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="jvmGC日志分析 - 打工笔记" property="og:title">
+<meta content="jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-12-06 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "jvmGC日志分析",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-12-06-jvm-gc-log\/",
+    "datePublished": "2019-12-06 00:00:00 \u002b0000 UTC",
+    "description": "jvmGC日志分析 TestGC.java\npublic class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; \/\/ allocation5 = new byte[2 * _1MB]; \/\/ allocation6 = new byte[1 * _1MB];  } } gc输出",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">jvmGC日志分析</h1>
+            <p class="post-meta"><time datetime='2019-12-06T00:00:00Z' itemprop="datePublished">December 6, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="jvmgc日志分析">jvmGC日志分析</h2>
+<p>TestGC.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestGc</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> _1MB <span style="color:#f92672">=</span> 1024<span style="color:#f92672">*</span>1024<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> allocation1<span style="color:#f92672">,</span> allocation2<span style="color:#f92672">,</span> allocation3<span style="color:#f92672">,</span> allocation4<span style="color:#f92672">,</span>allocation5<span style="color:#f92672">,</span>allocation6<span style="color:#f92672">;</span>
+
+        allocation1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>2 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>
+        allocation2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>2 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>
+        allocation3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>
+        allocation4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>4 <span style="color:#f92672">*</span> _1MB<span style="color:#f92672">];</span>
+<span style="color:#75715e">//        allocation5 = new byte[2 * _1MB];
+</span><span style="color:#75715e">//        allocation6 = new byte[1 * _1MB];
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>gc输出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0.083: [GC (Allocation Failure) --[PSYoungGen: 5141K-&gt;5141K(9216K)] 5141K-&gt;5181K(9728K), 0.0009566 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+0.084: [Full GC (Ergonomics) [PSYoungGen: 5141K-&gt;4571K(9216K)] [ParOldGen: 40K-&gt;51K(512K)] 5181K-&gt;4623K(9728K), [Metaspace: 2691K-&gt;2691K(1056768K)], 0.0054408 secs] [Times: user=0.02 sys=0.00, real=0.00 secs] 
+0.091: [GC (Allocation Failure) --[PSYoungGen: 8667K-&gt;8667K(9216K)] 8719K-&gt;8823K(9728K), 0.0009663 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+0.092: [Full GC (Ergonomics) [PSYoungGen: 8667K-&gt;8588K(9216K)] [ParOldGen: 155K-&gt;128K(512K)] 8823K-&gt;8717K(9728K), [Metaspace: 2691K-&gt;2691K(1056768K)], 0.0038156 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+0.096: [GC (Allocation Failure) --[PSYoungGen: 8588K-&gt;8588K(9216K)] 8717K-&gt;8733K(9728K), 0.0006163 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+0.097: [Full GC (Allocation Failure) [PSYoungGen: 8588K-&gt;8572K(9216K)] [ParOldGen: 144K-&gt;132K(512K)] 8733K-&gt;8705K(9728K), [Metaspace: 2691K-&gt;2691K(1056768K)], 0.0039691 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
+    at demo.TestGc.main(TestGc.java:18)
+Heap
+ PSYoungGen      total 9216K, used 8704K [0x00000000ff680000, 0x0000000100000000, 0x0000000100000000)
+  eden space 8704K, 100% used [0x00000000ff680000,0x00000000fff00000,0x00000000fff00000)
+  from space 512K, 0% used [0x00000000fff80000,0x00000000fff80000,0x0000000100000000)
+  to   space 512K, 0% used [0x00000000fff00000,0x00000000fff00000,0x00000000fff80000)
+ ParOldGen       total 512K, used 133K [0x00000000ff600000, 0x00000000ff680000, 0x00000000ff680000)
+  object space 512K, 26% used [0x00000000ff600000,0x00000000ff621490,0x00000000ff680000)
+ Metaspace       used 2722K, capacity 4486K, committed 4864K, reserved 1056768K
+  class space    used 300K, capacity 386K, committed 512K, reserved 1048576K
+Java HotSpot(TM) 64-Bit Server VM warning: MaxNewSize (10240k) is equal to or greater than the entire heap (10240k).  A new max generation size of 9728k will be used.
+</code></pre></div><p>gc日志分析：</p>
+<ol>
+<li>0.083: 自从jvm启动以来，GC发生的时间</li>
+<li>[GC (Allocation Failure) &ndash;[PSYoungGen: 5141K-&gt;5141K(9216K)] GC前该内存区域已使用容量 -&gt; GC后该内存区域已使用容量（该内存区域总容量）</li>
+<li>5141K-&gt;5181K(9728K) GC前java堆已使用容量 -&gt; GC后java堆已使用容量(Java堆总容量)</li>
+<li>[Times: user=0.00 sys=0.00, real=0.00 secs] 用户消耗的CPU时间，内存态消耗的CPU时间，和操作从开始到结束所经过的墙钟时间</li>
+</ol>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-12-07-jvm-note/">&laquo; jvm学习02</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-12-05-port-scan/">Linux端口扫描 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> - 打工笔记</title>
+<meta name="description" content="多线程计算圆周率 使用公式1-1/3&#43;1/5&amp;hellip;&amp;hellip;
+代码示例 package learn; import java.math.BigDecimal; import java.util.ArrayList; import java.util.concurrent.*; /** * 多线程计算圆周率 */ public class Pie { public static double sum = 0."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-03-thread-sample-of-pi/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="多线程计算圆周率 使用公式1-1/3&#43;1/5&amp;hellip;&amp;hellip;
+代码示例 package learn; import java.math.BigDecimal; import java.util.ArrayList; import java.util.concurrent.*; /** * 多线程计算圆周率 */ public class Pie { public static double sum = 0." />
+<meta name="twitter:title" content=" - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content=" - 打工笔记" property="og:title">
+<meta content="多线程计算圆周率 使用公式1-1/3&#43;1/5&amp;hellip;&amp;hellip;
+代码示例 package learn; import java.math.BigDecimal; import java.util.ArrayList; import java.util.concurrent.*; /** * 多线程计算圆周率 */ public class Pie { public static double sum = 0." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-03-thread-sample-of-pi/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-03 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-03-thread-sample-of-pi\/",
+    "datePublished": "2019-10-03 00:00:00 \u002b0000 UTC",
+    "description": "多线程计算圆周率 使用公式1-1\/3\u002b1\/5\u0026hellip;\u0026hellip;\n代码示例 package learn; import java.math.BigDecimal; import java.util.ArrayList; import java.util.concurrent.*; \/** * 多线程计算圆周率 *\/ public class Pie { public static double sum = 0.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline"></h1>
+            <p class="post-meta"><time datetime='2019-10-03T00:00:00Z' itemprop="datePublished">October 3, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h1 id="多线程计算圆周率">多线程计算圆周率</h1>
+<p>使用公式1-1/3+1/5&hellip;&hellip;</p>
+<h2 id="代码示例">代码示例</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">package learn;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.concurrent.*;
+
+/**
+ * 多线程计算圆周率
+ */
+public class Pie {
+
+    public static double sum = 0.0;
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        int tNum = 64;
+        ExecutorService pool = Executors.newFixedThreadPool(tNum);
+
+        ArrayList&lt;Future&lt;BigDecimal&gt;&gt; list = new ArrayList&lt;&gt;();
+
+        long tmp = 1000000000;
+
+        long time0 = System.currentTimeMillis();
+        System.out.println(&#34;开始计算时间：&#34;+time0);
+        for (int i=0; i&lt; tNum; i++){
+            long start = 1+tmp*i;
+            long end = start+tmp-1;
+            Callable&lt;BigDecimal&gt; caller = new Pie().new MyCaller(start,end);
+            Future&lt;BigDecimal&gt; res = pool.submit(caller);
+
+            list.add(res);
+        }
+        pool.shutdown();
+
+        BigDecimal sum = new BigDecimal(0.0);
+        for (Future&lt;BigDecimal&gt; res: list){
+            BigDecimal tmp1 = new BigDecimal(res.get().doubleValue());
+           sum  = sum.add(tmp1);
+        }
+        long time1 = System.currentTimeMillis();
+        System.out.println(sum);
+        System.out.println(&#34;结束计算时间：&#34;+time1);
+        System.out.println(&#34;计算总共耗时：&#34;+(time1-time0)/1000 + &#34;秒&#34;);
+    }
+
+    public class MyCaller implements Callable&lt;BigDecimal&gt; {
+        private long start;
+        private long end;
+
+        public MyCaller(long start, long end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public BigDecimal call() throws Exception {
+           double sum = 0.0;
+           for (long n = start; n&lt;=end; n++){
+               sum+=Math.pow(-1.0,n-1)*4.0/(2.0*n-1.0);
+           }
+           return new BigDecimal(sum);
+        }
+    }
+}
+</code></pre></div><h2 id="计算结果">计算结果</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">开始计算时间：1572782003607
+3.141592653572425427117925326266235743040967334956115042388091751490719616413116455078125
+结束计算时间：1572783503836
+计算总共耗时：1500秒
+
+Process finished with exit code 0
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/">&laquo; java创建线程的7种方式</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-09-28-react/">React学习笔记 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

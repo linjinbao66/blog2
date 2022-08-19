@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>k8s整合glusterfs做后端存储 - 打工笔记</title>
+<meta name="description" content="安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群" />
+<meta name="twitter:title" content="k8s整合glusterfs做后端存储 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="k8s整合glusterfs做后端存储 - 打工笔记" property="og:title">
+<meta content="安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-03-25 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "k8s整合glusterfs做后端存储",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-03-25-k8s-glusterfs\/",
+    "datePublished": "2021-03-25 00:00:00 \u002b0000 UTC",
+    "description": "安装glusterfs和heketi\n#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">k8s整合glusterfs做后端存储</h1>
+            <p class="post-meta"><time datetime='2021-03-25T00:00:00Z' itemprop="datePublished">March 25, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <ol>
+<li>
+<p>安装glusterfs和heketi</p>
+<pre><code class="language-code" data-lang="code">#所有存储服务器下载安装glusterfs
+yum install centos-release-gluster -y
+yum install glusterfs-server -y
+   
+#启动
+systemctl  start glusterd 
+   
+#安装heketi
+yum install -y heketi heketi-client
+</code></pre></li>
+<li>
+<p>部署gluster集群</p>
+<pre><code class="language-code" data-lang="code">gluster peer probe node0
+gluster peer probe node1
+gluster peer probe node2
+   
+gluster peer status
+   
+mkdir /data/gluster/data -p
+   
+gluster volume create glusterfs_volume replica 3 node0:/data/gluster/data node1:/data/gluster/data node2:/data/gluster/data force
+   
+gluster volume info
+   
+gluster volume start glusterfs_volume
+   
+yum install -y glusterfs glusterfs-fuse
+</code></pre></li>
+<li>
+<p>配置heketi</p>
+<pre><code class="language-code" data-lang="code">[root@node0 ~]# cat /etc/heketi/heketi.json 
+{
+  &quot;_port_comment&quot;: &quot;Heketi Server Port Number&quot;,
+  &quot;port&quot;: &quot;8080&quot;,
+   
+  &quot;_use_auth&quot;: &quot;Enable JWT authorization. Please enable for deployment&quot;,
+  &quot;use_auth&quot;: false,
+   
+  &quot;_jwt&quot;: &quot;Private keys for access&quot;,
+  &quot;jwt&quot;: {
+    &quot;_admin&quot;: &quot;Admin has access to all APIs&quot;,
+    &quot;admin&quot;: {
+      &quot;key&quot;: &quot;My Secret&quot;
+    },
+    &quot;_user&quot;: &quot;User only has access to /volumes endpoint&quot;,
+    &quot;user&quot;: {
+      &quot;key&quot;: &quot;My Secret&quot;
+    }
+  },
+   
+  &quot;_glusterfs_comment&quot;: &quot;GlusterFS Configuration&quot;,
+  &quot;glusterfs&quot;: {
+    &quot;_executor_comment&quot;: [
+      &quot;Execute plugin. Possible choices: mock, ssh&quot;,
+      &quot;mock: This setting is used for testing and development.&quot;,
+      &quot;      It will not send commands to any node.&quot;,
+      &quot;ssh:  This setting will notify Heketi to ssh to the nodes.&quot;,
+      &quot;      It will need the values in sshexec to be configured.&quot;,
+      &quot;kubernetes: Communicate with GlusterFS containers over&quot;,
+      &quot;            Kubernetes exec api.&quot;
+    ],
+    &quot;executor&quot;: &quot;mock&quot;,
+   
+    &quot;_sshexec_comment&quot;: &quot;SSH username and private key file information&quot;,
+    &quot;sshexec&quot;: {
+      &quot;keyfile&quot;: &quot;/etc/heketi/heketi_key&quot;,
+      &quot;user&quot;: &quot;root&quot;,
+      &quot;port&quot;: &quot;22&quot;,
+      &quot;fstab&quot;: &quot;/etc/fstab&quot;
+    },
+   
+    &quot;_kubeexec_comment&quot;: &quot;Kubernetes configuration&quot;,
+    &quot;kubeexec&quot;: {
+      &quot;host&quot; :&quot;https://127.0.0.1:8443&quot;,
+      &quot;cert&quot; : &quot;/path/to/crt.file&quot;,
+      &quot;insecure&quot;: false,
+      &quot;user&quot;: &quot;kubernetes username&quot;,
+      &quot;password&quot;: &quot;password for kubernetes user&quot;,
+      &quot;namespace&quot;: &quot;OpenShift project or Kubernetes namespace&quot;,
+      &quot;fstab&quot;: &quot;Optional: Specify fstab file on node.  Default is /etc/fstab&quot;
+    },
+   
+    &quot;_db_comment&quot;: &quot;Database file name&quot;,
+    &quot;db&quot;: &quot;/var/lib/heketi/heketi.db&quot;,
+   
+    &quot;_loglevel_comment&quot;: [
+      &quot;Set log level. Choices are:&quot;,
+      &quot;  none, critical, error, warning, info, debug&quot;,
+      &quot;Default is warning&quot;
+    ],
+    &quot;loglevel&quot; : &quot;debug&quot;
+  }
+}
+</code></pre></li>
+<li>
+<p>配置免密登陆</p>
+<pre><code class="language-code" data-lang="code">#设置heketi免密访问GlusterFS
+[root@master heketi]# ssh-keygen -t rsa -q -f /etc/heketi/heketi_key -N &quot;&quot;
+[root@master heketi]# chown heketi:heketi /etc/heketi/heketi_key
+   
+#分发公钥
+[root@master heketi]# ssh-copy-id -i /etc/heketi/heketi_key.pub root@master
+[root@master heketi]# ssh-copy-id -i /etc/heketi/heketi_key.pub root@node1
+#将秘钥充master服务器复制到node1服务器上
+[root@master heketi]# rsync -avz /etc/heketi/heketi_key root@node1:/etc/heketi/
+</code></pre></li>
+<li>
+<p>启动heketl</p>
+<pre><code class="language-code" data-lang="code">systemctl enable heketi
+systemctl restart heketi
+systemctl status heketi
+   
+[root@master ~]# curl http://localhost:8080/hello
+Hello from Heketi
+</code></pre></li>
+<li>
+<p>设置集群</p>
+<pre><code class="language-code" data-lang="code">[root@node0 ~]# cat /etc/heketi/topology.json 
+{
+    &quot;clusters&quot;: [
+        {
+            &quot;nodes&quot;: [
+                {
+                    &quot;node&quot;: {
+                        &quot;hostnames&quot;: {
+                            &quot;manage&quot;: [
+                                &quot;192.168.90.219&quot;
+                            ],
+                            &quot;storage&quot;: [
+                                &quot;192.168.90.219&quot;
+                            ]
+                        },
+                        &quot;zone&quot;: 1
+                    },
+                    &quot;devices&quot;: [
+                        &quot;/dev/vdb&quot;
+                    ]
+                },
+                {
+                    &quot;node&quot;: {
+                        &quot;hostnames&quot;: {
+                            &quot;manage&quot;: [
+                                &quot;192.168.90.217&quot;
+                            ],
+                            &quot;storage&quot;: [
+                                &quot;192.168.90.217&quot;
+                            ]
+                        },
+                        &quot;zone&quot;: 2
+                    },
+                    &quot;devices&quot;: [
+                        &quot;/dev/vdb&quot;
+                    ]
+                },
+                {
+                    &quot;node&quot;: {
+                        &quot;hostnames&quot;: {
+                            &quot;manage&quot;: [
+                                &quot;192.168.90.216&quot;
+                            ],
+                            &quot;storage&quot;: [
+                                &quot;192.168.90.216&quot;
+                            ]
+                        },
+                        &quot;zone&quot;: 3
+                    },
+                    &quot;devices&quot;: [
+                        &quot;/dev/vdb&quot;
+                    ]
+                }
+            ]
+        }
+    ]
+}
+</code></pre></li>
+<li>
+<p>通过topology.json组建GlusterFS集群</p>
+<pre><code class="language-code" data-lang="code">[root@master ~]# heketi-cli --server http://localhost:8080 --user admin --secret admin@key topology load --json=/etc/heketi/topology.json
+Creating cluster ... ID: 2865ef5ac77aae777bbfaf3f27e456ef
+    Allowing file volumes on cluster.
+    Allowing block volumes on cluster.
+    Creating node 172.16.208.210 ... ID: 474894862effef22952e7c0d4542605b
+        Adding device /dev/vdb ... OK
+    Creating node 172.16.208.211 ... ID: 156c6b793ef761f68b317d0cfe8e7ec1
+        Adding device /dev/vdb ... OK
+           
+           
+[root@master ~]# heketi-cli --server http://localhost:8080 --user admin --secret admin@key topology info
+   
+</code></pre></li>
+<li>
+<p>配置StorageClass</p>
+<pre><code class="language-code" data-lang="code">[root@master ~]# cat  gluster-heketi-secret.yaml 
+apiVersion: v1
+kind: Secret
+metadata:
+  name: heketi-secret
+  namespace: default
+data:
+  # base64 encoded password. E.g.: echo -n &quot;mypassword&quot; | base64
+  key: *
+type: kubernetes.io/glusterfs
+   
+[root@master ~]# kubectl  apply -f gluster-heketi-secret.yaml 
+secret/heketi-secret created
+   
+[root@master ~]# cat  gluster-heketi-storageclass.yaml 
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gluster-heketi-storageclass
+provisioner: kubernetes.io/glusterfs
+reclaimPolicy: Delete
+parameters:
+  resturl: &quot;http://192.168.*.*:8080&quot;
+  restauthenabled: &quot;true&quot;
+  restuser: &quot;admin&quot;
+  secretNamespace: &quot;default&quot;
+  secretName: &quot;heketi-secret&quot;
+  volumetype: &quot;replicate:2&quot;
+   
+[root@master ~]# kubectl apply -f  gluster-heketi-storageclass.yaml 
+storageclass.storage.k8s.io/gluster-heketi-storageclass created
+</code></pre></li>
+<li>
+<p>测试</p>
+<pre><code class="language-code" data-lang="code">[root@master ~]# cat test-pvc.yaml 
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: &quot;gluster-heketi-storageclass&quot;
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+</code></pre></li>
+</ol>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-05-05-what-is-devops/">&laquo; 什么是DevOps</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-03-22-tar-system/">tar打包现有的系统 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

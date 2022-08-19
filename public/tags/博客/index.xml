@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>博客 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 博客 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>博客加入评论功能</title>
+      <link>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</link>
+      <pubDate>Thu, 26 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</guid>
+      <description>2019-09-26-个人博客加入评论功能 个人博客加入评论功能 实现思路： 使用第三方存储，白嫖美滋滋
+按照姑苏流白的教程，我使用Valine的评论系统
+配置Valine  注册 登录账号 略过 建立应用 配置应用keys，配置项：AppID， AppKey  修改博客配置  修改config.toml配置  加入以下内容：
+# Valine.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spring on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/spring/</link>
+    <description>Recent content in spring on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL 分库分表-ShardingSphere使用</title>
+      <link>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</link>
+      <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</guid>
+      <description>MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.</description>
+    </item>
+    
+    <item>
+      <title>ssm整合</title>
+      <link>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</guid>
+      <description>ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

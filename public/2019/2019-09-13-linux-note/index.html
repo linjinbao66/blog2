@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Linux笔记 - 打工笔记</title>
+<meta name="description" content="笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n &#43;10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-09-13-linux-note/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n &#43;10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp." />
+<meta name="twitter:title" content="Linux笔记 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="Linux笔记 - 打工笔记" property="og:title">
+<meta content="笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n &#43;10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-09-13-linux-note/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="Linux" />
+<meta property="article:published_time" content="2019-09-13 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "Linux笔记",
+    "genre": "Linux",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-09-13-linux-note\/",
+    "datePublished": "2019-09-13 00:00:00 \u002b0000 UTC",
+    "description": "笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup \/home\/ljbao\/ 打印指定行数据 sed -n \u0026#39;10,10p\u0026#39; file.txt cat file.txt | head -n 10 | tail -n \u002b10 awk使用 awk \u0026#39;{print $2} {print $1}\u0026#39; emp.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">Linux笔记</h1>
+            <p class="post-meta"><time datetime='2019-09-13T00:00:00Z' itemprop="datePublished">September 13, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="笔记">笔记</h2>
+<h2 id="查找软件包rsync">查找软件包rsync</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">rpm -qa | grep rsync
+</code></pre></div><h2 id="客户端拉取">客户端拉取</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text"> rsync -av root@192.168.59.130::backup /home/ljbao/
+</code></pre></div><h2 id="打印指定行数据">打印指定行数据</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">sed -n &#39;10,10p&#39; file.txt
+cat file.txt | head -n 10 | tail -n +10
+</code></pre></div><h2 id="awk使用">awk使用</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">awk &#39;{print $2} {print $1}&#39; emp.data
+</code></pre></div><h2 id="crond使用">crond使用</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">    service crond start    //启动服务
+　　    service crond stop     //关闭服务
+　    service crond restart  //重启服务
+　　    service crond reload   //重新载入配置
+　　    service crond status   //查看服务状态
+</code></pre></div><p>第一步：写<code>cron</code>脚本文件,命名为<code>crontest.cron</code>。 <code>15,30,45,59 * * * * echo &quot;xgmtest.....&quot; &gt;&gt; xgmtest.txt</code> 表示，每隔15分钟，执行打印一次命令 第二步：添加定时任务。执行命令 <code>crontab crontest.cron</code>。搞定 第三步：<code>crontab -l</code>查看定时任务是否成功或者检测<code>/var/spool/cron</code>下是否生成对应<code>cron</code>脚本</p>
+<p>脚本实例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0 6 * * * echo &#34;Good morning.&#34; &gt;&gt; /tmp/test.txt //注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。
+0 */2 * * * echo &#34;Have a break now.&#34; &gt;&gt; /tmp/test.txt  
+0 23-7/2，8 * * * echo &#34;Have a good dream&#34; &gt;&gt; /tmp/test.txt
+0 11 4 * 1-3 command line
+0 4 1 1 * command line SHELL=/bin/bash PATH=/sbin:/bin:/usr/sbin:/usr/bin MAILTO=root //如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ 
+01 * * * * root run-parts /etc/cron.hourly
+02 4 * * * root run-parts /etc/cron.daily 
+22 4 * * 0 root run-parts /etc/cron.weekly 
+42 4 1 * * root run-parts /etc/cron.monthly 
+5，15，25，35，45，55 16，17，18 * * * command
+00 15 * * 1，3，5 shutdown -r +5
+10，40 * * * * innd/bbslink
+</code></pre></div><p>第 1 列分钟 1～59</p>
+<p>第 2 列小时 1～23（0 表示子夜）</p>
+<p>第 3 列日 1～31</p>
+<p>第 4 列月 1～12</p>
+<p>第 5 列星期 0～6（0 表示星期天）</p>
+<p>第 6 列要运行的命令</p>
+<p>分 时 日 月 星期 要运行的命令</p>
+<p><code>30 21 * * * /usr/local/apache/bin/apachectl restart</code></p>
+<p>上面的例子表示每晚的 21:30 重启 apache。</p>
+<h2 id="mysql定时备份">MySQL定时备份</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">vim DatabaseName.sh
+/usr/local/mysql/bin/mysqldump -uusername -ppassword DatabaseName &gt; /home/backup/DatabaseName_$(date +%Y%m%d_%H%M%S).sql
+/usr/local/mysql/bin/mysqldump -uusername -ppassword DatabaseName | gzip &gt; /home/backup/DatabaseName_$(date +%Y%m%d_%H%M%S).sql.gz
+</code></pre></div><p><strong>注意</strong>：</p>
+<p>把<code>username</code> 替换为实际的用户名； 把 <code>password</code>替换为实际的密码； 把 <code>DatabaseName</code> 替换为实际的数据库名；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">chmod u+x DatabaseName.sh
+crontab -e
+01   3 * * * root/home/backup/DatabaseName.sh
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-09-21-netcat-sample/">&laquo; netcat使用教程</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-07-29-redis-note/">Redis笔记 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

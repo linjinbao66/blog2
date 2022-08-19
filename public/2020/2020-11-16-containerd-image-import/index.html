@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>containerd手动导入镜像 - 打工笔记</title>
+<meta name="description" content="众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题
+docker pull mirrorgooglecontainers/pause:3.1 docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1 我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下："/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2020/2020-11-16-containerd-image-import/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题
+docker pull mirrorgooglecontainers/pause:3.1 docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1 我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下：" />
+<meta name="twitter:title" content="containerd手动导入镜像 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="containerd手动导入镜像 - 打工笔记" property="og:title">
+<meta content="众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题
+docker pull mirrorgooglecontainers/pause:3.1 docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1 我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下：" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2020/2020-11-16-containerd-image-import/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2020-11-16 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "containerd手动导入镜像",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2020\/2020-11-16-containerd-image-import\/",
+    "datePublished": "2020-11-16 00:00:00 \u002b0000 UTC",
+    "description": "众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题\ndocker pull mirrorgooglecontainers\/pause:3.1 docker tag mirrorgooglecontainers\/pause:3.1 k8s.gcr.io\/pause:3.1 我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下：",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">containerd手动导入镜像</h1>
+            <p class="post-meta"><time datetime='2020-11-16T00:00:00Z' itemprop="datePublished">November 16, 2020</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题</p>
+<pre><code class="language-code" data-lang="code">docker pull mirrorgooglecontainers/pause:3.1 
+docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1
+</code></pre><p>我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下：</p>
+<ul>
+<li>containerd 命令行工具 <strong>ctr</strong> 特性不如 docker 丰富，如 ctr 1.2 并没有 tag 子命令，直到 1.3 才有</li>
+<li>为支持多租户隔离，containerd 有 namespace 概念，不同 namespace 下的 image、container 均不同，直接使用 ctr 操作时，会使用 default namespace</li>
+</ul>
+<p>如果使用的是 ctr 1.2，可以通过 docker tag 镜像，再使用 ctr 导入镜像</p>
+<pre><code class="language-code" data-lang="code">docker save k8s.gcr.io/pause -o pause.tar 
+ctr -n &lt;namespace&gt; images import pause.tar 
+</code></pre><p>刚开始导入时，没有指定 namespace，pause 导入在 default 空间，整晚上创建 Pod 均处于如下状态，心态一度爆炸</p>
+<pre><code class="language-code" data-lang="code">Warning  FailedCreatePodSandBox  9s         
+kubelet, worker-2  Failed to create pod sandbox: rpc error:  
+code = Unknown desc = failed to get sandbox image &quot;k8s.gcr.io/pause:3.1&quot;: 
+failed to pull image &quot;k8s.gcr. io/pause:3.1&quot;: failed to pull and unpack image &quot;k8s.gcr.io/pause:3.1&quot;: 
+failed to resolve reference &quot;k8s. gcr.io/pause:3.1&quot;: failed to do request: 
+Head https://k8s.gcr.io/v2/pause/manifests/3.1: dial tcp 108. 177.97.82:443: i/o timeout 
+</code></pre><p>仔细看文档发现有 namespace 这回事时，才恍然大悟 k8s 只会使用 k8s.io namespace 中镜像。于是再往 k8s.io 导入镜像，containerd worker 终于能正常被调度了</p>
+<pre><code class="language-code" data-lang="code">ctr namespace ls NAME    LABELS default k8s.io
+ctr -n k8s.io images import pause.tar
+</code></pre>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/">&laquo; jdk1.15编译</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/2020-11-10-nginx-reffer/">nginx拦截空reffer &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

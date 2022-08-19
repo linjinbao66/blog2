@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>简单操作excel apache POI使用 - 打工笔记</title>
+<meta name="description" content="使用apace POI操作excel   pom依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.poi&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;poi&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;   部分java 代码
+//部分代码 FileSystemView fsv = FileSystemView.getFileSystemView(); String desktop = fsv."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-11-11-poi-excel/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="使用apace POI操作excel   pom依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.poi&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;poi&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;   部分java 代码
+//部分代码 FileSystemView fsv = FileSystemView.getFileSystemView(); String desktop = fsv." />
+<meta name="twitter:title" content="简单操作excel apache POI使用 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="简单操作excel apache POI使用 - 打工笔记" property="og:title">
+<meta content="使用apace POI操作excel   pom依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.poi&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;poi&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;   部分java 代码
+//部分代码 FileSystemView fsv = FileSystemView.getFileSystemView(); String desktop = fsv." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-11-11-poi-excel/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-11-11 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "简单操作excel apache POI使用",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-11-11-poi-excel\/",
+    "datePublished": "2019-11-11 00:00:00 \u002b0000 UTC",
+    "description": "使用apace POI操作excel   pom依赖\n\u0026lt;dependency\u0026gt; \u0026lt;groupId\u0026gt;org.apache.poi\u0026lt;\/groupId\u0026gt; \u0026lt;artifactId\u0026gt;poi\u0026lt;\/artifactId\u0026gt; \u0026lt;version\u0026gt;3.8\u0026lt;\/version\u0026gt; \u0026lt;\/dependency\u0026gt;   部分java 代码\n\/\/部分代码 FileSystemView fsv = FileSystemView.getFileSystemView(); String desktop = fsv.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">简单操作excel apache POI使用</h1>
+            <p class="post-meta"><time datetime='2019-11-11T00:00:00Z' itemprop="datePublished">November 11, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="使用apace-poi操作excel">使用apace POI操作excel</h2>
+<ol>
+<li>
+<p>pom依赖</p>
+<pre><code class="language-markup" data-lang="markup">&lt;dependency&gt;
+ &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;
+     &lt;artifactId&gt;poi&lt;/artifactId&gt;
+ &lt;version&gt;3.8&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></li>
+<li>
+<p>部分java 代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//部分代码
+</span><span style="color:#75715e"></span>FileSystemView fsv <span style="color:#f92672">=</span> FileSystemView<span style="color:#f92672">.</span><span style="color:#a6e22e">getFileSystemView</span><span style="color:#f92672">();</span>
+String desktop <span style="color:#f92672">=</span> fsv<span style="color:#f92672">.</span><span style="color:#a6e22e">getHomeDirectory</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getPath</span><span style="color:#f92672">();</span>
+String filePath <span style="color:#f92672">=</span> desktop <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/在线申报地址.xls&#34;</span><span style="color:#f92672">;</span>
+FileInputStream fileInputStream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>filePath<span style="color:#f92672">);</span>
+BufferedInputStream bufferedInputStream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedInputStream<span style="color:#f92672">(</span>fileInputStream<span style="color:#f92672">);</span>
+POIFSFileSystem fileSystem <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> POIFSFileSystem<span style="color:#f92672">(</span>bufferedInputStream<span style="color:#f92672">);</span>
+HSSFWorkbook workbook <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HSSFWorkbook<span style="color:#f92672">(</span>fileSystem<span style="color:#f92672">);</span>
+HSSFSheet sheet <span style="color:#f92672">=</span> workbook<span style="color:#f92672">.</span><span style="color:#a6e22e">getSheet</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;法人&#34;</span><span style="color:#f92672">);</span>
+<span style="color:#66d9ef">int</span> lastRowIndex <span style="color:#f92672">=</span> sheet<span style="color:#f92672">.</span><span style="color:#a6e22e">getLastRowNum</span><span style="color:#f92672">();</span>
+<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>lastRowIndex<span style="color:#f92672">;</span> i<span style="color:#f92672">++){</span>
+ HSSFRow row <span style="color:#f92672">=</span> sheet<span style="color:#f92672">.</span><span style="color:#a6e22e">getRow</span><span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+ <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>row <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span> <span style="color:#f92672">}</span>
+ String cellValue <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span><span style="color:#a6e22e">getCell</span><span style="color:#f92672">(</span>0<span style="color:#f92672">).</span><span style="color:#a6e22e">getStringCellValue</span><span style="color:#f92672">();</span>
+ System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>cellValue<span style="color:#f92672">);</span>
+ String afterBase64Url <span style="color:#f92672">=</span> Base64Util<span style="color:#f92672">.</span><span style="color:#a6e22e">urltoBase64</span><span style="color:#f92672">(</span>prefix2<span style="color:#f92672">+</span>Base64Util<span style="color:#f92672">.</span><span style="color:#a6e22e">toBase64</span><span style="color:#f92672">(</span>cellValue<span style="color:#f92672">));</span>
+ System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>afterBase64Url<span style="color:#f92672">);</span>
+ row<span style="color:#f92672">.</span><span style="color:#a6e22e">createCell</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+ row<span style="color:#f92672">.</span><span style="color:#a6e22e">getCell</span><span style="color:#f92672">(</span>3<span style="color:#f92672">).</span><span style="color:#a6e22e">setCellValue</span><span style="color:#f92672">(</span>preFix<span style="color:#f92672">+</span>afterBase64Url<span style="color:#f92672">);</span>
+ FileOutputStream fileOutputStream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>filePath<span style="color:#f92672">);</span>
+ workbook<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>fileOutputStream<span style="color:#f92672">);</span>
+ fileOutputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+ fileOutputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+fileInputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+bufferedInputStream<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+</code></pre></div></li>
+</ol>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-11-16-vnstat/">&laquo; Linux流量检测工具-vnstat使用</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-11-08-jvm-practice/">jvm指令学习 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

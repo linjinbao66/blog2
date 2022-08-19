@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MySQL一键备份脚本 - 打工笔记</title>
+<meta name="description" content="MySQL一键备份脚本 备份脚本-Windows版本 脚本下载
+@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\ set host=localhost set user=root set password=123321 set mysqlpath=D:\epoint_mysql_5."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="MySQL一键备份脚本 备份脚本-Windows版本 脚本下载
+@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\ set host=localhost set user=root set password=123321 set mysqlpath=D:\epoint_mysql_5." />
+<meta name="twitter:title" content="MySQL一键备份脚本 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="MySQL一键备份脚本 - 打工笔记" property="og:title">
+<meta content="MySQL一键备份脚本 备份脚本-Windows版本 脚本下载
+@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\ set host=localhost set user=root set password=123321 set mysqlpath=D:\epoint_mysql_5." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="MySQL" />
+<meta property="article:published_time" content="2019-09-24 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "MySQL一键备份脚本",
+    "genre": "MySQL",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-09-24-mysql-backup-script\/",
+    "datePublished": "2019-09-24 00:00:00 \u002b0000 UTC",
+    "description": "MySQL一键备份脚本 备份脚本-Windows版本 脚本下载\n@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\\ set host=localhost set user=root set password=123321 set mysqlpath=D:\\epoint_mysql_5.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">MySQL一键备份脚本</h1>
+            <p class="post-meta"><time datetime='2019-09-24T00:00:00Z' itemprop="datePublished">September 24, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="mysql一键备份脚本">MySQL一键备份脚本</h2>
+<h2 id="备份脚本-windows版本">备份脚本-Windows版本</h2>
+<p><a href="https://raw.githubusercontent.com/linjinbao666/resources/master/bat%E8%84%9A%E6%9C%AC/backup.bat">脚本下载</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">@echo off
+
+pause
+set year=%Date:~0,4%
+set month=%Date:~5,2%
+set day=%Date:~8,2%
+
+set address=f:\
+set host=localhost
+set user=root
+set password=123321
+set mysqlpath=D:\epoint_mysql_5.7.24\mysql-5.7.24-winx64\bin\mysqldump.exe
+set port=3306
+
+rem 用户输入：
+set /p  address=备份地址(例如：F:\)
+set /p mysqlpath=请输入MySQL安装，不输入则使用默认地址D:\epoint_mysql_5.7.24\mysql-5.7.24-winx64\bin\mysqldump.exe
+set /p host=请输入主机地址（默认localhost）
+set /p  user=请输入数据库用户名：（默认root）
+set /p password=请输入数据库密码：(默认123321)
+set /p port=请输入端口号（默认3306）
+set /p dbname=请输入数据库名称
+rem 用户输入结束：
+
+echo 用户输入结束，备份地址为%address%； 数据库用户名为：%user%；数据库密码为：%password%; 
+pause
+
+set backupfile=%address%%year%-%month%-%day%-%dbname%.sql
+echo 备份文件: %backupfile%
+
+pause
+
+%mysqlpath%  -u%user%  -p%password%  %dbname% &gt; %backupfile%
+
+echo 请检查数据库备份是否成功，备份文件为%backupfile%
+echo 欢迎下次使用
+pause
+exit
+</code></pre></div><h2 id="备份脚本-linux版本">备份脚本-Linux版本</h2>
+<p>待续</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-09-24-mongodb-install/">&laquo; Mongodb安装与使用</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/">GitHub博客教程 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

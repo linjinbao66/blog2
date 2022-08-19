@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/docker/</link>
+    <description>Recent content in docker on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>空镜像</title>
+      <link>https://amrom66.github.io/2021/2021-03-17-scratch/</link>
+      <pubDate>Wed, 17 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-17-scratch/</guid>
+      <description>如何将当前宿主机制作成镜像？
+答案：借助scratch 镜像
+scratch 是一个空镜像，只能用于构建其他镜像，比如你要运行一个包含所有依赖的二进制文件，如Golang 程序，可以直接使用 scratch 作为基础镜像。例如busybox的Dockerfile写法：
+FROM scratch ADD busybox.tar.xz / CMD [&amp;quot;sh&amp;quot;] 将当前机器制作成OS镜像，使用docker build即可。</description>
+    </item>
+    
+  </channel>
+</rss>

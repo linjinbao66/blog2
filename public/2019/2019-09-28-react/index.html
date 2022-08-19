@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>React学习笔记 - 打工笔记</title>
+<meta name="description" content="React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-09-28-react/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。" />
+<meta name="twitter:title" content="React学习笔记 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="React学习笔记 - 打工笔记" property="og:title">
+<meta content="React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-09-28-react/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="笔记" />
+<meta property="article:published_time" content="2019-09-28 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "React学习笔记",
+    "genre": "笔记",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-09-28-react\/",
+    "datePublished": "2019-09-28 00:00:00 \u002b0000 UTC",
+    "description": "React学习 JSF语法概述 const element = \u0026lt;h1\u0026gt;Hello, world!\u0026lt;\/h1\u0026gt;; 这个有趣的标签语法既不是字符串也不是 HTML。\n它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">React学习笔记</h1>
+            <p class="post-meta"><time datetime='2019-09-28T00:00:00Z' itemprop="datePublished">September 28, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="react学习">React学习</h2>
+<h2 id="jsf语法概述">JSF语法概述</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">Hello</span>, <span style="color:#a6e22e">world</span><span style="color:#f92672">!&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;;</span>
+</code></pre></div><p>这个有趣的标签语法既不是字符串也不是 HTML。</p>
+<p>它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。</p>
+<p>实例</p>
+<pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;&lt;/title&gt;
+
+        &lt;script src=&quot;https://cdn.staticfile.org/react/16.4.0/umd/react.development.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+        &lt;!-- 生产环境中不建议使用 --&gt;
+        &lt;script src=&quot;https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+        &lt;script type=&quot;text/babel&quot;&gt;
+            const name = 'linjinbao666';
+            const element = &lt;h1&gt;hello, {name}&lt;/h1&gt;
+
+
+            ReactDOM.render(
+                element,
+                document.getElementById('root')
+            );
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="元素">元素</h2>
+<p>元素是构成<code>React</code>应用的最小砖块</p>
+<h3 id="元素的渲染">元素的渲染</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">Hello</span>, <span style="color:#a6e22e">world</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;;</span>
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">element</span>, document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>));
+</code></pre></div><h3 id="元素的更新">元素的更新</h3>
+<p><code>React</code>元素是不可变对象，创建后无法修改；可以通过创建一个全新的元素，并重新使用<code>ReactDOM.render()</code>渲染。</p>
+<h2 id="组件">组件</h2>
+<p><code>React</code>的组件和<code>Vue</code>类似，注意点：</p>
+<ul>
+<li>自定义首字母大写<code>&lt;Welcome /&gt;</code>，原生组组件首字母大写，如：<code>&lt;div /&gt;</code></li>
+<li>单标签</li>
+<li>接受的参数是个对象，注意写法</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * @param {Object} props
+</span><span style="color:#75715e"> * 组件
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Welcome</span>(<span style="color:#a6e22e">props</span>){
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">组件</span>, {<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">name</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;;</span>
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">welcomeElement</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Welcome</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;菜鸡从&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">welcomeElement</span>,document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>));
+</code></pre></div><p>组合组件 组件可以在其输出中引用其他组件，这一特性可以用来建立<code>文档树</code>结构，例如<code>html</code>的<code>dom</code>树</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 组合组件
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">App</span>(){
+    <span style="color:#66d9ef">return</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Welcome</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;刘峰&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Welcome</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;刘前&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Welcome</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;我&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+    )
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">appElement</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">App</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">appElement</span>, document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>));
+</code></pre></div><p>ES6定义组件格式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * ES6定义组件
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Clock</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span>{
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>){
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>  <span style="color:#f92672">=</span> {<span style="color:#a6e22e">date</span><span style="color:#f92672">:</span><span style="color:#66d9ef">new</span> Date().<span style="color:#a6e22e">toDateString</span>()};
+    }
+    <span style="color:#a6e22e">render</span>(){
+        <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">组件定义</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h2</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">现在是</span><span style="color:#960050;background-color:#1e0010">：</span> {<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">date</span>}.<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h2&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+        );
+    }
+}
+
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Clock</span> <span style="color:#f92672">/&gt;</span>, document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>))
+</code></pre></div><h2 id="组件添加生命周期方法">组件添加生命周期方法</h2>
+<p><code>componentDidMount()</code> 方法会在组件已经渲染到DOM后运行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Clock</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span>{
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>){
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>  <span style="color:#f92672">=</span> {<span style="color:#a6e22e">date</span><span style="color:#f92672">:</span><span style="color:#66d9ef">new</span> Date()};
+    }
+    <span style="color:#75715e">//挂载函数
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">componentDidMount</span>(){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">timeID</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">setInterval</span>(
+            () =&gt; <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">tick</span>(),<span style="color:#ae81ff">1000</span>
+        );
+    }
+    <span style="color:#75715e">//清除函数
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">componentWillUnmount</span>(){
+        <span style="color:#a6e22e">clearInterval</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">timeID</span>);
+    }
+    <span style="color:#a6e22e">tick</span>(){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({
+            <span style="color:#a6e22e">date</span><span style="color:#f92672">:</span><span style="color:#66d9ef">new</span> Date()
+        });
+    }
+
+    <span style="color:#a6e22e">render</span>(){
+        <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">组件定义</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h2</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">现在是</span><span style="color:#960050;background-color:#1e0010">：</span> {<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">date</span>.<span style="color:#a6e22e">toLocaleTimeString</span>()}.<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h2&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+        );
+    }
+}
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Clock</span> <span style="color:#f92672">/&gt;</span>, document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>))
+</code></pre></div><p><strong>代码运行解释</strong>：</p>
+<ol>
+<li>当 <code>&lt;Clock /&gt;</code> 被传给 <code>ReactDOM.render()</code>的时候，React 会调用 <code>Clock</code> 组件的构造函数。 因为 <code>Clock</code> 需要显示当前的时间，所以它会用一个包含当前时间的对象来初始化 <code>this.state</code>。我们会在之后更新 state。</li>
+<li>之后 React 会调用组件的 <code>render()</code> 方法。这就是　React 确定该在页面上展示什么的方式。然后　React 更新 DOM 来匹配 <code>Clock</code> 渲染的输出。</li>
+<li>当 <code>Clock</code> 的输出被插入到 DOM 中后， React 就会调用 <code>ComponentDidMount()</code> 生命周期方法。在这个方法中，<code>Clock</code> 组件向浏览器请求设置一个计时器来每秒调用一次组件的 <code>tick()</code> 方法。</li>
+<li>浏览器每秒都会调用一次 <code>tick()</code> 方法。 在这方法之中，<code>Clock</code> 组件会通过调用 <code>setState()</code> 来计划进行一次 UI 更新。得益于 <code>setState()</code> 的调用，React 能够知道 state 已经改变了，然后会重新调用 <code>render()</code> 方法来确定页面上该显示什么。这一次，<code>render()</code> 方法中的 <code>this.state.date</code> 就不一样了，如此以来就会渲染输出更新过的时间。React 也会相应的更新 DOM。</li>
+<li>一旦 <code>Clock</code> 组件从 DOM 中被移除，React 就会调用 <code>componentWillUnmount()</code> 生命周期方法，这样计时器就停止了。</li>
+</ol>
+<h2 id="thisstate的赋值问题"><code>this.State</code>的赋值问题</h2>
+<ol>
+<li>在构造方法里面赋值</li>
+<li>使用<code>setState</code>方法</li>
+</ol>
+<h2 id="事件处理">事件处理</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//事件处理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ActionLink</span>(){
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handleClick</span>(<span style="color:#a6e22e">e</span>){
+        <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">preventDefault</span>();
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;The link is clicked.&#39;</span>);
+    }
+    <span style="color:#66d9ef">return</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;#&#34;</span> <span style="color:#a6e22e">onClick</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">handleClick</span>()}<span style="color:#f92672">&gt;</span>
+            <span style="color:#a6e22e">Click</span> <span style="color:#a6e22e">me</span> 
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/a&gt;</span>
+    )
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">actionElement</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">ActionLink</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">//ReactDOM.render(actionElement, document.getElementById(&#39;root3&#39;));
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">//事件处理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Toggle</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">isToggleOn</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>};
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+    }
+
+    <span style="color:#a6e22e">handleClick</span>(){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>(<span style="color:#a6e22e">state</span> =&gt; ({
+            <span style="color:#a6e22e">isToggleOn</span><span style="color:#f92672">:</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">isToggleOn</span>
+        }));
+    }
+
+    <span style="color:#a6e22e">render</span>(){
+        <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span>}<span style="color:#f92672">&gt;</span>
+                {<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">isToggleOn</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;开&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;关&#39;</span>}
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+        )
+    }
+}
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Toggle</span> <span style="color:#f92672">/&gt;</span>,
+    document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>)
+)
+</code></pre></div><h2 id="条件渲染">条件渲染</h2>
+<p>React 中的条件渲染和 JavaScript 中的一样，使用 JavaScript 运算符```if`` 或者条件运算符去创建元素来表现当前的状态，然后让 React 根据它们来更新 UI。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//条件渲染
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">UserGreeting</span>(<span style="color:#a6e22e">props</span>){
+    <span style="color:#66d9ef">return</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">欢迎您</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">您已登录</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;</span>
+    )
+}
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">GuestGreeting</span>(<span style="color:#a6e22e">props</span>){
+    <span style="color:#66d9ef">return</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">请先登录</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;    </span>
+    )
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e">function Greeting(props) {
+</span><span style="color:#75715e">    const isLoggedIn = props.isLoggedIn;
+</span><span style="color:#75715e">    if (isLoggedIn) {
+</span><span style="color:#75715e">        return &lt;UserGreeting /&gt;;
+</span><span style="color:#75715e">    }
+</span><span style="color:#75715e">    return &lt;GuestGreeting /&gt;;
+</span><span style="color:#75715e">}
+</span><span style="color:#75715e">**/</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Greeting</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>)
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isLoggedIn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">isLoggedIn</span>;
+    }
+
+    <span style="color:#a6e22e">render</span>(){
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isLoggedIn</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">UserGreeting</span> <span style="color:#f92672">/&gt;</span>;
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">GuestGreeting</span> <span style="color:#f92672">/&gt;</span>;
+    }
+}
+
+
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Greeting</span> <span style="color:#a6e22e">isLoggedIn</span> <span style="color:#f92672">=</span> {<span style="color:#66d9ef">false</span>} <span style="color:#f92672">/&gt;</span>,
+    <span style="color:#a6e22e">root3</span>
+)
+</code></pre></div><p>代码示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">LoginButton</span>(<span style="color:#a6e22e">props</span>) {
+    <span style="color:#66d9ef">return</span> (
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">onClick</span>}<span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">登入</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+    );
+}
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">LogoutButton</span>(<span style="color:#a6e22e">props</span>) {
+    <span style="color:#66d9ef">return</span> (
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">onClick</span>}<span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">登出</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+    );
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoginControl</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span>{
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>){
+        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>)
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLoginClick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLoginClick</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLogoutClick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLogoutClick</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">isLoggedin</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>}
+    }
+    <span style="color:#a6e22e">handleLoginClick</span>(){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({<span style="color:#a6e22e">isLoggedIn</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>});
+    }
+    <span style="color:#a6e22e">handleLogoutClick</span>(){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({<span style="color:#a6e22e">isLoggedIn</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>});
+    }
+    <span style="color:#a6e22e">render</span>(){
+        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">isLoggedIn</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">isLoggedin</span>;
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">button</span>;
+        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">isLoggedIn</span>) <span style="color:#a6e22e">button</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">LogoutButton</span> <span style="color:#a6e22e">onClick</span> <span style="color:#f92672">=</span> {<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLogoutClick</span>} <span style="color:#f92672">/&gt;</span>;
+        <span style="color:#a6e22e">button</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">LoginButton</span> <span style="color:#a6e22e">onClick</span> <span style="color:#f92672">=</span> {<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleLoginClick</span>} <span style="color:#f92672">/&gt;</span>;
+        <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Greeting</span> <span style="color:#a6e22e">isLoggedIn</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">isLoggedIn</span>} <span style="color:#f92672">/&gt;</span>
+                {<span style="color:#a6e22e">button</span>}
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+        )
+    }
+}
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">LoginControl</span> <span style="color:#f92672">/&gt;</span>,
+    document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root2&#39;</span>)
+)
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-03-thread-sample-of-pi/">&laquo; </a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/">博客加入评论功能 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

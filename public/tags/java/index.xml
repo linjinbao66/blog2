@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/java/</link>
+    <description>Recent content in java on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mvn-generate-project</title>
+      <link>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</link>
+      <pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</guid>
+      <description>use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  </description>
+    </item>
+    
+    <item>
+      <title>jvm学习02</title>
+      <link>https://amrom66.github.io/2019/2019-12-07-jvm-note/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-07-jvm-note/</guid>
+      <description>jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava.</description>
+    </item>
+    
+    <item>
+      <title>jvmGC日志分析</title>
+      <link>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</link>
+      <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</guid>
+      <description>jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出</description>
+    </item>
+    
+    <item>
+      <title>jvm指令学习</title>
+      <link>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</link>
+      <pubDate>Fri, 08 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</guid>
+      <description>jvm 指令学习 编写源代码 Hello.java
+public class Hello{ public static void main(String[] args){ System.out.println(&amp;#34;Hello!&amp;#34;); } } 编译 javac Hello.java 生成Hello.class
+反编译 javap -v -verbose Hello.</description>
+    </item>
+    
+    <item>
+      <title>Centos 7 下编译openjdk</title>
+      <link>https://amrom66.github.io/2019/2019-10-22-how-to-build-openjdk/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-22-how-to-build-openjdk/</guid>
+      <description>openjdk编译 最近在学习java虚拟机的技术，尝试下手动编译openjdk
+准备工作  CentOS7 环境 openjdk8 源码 bootstrap jdk源码（我用的是openjdk 7）  注意事项：
+  目标jdk版本号比bootstrap jdk 大1
+  准备可能需要安装各种编译工具</description>
+    </item>
+    
+    <item>
+      <title>base64转码</title>
+      <link>https://amrom66.github.io/2019/2019-10-15-base64-usage/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-15-base64-usage/</guid>
+      <description>2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 + 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java.</description>
+    </item>
+    
+    <item>
+      <title>JAVA并发编程实战-笔记</title>
+      <link>https://amrom66.github.io/2019/2019-10-14-java-note/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-14-java-note/</guid>
+      <description>JAVA并发编程实战-笔记 Volatile变量
+ 同步的弱形式 该变量不会被缓存 不加锁 不会导致阻塞 可以修饰变量，不能修饰方法 只能保证可见性，不能保证原子性  线程封闭 访问共享的、可变的数据要求使用同步，一个可以避免同步的方法就是不共享数据。
+  Ad-hoc线程限制
+  栈限制
+  ThreadLocal</description>
+    </item>
+    
+    <item>
+      <title>java创建线程的7种方式</title>
+      <link>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</link>
+      <pubDate>Wed, 09 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</guid>
+      <description>java创建线程的7种方式  继承Thread类并重写run()方法  public class MyThread extends Thread { @Override public void run() { System.out.println(this.getId()+this.getName()+ &amp;#34; is running&amp;#34;); } public static void main(String[] arg){ new MyThread().</description>
+    </item>
+    
+    <item>
+      <title>Android学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-06-11-android/</link>
+      <pubDate>Tue, 11 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-06-11-android/</guid>
+      <description>Android学习 ListView package com.amrom.linjinbao.listviewtest; import android.support.v7.app.AppCompatActivity; import android.os.Bundle; import android.view.View; import android.widget.AdapterView; import android.widget.ArrayAdapter; import android.widget.ListView; import android.widget.Toast; import java.util.ArrayList; import java.</description>
+    </item>
+    
+  </channel>
+</rss>

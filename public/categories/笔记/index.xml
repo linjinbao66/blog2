@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>笔记 on 打工笔记</title>
+    <link>https://amrom66.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 笔记 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JAVA并发编程实战-笔记</title>
+      <link>https://amrom66.github.io/2019/2019-10-14-java-note/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-14-java-note/</guid>
+      <description>JAVA并发编程实战-笔记 Volatile变量
+ 同步的弱形式 该变量不会被缓存 不加锁 不会导致阻塞 可以修饰变量，不能修饰方法 只能保证可见性，不能保证原子性  线程封闭 访问共享的、可变的数据要求使用同步，一个可以避免同步的方法就是不共享数据。
+  Ad-hoc线程限制
+  栈限制
+  ThreadLocal</description>
+    </item>
+    
+    <item>
+      <title>webpack学习</title>
+      <link>https://amrom66.github.io/2019/2019-10-10-webpack/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-10-webpack/</guid>
+      <description>webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package.</description>
+    </item>
+    
+    <item>
+      <title>React学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-28-react/</link>
+      <pubDate>Sat, 28 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-28-react/</guid>
+      <description>React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。</description>
+    </item>
+    
+  </channel>
+</rss>

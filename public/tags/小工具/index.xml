@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>小工具 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 小工具 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E5%B0%8F%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>windows常用批处理命令</title>
+      <link>https://amrom66.github.io/2019/2019-09-23-windows-cmd/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-23-windows-cmd/</guid>
+      <description>Windows批处理 常用dos命令 echo 打印 dir 列文件名 cd　改变当前目录 ren 改变文件名 copy　拷贝文件 del 删除文件 md　建立子目录 rd　删除目录 deltree　删除目录树 format　格式化磁盘 edit　文本编辑 type　显示文件内容 mem 查看内存状况 ## 以下是新增加的命令 help　显示帮助提示 cls 清屏 move　移动文件，改目录名 more　分屏显示 xcopy 拷贝目录和文件 显示篇  echo @ 和 pause 在DOS命令提示符中使用 echo /?</description>
+    </item>
+    
+    <item>
+      <title>修复Office文件默认图标</title>
+      <link>https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/</guid>
+      <description>修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\ :: 修复word图标 reg add &amp;#34;HKCR\Word.Document.8\DefaultIcon&amp;#34; /ve /t REG_SZ /d &amp;#34;%officepath%WORDICON.EXE,1&amp;#34; reg delete &amp;#34;HKCR\Word.</description>
+    </item>
+    
+  </channel>
+</rss>

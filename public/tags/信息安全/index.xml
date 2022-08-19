@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>信息安全 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</link>
+    <description>Recent content in 信息安全 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>netcat使用教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</link>
+      <pubDate>Sat, 21 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</guid>
+      <description>netcat使用教程 @author linjinbao666@gmail.com fork me on github
+netcat简介 netcat 一般简称为 nc，直译为中文就是“网猫”，被誉为——【网络上的瑞士军刀】。它诞生于1995年，在网络安全社区的名气很大（就如同 AK47 在军事领域的名气）。长期在安全圈内混的人，应该都知道它。想当年，insecure.org 网站在本世纪初搞过几次“年度投票”，评选优秀的安全工具。每次投票，netcat 都能排进前几名。参考链接
+nc命令行简介 形式： nc 命令选项 主机 端口 命令选项 这部分可能包含 0~N 个选项 （注：这部分最复杂，下一个小节单独聊） 主机 这部分可能没有，可能以“点分十进制”形式表示，也可能以“域名”形式表示。 端口 这部分可能没有，可能是单个端口，可能是端口范围（以减号分隔） 举例：</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>教程 on 打工笔记</title>
+    <link>https://amrom66.github.io/categories/%E6%95%99%E7%A8%8B/</link>
+    <description>Recent content in 教程 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>博客加入评论功能</title>
+      <link>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</link>
+      <pubDate>Thu, 26 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</guid>
+      <description>2019-09-26-个人博客加入评论功能 个人博客加入评论功能 实现思路： 使用第三方存储，白嫖美滋滋
+按照姑苏流白的教程，我使用Valine的评论系统
+配置Valine  注册 登录账号 略过 建立应用 配置应用keys，配置项：AppID， AppKey  修改博客配置  修改config.toml配置  加入以下内容：
+# Valine.</description>
+    </item>
+    
+    <item>
+      <title>Mongodb安装与使用</title>
+      <link>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</guid>
+      <description>Mongodb安装与使用 背景知识 最近在项目实施过程中遇到一个问题：由于客户提供的Linux机器没有最下滑化安装，导致使用公司的bin包方式安装Mongodb失败。本着能自己解决就自己解决的态度，我开始了Mongodb的研究。
+安装和启动   下载
+因为centos的官放的yum源中没有提供Mongodb的安装包，此时我们需要自己下载下来（也可以修改yum源，不推荐） 执行命令wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.0.tgz 下载安装包
+  解压
+执行解压命令tar zxvf mongodb-linux-x86_64-4.0.0.tgz，如果为了统一的化，可以把解压出来的文件夹重命名，以及移动到/opt/下去。这个不重要，可以不用看。
+  添加启动配置</description>
+    </item>
+    
+    <item>
+      <title>GitHub博客教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</guid>
+      <description>GitHub博客 作为一名程序员，每天的学习必不可少，但是，如果只是乱糟糟的学习，而不懂得如何去记笔记，那效率可想而知。一个技术博客，是大多数程序员的必须品。漂亮的博客，让工作顺心，让学习更有效率，更有动力。今天，我来教大家如何利用GitHub提供的免费服务，打造自己的专属博客，白嫖美滋滋。
+前期准备   GitHub账号
+  Hugo 软件
+  Git客户端
+  掌握Markdown语法
+需要准备的东西就是这么多，账号去官网注册就行，几个软件下载安装就可以，具体怎么安装，以及如何跨平台啥的，这里不作阐述。需要注意的是Markdown语法一定要会，起码简单的语法懂得，因为写文章都要用Markdown来写，.md是他的标志。
+  第一篇文章 准备好以上条件后，我们来写一篇博客</description>
+    </item>
+    
+    <item>
+      <title>netcat使用教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</link>
+      <pubDate>Sat, 21 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</guid>
+      <description>netcat使用教程 @author linjinbao666@gmail.com fork me on github
+netcat简介 netcat 一般简称为 nc，直译为中文就是“网猫”，被誉为——【网络上的瑞士军刀】。它诞生于1995年，在网络安全社区的名气很大（就如同 AK47 在军事领域的名气）。长期在安全圈内混的人，应该都知道它。想当年，insecure.org 网站在本世纪初搞过几次“年度投票”，评选优秀的安全工具。每次投票，netcat 都能排进前几名。参考链接
+nc命令行简介 形式： nc 命令选项 主机 端口 命令选项 这部分可能包含 0~N 个选项 （注：这部分最复杂，下一个小节单独聊） 主机 这部分可能没有，可能以“点分十进制”形式表示，也可能以“域名”形式表示。 端口 这部分可能没有，可能是单个端口，可能是端口范围（以减号分隔） 举例：</description>
+    </item>
+    
+  </channel>
+</rss>

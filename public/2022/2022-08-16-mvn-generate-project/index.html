@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>mvn-generate-project - 打工笔记</title>
+<meta name="description" content="use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  "/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  " />
+<meta name="twitter:title" content="mvn-generate-project - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="mvn-generate-project - 打工笔记" property="og:title">
+<meta content="use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  " property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-08-16 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "mvn-generate-project",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-08-16-mvn-generate-project\/",
+    "datePublished": "2022-08-16 00:00:00 \u002b0000 UTC",
+    "description": "use mvn cli to generate a project:\nmvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=.\/ explain:\n use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  ",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">mvn-generate-project</h1>
+            <p class="post-meta"><time datetime='2022-08-16T00:00:00Z' itemprop="datePublished">August 16, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>use mvn cli to generate a project:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+mvn archetype:generate -DgroupId<span style="color:#f92672">=</span>tk.amrom -DartifactId<span style="color:#f92672">=</span>proto-java -DinteractiveMode<span style="color:#f92672">=</span>false -DoutputDirectory<span style="color:#f92672">=</span>./
+
+</code></pre></div><p>explain:</p>
+<ol>
+<li>use plugin archetype:generate</li>
+<li>require args groutId and artifactId and DinteractiveMode</li>
+</ol>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

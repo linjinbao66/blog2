@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>http on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/http/</link>
+    <description>Recent content in http on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>nginx代理出来的页面使用IE无法加载png问题</title>
+      <link>https://amrom66.github.io/2019/2019-11-25-nginx-problem/</link>
+      <pubDate>Mon, 25 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-25-nginx-problem/</guid>
+      <description>nginx代理出来的页面使用IE无法加载png问题 问题描述： 使用nginx对站点进行反代，其他都正常，但是有个png图片无法加载。排查了情况如下： 1. 其他浏览器正常 2. IE在内网正常，访问原始地址 3. IE在外网异常，访问nginx代理后地址
+问题分析： 检查F12，发现图片状态码200，已经加载出来，但是没有渲染出来，推测是由于安全策略问题；比对内网header和外网访问header，发现区别在外网多了个X-Content-Type-Options: nosniff，估计问题在这。
+问题解决： 在nginx代理中，去掉add_header X-Content-Type-Options nosniff;配置项 问题解决
+总结 X-Content-Type-Options nosniff是什么？</description>
+    </item>
+    
+  </channel>
+</rss>

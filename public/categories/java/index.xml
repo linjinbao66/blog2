@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on 打工笔记</title>
+    <link>https://amrom66.github.io/categories/java/</link>
+    <description>Recent content in java on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>base64转码</title>
+      <link>https://amrom66.github.io/2019/2019-10-15-base64-usage/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-15-base64-usage/</guid>
+      <description>2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 + 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java.</description>
+    </item>
+    
+    <item>
+      <title>java创建线程的7种方式</title>
+      <link>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</link>
+      <pubDate>Wed, 09 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</guid>
+      <description>java创建线程的7种方式  继承Thread类并重写run()方法  public class MyThread extends Thread { @Override public void run() { System.out.println(this.getId()+this.getName()+ &amp;#34; is running&amp;#34;); } public static void main(String[] arg){ new MyThread().</description>
+    </item>
+    
+    <item>
+      <title>ssm整合</title>
+      <link>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</guid>
+      <description>ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

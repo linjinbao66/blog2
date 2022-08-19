@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>RabbitMQ示例代码 - 打工笔记</title>
+<meta name="description" content="RabbitMQ 官网文档 涉及jar包amqp-client-5.7.3.jar
+ 发送  package myrabbitmq; import com.rabbitmq.client.Channel; import com.rabbitmq.client.Connection; import com.rabbitmq.client.ConnectionFactory; public class Send { private final static String QUEUE_NAME = &amp;#34;hello&amp;#34;; private final static String IP = &amp;#34;localhost&amp;#34;; public static void main(String[] args) { ConnectionFactory factory = new ConnectionFactory(); factory."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="RabbitMQ 官网文档 涉及jar包amqp-client-5.7.3.jar
+ 发送  package myrabbitmq; import com.rabbitmq.client.Channel; import com.rabbitmq.client.Connection; import com.rabbitmq.client.ConnectionFactory; public class Send { private final static String QUEUE_NAME = &amp;#34;hello&amp;#34;; private final static String IP = &amp;#34;localhost&amp;#34;; public static void main(String[] args) { ConnectionFactory factory = new ConnectionFactory(); factory." />
+<meta name="twitter:title" content="RabbitMQ示例代码 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="RabbitMQ示例代码 - 打工笔记" property="og:title">
+<meta content="RabbitMQ 官网文档 涉及jar包amqp-client-5.7.3.jar
+ 发送  package myrabbitmq; import com.rabbitmq.client.Channel; import com.rabbitmq.client.Connection; import com.rabbitmq.client.ConnectionFactory; public class Send { private final static String QUEUE_NAME = &amp;#34;hello&amp;#34;; private final static String IP = &amp;#34;localhost&amp;#34;; public static void main(String[] args) { ConnectionFactory factory = new ConnectionFactory(); factory." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-16 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "RabbitMQ示例代码",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-16-rabbitmq-java\/",
+    "datePublished": "2019-10-16 00:00:00 \u002b0000 UTC",
+    "description": "RabbitMQ 官网文档 涉及jar包amqp-client-5.7.3.jar\n 发送  package myrabbitmq; import com.rabbitmq.client.Channel; import com.rabbitmq.client.Connection; import com.rabbitmq.client.ConnectionFactory; public class Send { private final static String QUEUE_NAME = \u0026#34;hello\u0026#34;; private final static String IP = \u0026#34;localhost\u0026#34;; public static void main(String[] args) { ConnectionFactory factory = new ConnectionFactory(); factory.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">RabbitMQ示例代码</h1>
+            <p class="post-meta"><time datetime='2019-10-16T00:00:00Z' itemprop="datePublished">October 16, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="rabbitmq">RabbitMQ</h2>
+<p><a href="https://www.rabbitmq.com/api-guide.html">官网文档</a> 涉及jar包<code>amqp-client-5.7.3.jar</code></p>
+<ol>
+<li>发送</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> myrabbitmq<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> com.rabbitmq.client.Channel<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> com.rabbitmq.client.Connection<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> com.rabbitmq.client.ConnectionFactory<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Send</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> String QUEUE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> String IP <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;localhost&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ConnectionFactory factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConnectionFactory<span style="color:#f92672">();</span>
+        factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setHost</span><span style="color:#f92672">(</span>IP<span style="color:#f92672">);</span>
+        factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#f92672">);</span>
+        factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>Connection connection <span style="color:#f92672">=</span> factory<span style="color:#f92672">.</span><span style="color:#a6e22e">newConnection</span><span style="color:#f92672">();</span>
+             Channel channel <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">createChannel</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            channel<span style="color:#f92672">.</span><span style="color:#a6e22e">queueDeclare</span><span style="color:#f92672">(</span>QUEUE_NAME<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+            String message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello World!&#34;</span><span style="color:#f92672">;</span>
+            channel<span style="color:#f92672">.</span><span style="color:#a6e22e">basicPublish</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> QUEUE_NAME<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> message<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">());</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; [x] Sent &#39;&#34;</span> <span style="color:#f92672">+</span> message <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol>
+<li>接收</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> myrabbitmq<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> com.rabbitmq.client.Channel<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> com.rabbitmq.client.Connection<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> com.rabbitmq.client.ConnectionFactory<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> com.rabbitmq.client.DeliverCallback<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Recv</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> String QUEUE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test_queue_work&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> String IP <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123.59.201.22&#34;</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+
+            ConnectionFactory factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConnectionFactory<span style="color:#f92672">();</span>
+            factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setHost</span><span style="color:#f92672">(</span>IP<span style="color:#f92672">);</span>
+            factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#f92672">);</span>
+            factory<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#f92672">);</span>
+            Connection connection <span style="color:#f92672">=</span> factory<span style="color:#f92672">.</span><span style="color:#a6e22e">newConnection</span><span style="color:#f92672">();</span>
+            Channel channel <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">createChannel</span><span style="color:#f92672">();</span>
+
+            channel<span style="color:#f92672">.</span><span style="color:#a6e22e">queueDeclare</span><span style="color:#f92672">(</span>QUEUE_NAME<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">();</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; [*] Waiting for messages. To exit press CTRL+C&#34;</span><span style="color:#f92672">);</span>
+            DeliverCallback deliverCallback <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>consumerTag<span style="color:#f92672">,</span> delivery<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                String message <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>delivery<span style="color:#f92672">.</span><span style="color:#a6e22e">getBody</span><span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">);</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; [x] Received &#39;&#34;</span> <span style="color:#f92672">+</span> message <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">};</span>
+            channel<span style="color:#f92672">.</span><span style="color:#a6e22e">basicConsume</span><span style="color:#f92672">(</span>QUEUE_NAME<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> deliverCallback<span style="color:#f92672">,</span> consumerTag <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span> <span style="color:#f92672">});</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-18-linux-scale-disk/">&laquo; Vmware虚拟机Linux修改磁盘大小</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-15-base64-usage/">base64转码 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

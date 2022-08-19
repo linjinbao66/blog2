@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>esxi-cloud-init使用 - 打工笔记</title>
+<meta name="description" content="esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。
+cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。
+使用到的工具  govc  govc 是vmware出的cli工具，用于操作vcenter
+第一步 配置esxi.env配置 # vCenter host export GOVC_URL=192.168.123.138 # vCenter credentials export GOVC_USERNAME=administrator@vsphere.local export GOVC_PASSWORD=rpK0qGVhd#YIxP4~S26&#43; # disable cert validation export GOVC_INSECURE=1 export GOVC_DATASTORE=bigdata export GOVC_NETWORK=&amp;#34;&amp;#34; export GOVC_RESOURCE_POOL=&amp;#39;default-cluster/Resources&amp;#39; export GOVC_DATACENTER=default-dc jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about FullName: VMware vCenter Server 6."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。
+cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。
+使用到的工具  govc  govc 是vmware出的cli工具，用于操作vcenter
+第一步 配置esxi.env配置 # vCenter host export GOVC_URL=192.168.123.138 # vCenter credentials export GOVC_USERNAME=administrator@vsphere.local export GOVC_PASSWORD=rpK0qGVhd#YIxP4~S26&#43; # disable cert validation export GOVC_INSECURE=1 export GOVC_DATASTORE=bigdata export GOVC_NETWORK=&amp;#34;&amp;#34; export GOVC_RESOURCE_POOL=&amp;#39;default-cluster/Resources&amp;#39; export GOVC_DATACENTER=default-dc jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about FullName: VMware vCenter Server 6." />
+<meta name="twitter:title" content="esxi-cloud-init使用 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="esxi-cloud-init使用 - 打工笔记" property="og:title">
+<meta content="esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。
+cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。
+使用到的工具  govc  govc 是vmware出的cli工具，用于操作vcenter
+第一步 配置esxi.env配置 # vCenter host export GOVC_URL=192.168.123.138 # vCenter credentials export GOVC_USERNAME=administrator@vsphere.local export GOVC_PASSWORD=rpK0qGVhd#YIxP4~S26&#43; # disable cert validation export GOVC_INSECURE=1 export GOVC_DATASTORE=bigdata export GOVC_NETWORK=&amp;#34;&amp;#34; export GOVC_RESOURCE_POOL=&amp;#39;default-cluster/Resources&amp;#39; export GOVC_DATACENTER=default-dc jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about FullName: VMware vCenter Server 6." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-03-03 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "esxi-cloud-init使用",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-03-03-esxi-cloud-init\/",
+    "datePublished": "2022-03-03 00:00:00 \u002b0000 UTC",
+    "description": "esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。\ncloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。\n使用到的工具  govc  govc 是vmware出的cli工具，用于操作vcenter\n第一步 配置esxi.env配置 # vCenter host export GOVC_URL=192.168.123.138 # vCenter credentials export GOVC_USERNAME=administrator@vsphere.local export GOVC_PASSWORD=rpK0qGVhd#YIxP4~S26\u002b # disable cert validation export GOVC_INSECURE=1 export GOVC_DATASTORE=bigdata export GOVC_NETWORK=\u0026#34;\u0026#34; export GOVC_RESOURCE_POOL=\u0026#39;default-cluster\/Resources\u0026#39; export GOVC_DATACENTER=default-dc jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about FullName: VMware vCenter Server 6.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">esxi-cloud-init使用</h1>
+            <p class="post-meta"><time datetime='2022-03-03T00:00:00Z' itemprop="datePublished">March 3, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。</p>
+<p>cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。</p>
+<h2 id="使用到的工具">使用到的工具</h2>
+<ul>
+<li>govc</li>
+</ul>
+<p>govc 是vmware出的cli工具，用于操作vcenter</p>
+<h2 id="第一步-配置esxienv配置">第一步 配置esxi.env配置</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># vCenter host</span>
+export GOVC_URL<span style="color:#f92672">=</span>192.168.123.138
+<span style="color:#75715e"># vCenter credentials</span>
+export GOVC_USERNAME<span style="color:#f92672">=</span>administrator@vsphere.local
+export GOVC_PASSWORD<span style="color:#f92672">=</span>rpK0qGVhd#YIxP4~S26+
+<span style="color:#75715e"># disable cert validation</span>
+export GOVC_INSECURE<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+export GOVC_DATASTORE<span style="color:#f92672">=</span>bigdata
+export GOVC_NETWORK<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+export GOVC_RESOURCE_POOL<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;default-cluster/Resources&#39;</span>
+export GOVC_DATACENTER<span style="color:#f92672">=</span>default-dc
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about
+FullName:     VMware vCenter Server 6.7.0 build-17712750
+Name:         VMware vCenter Server
+Vendor:       VMware, Inc.
+Version:      6.7.0
+Build:        <span style="color:#ae81ff">17712750</span>
+OS type:      linux-x64
+API type:     VirtualCenter
+API version:  6.7.3
+Product ID:   vpx
+UUID:         e8dd6d90-2d67-4803-a46a-22494e87a678
+</code></pre></div><h2 id="第二步-准备ubuntu模版">第二步 准备ubuntu模版</h2>
+<p><a href="https://cloud-images.ubuntu.com/releases/18.04/release/ubuntu-18.04-server-cloudimg-amd64.ova">https://cloud-images.ubuntu.com/releases/18.04/release/ubuntu-18.04-server-cloudimg-amd64.ova ↗</a></p>
+<p>下载到<code>~/Downloads</code>目录</p>
+<h2 id="第三步-导出模版spec">第三步 导出模版spec</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">govc import.spec ~/Downloads/ubuntu-18.04-server-cloudimg-amd64.ova | python -m json.tool &gt; ubuntu.json
+</code></pre></div><p>ubuntu.json是模版的信息所在</p>
+<h2 id="第四步-准备user-data文件">第四步 准备user-data文件</h2>
+<p>创建user-data文件，里面的信息定义了启动脚本的信息：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e">#cloud-config</span>
+<span style="color:#f92672">chpasswd</span>:
+    <span style="color:#f92672">list</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">      </span>      <span style="color:#ae81ff">deploy:369369</span>
+    <span style="color:#f92672">expire</span>: <span style="color:#66d9ef">false</span>
+<span style="color:#f92672">groups</span>:
+  - <span style="color:#ae81ff">deploy</span>
+<span style="color:#f92672">users</span>:
+  - <span style="color:#ae81ff">default</span>
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">deploy</span>
+    <span style="color:#f92672">ssh-authorized-keys</span>:
+      - <span style="color:#ae81ff">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXyE5xMca36mPqld/vA75oDNIxc955RLGR9oHDmo8Rko4wUUZj0A0Zgqiykyx6KHKAF/IdXKt7zLQsJbMPl09sE74g0UAt96rpGEj0rVrxH+pjrcl8HwT68ZSXuJrqGzBIzN/elKvwK9Zsf6OYzrHsBt0yGsOvTw2z9AT9ProjTldxPcyssWrPoYeP3qcdOfugn4y2ZKSweSO78HUd9dz/7Tj4zPSWQq+fPsCkb0WzvfaseJbLe3fJ3ZrQfADv4EIv3zsQd6/lZ4ypM/7KSCsal0qcX3buP0bsDom9TEwdRTswAk9NYIg2NwZPEWqU8HNccJKRFBMxIVS1aC8NMIhYveckUrsmHlXXYvqwMseYfb9V8FIyUuwLkzv3uNlIidtdQv0sas5/3f3T7UBS1Cv9hZQnJ6KFVjSg4ocOIA5mcAFYUIkSrvmHLxWZ7SNtUS6l0bucBwuI/JlXLkMAhJn69c261GEIrpBCOgKKsu8RNLWUoaPbGC+gJzS+YjZQa8M= jinbao666lin@jinbao666deMacBook-Pro.local</span>
+    <span style="color:#f92672">sudo</span>: <span style="color:#ae81ff">ALL=(ALL) NOPASSWD:ALL</span>
+    <span style="color:#f92672">groups</span>: <span style="color:#ae81ff">sudo, deploy</span>
+    <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">/bin/bash</span>
+<span style="color:#f92672">package_upgrade</span>: <span style="color:#66d9ef">false</span>
+<span style="color:#f92672">runcmd</span>:
+  - <span style="color:#ae81ff">swapoff --all</span>
+  - <span style="color:#ae81ff">sed -ri &#39;/\sswap\s/s/^#?/#/&#39; /etc/fstab</span>
+  - <span style="color:#ae81ff">sysctl net.bridge.bridge-nf-call-iptables=1</span>
+  - <span style="color:#ae81ff">sysctl net.bridge.bridge-nf-call-ip6tables=1</span>
+  - <span style="color:#e6db74">&#39;echo &#34;disable_vmware_customization: false&#34; &gt;&gt; /etc/cloud/cloud.cfg&#39;</span>
+  - <span style="color:#ae81ff">sed -i &#39;s/D \/tmp 1777 root root -/#D \/tmp 1777 root root -/g&#39; /usr/lib/tmpfiles.d/tmp.conf</span>
+  - <span style="color:#ae81ff">echo -n &gt; /etc/machine-id</span>
+<span style="color:#f92672">final_message</span>: <span style="color:#e6db74">&#34;The system is prepped, after $UPTIME seconds&#34;</span>
+<span style="color:#f92672">power_state</span>:
+  <span style="color:#f92672">timeout</span>: <span style="color:#ae81ff">30</span>
+  <span style="color:#f92672">mode</span>: <span style="color:#ae81ff">poweroff</span>
+</code></pre></div><p>参考：https://cloudinit.readthedocs.io/en/latest/topics/examples.html</p>
+<h2 id="第五步-修改模版spec">第五步 修改模版spec</h2>
+<p>ubuntu.json修改，最终形态：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;DiskProvisioning&#34;</span>: <span style="color:#e6db74">&#34;thin&#34;</span>,
+    <span style="color:#f92672">&#34;IPAllocationPolicy&#34;</span>: <span style="color:#e6db74">&#34;dhcpPolicy&#34;</span>,
+    <span style="color:#f92672">&#34;IPProtocol&#34;</span>: <span style="color:#e6db74">&#34;IPv4&#34;</span>,
+    <span style="color:#f92672">&#34;InjectOvfEnv&#34;</span>: <span style="color:#66d9ef">false</span>,
+    <span style="color:#f92672">&#34;MarkAsTemplate&#34;</span>: <span style="color:#66d9ef">false</span>,
+    <span style="color:#f92672">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;template-ubuntu-1804&#34;</span>,
+    <span style="color:#f92672">&#34;NetworkMapping&#34;</span>: [
+        {
+            <span style="color:#f92672">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;VM Network&#34;</span>,
+            <span style="color:#f92672">&#34;Network&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+        }
+    ],
+    <span style="color:#f92672">&#34;PowerOn&#34;</span>: <span style="color:#66d9ef">true</span>,
+    <span style="color:#f92672">&#34;PropertyMapping&#34;</span>: [
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;instance-id&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;id-ovf&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;hostname&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;seedfrom&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;public-keys&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;user-data&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;I2Nsb3VkLWNvbmZpZwpjaHBhc3N3ZDoKICAgIGxpc3Q6IHwKICAgICAgZGVwbG95OjM2OTM2OQogICAgZXhwaXJlOiBmYWxzZQpncm91cHM6CiAgLSBkZXBsb3kKdXNlcnM6CiAgLSBkZWZhdWx0CiAgLSBuYW1lOiB1YnVudHUKICAgIHNzaC1hdXRob3JpemVkLWtleXM6CiAgICAgIC0gc3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FEWHlFNXhNY2EzNm1QcWxkL3ZBNzVvRE5JeGM5NTVSTEdSOW9IRG1vOFJrbzR3VVVaajBBMFpncWl5a3l4NktIS0FGL0lkWEt0N3pMUXNKYk1QbDA5c0U3NGcwVUF0OTZycEdFajByVnJ4SCtwanJjbDhId1Q2OFpTWHVKcnFHekJJek4vZWxLdndLOVpzZjZPWXpySHNCdDB5R3NPdlR3Mno5QVQ5UHJvalRsZHhQY3lzc1dyUG9ZZVAzcWNkT2Z1Z240eTJaS1N3ZVNPNzhIVWQ5ZHovN1RqNHpQU1dRcStmUHNDa2IwV3p2ZmFzZUpiTGUzZkozWnJRZkFEdjRFSXYzenNRZDYvbFo0eXBNLzdLU0NzYWwwcWNYM2J1UDBic0RvbTlURXdkUlRzd0FrOU5ZSWcyTndaUEVXcVU4SE5jY0pLUkZCTXhJVlMxYUM4Tk1JaFl2ZWNrVXJzbUhsWFhZdnF3TXNlWWZiOVY4Rkl5VXV3TGt6djN1TmxJaWR0ZFF2MHNhczUvM2YzVDdVQlMxQ3Y5aFpRbko2S0ZWalNnNG9jT0lBNW1jQUZZVUlrU3J2bUhMeFdaN1NOdFVTNmwwYnVjQnd1SS9KbFhMa01BaEpuNjljMjYxR0VJcnBCQ09nS0tzdThSTkxXVW9hUGJHQytnSnpTK1lqWlFhOE09IGppbmJhbzY2NmxpbkBqaW5iYW82NjZkZU1hY0Jvb2stUHJvLmxvY2FsCiAgICBzdWRvOiBBTEw9KEFMTCkgTk9QQVNTV0Q6QUxMCiAgICBncm91cHM6IHN1ZG8sIGRlcGxveQogICAgc2hlbGw6IC9iaW4vYmFzaApwYWNrYWdlX3VwZ3JhZGU6IGZhbHNlCnJ1bmNtZDoKICAtIHN3YXBvZmYgLS1hbGwKICAtIHNlZCAtcmkgJy9cc3N3YXBccy9zL14jPy8jLycgL2V0Yy9mc3RhYgogIC0gc3lzY3RsIG5ldC5icmlkZ2UuYnJpZGdlLW5mLWNhbGwtaXB0YWJsZXM9MQogIC0gc3lzY3RsIG5ldC5icmlkZ2UuYnJpZGdlLW5mLWNhbGwtaXA2dGFibGVzPTEKICAtICdlY2hvICJkaXNhYmxlX3Ztd2FyZV9jdXN0b21pemF0aW9uOiBmYWxzZSIgPj4gL2V0Yy9jbG91ZC9jbG91ZC5jZmcnCiAgLSBzZWQgLWkgJ3MvRCBcL3RtcCAxNzc3IHJvb3Qgcm9vdCAtLyNEIFwvdG1wIDE3Nzcgcm9vdCByb290IC0vZycgL3Vzci9saWIvdG1wZmlsZXMuZC90bXAuY29uZgogIC0gZWNobyAtbiA+IC9ldGMvbWFjaGluZS1pZApmaW5hbF9tZXNzYWdlOiAiVGhlIHN5c3RlbSBpcyBwcmVwcGVkLCBhZnRlciAkVVBUSU1FIHNlY29uZHMiCnBvd2VyX3N0YXRlOgogIHRpbWVvdXQ6IDMwCiAgbW9kZTogcG93ZXJvZmY=&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Key&#34;</span>: <span style="color:#e6db74">&#34;password&#34;</span>,
+            <span style="color:#f92672">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+        }
+    ],
+    <span style="color:#f92672">&#34;WaitForIP&#34;</span>: <span style="color:#66d9ef">false</span>
+}
+</code></pre></div><p><code>user-data</code>内容使用的是<code>user-data</code>的base64编码后的值。<code>base64 user-data</code></p>
+<h2 id="第六步-部署虚拟机">第六步 部署虚拟机</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">govc import.ova -options<span style="color:#f92672">=</span>ubuntu.json ~/Downloads/ubuntu-18.04-server-cloudimg-amd64.ova 
+</code></pre></div><p>部署完成，即出现了一个虚拟机，使用<code>deploy|ubuntu</code>用户登录</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/">&laquo; 关于pv pvc的新认识</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-02-28-etcd-clean/">etcd强制删除k8s数据 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

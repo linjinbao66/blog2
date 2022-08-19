@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>服务端 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF/</link>
+    <description>Recent content in 服务端 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MYSQL笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-28-mysql-note/</link>
+      <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-28-mysql-note/</guid>
+      <description>MYSQL笔记 UUID select uuid(); 存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。 创建存储过程
+DELIMITER // CREATE PROCEDURE getAllUsers() BEGIN SELECT * FROM `user`; END // DELIMITER ; CALL getAllUsers(); 调用存储过程</description>
+    </item>
+    
+  </channel>
+</rss>

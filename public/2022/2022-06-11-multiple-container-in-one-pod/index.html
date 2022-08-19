@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>multiple-container-in-one-pod - 打工笔记</title>
+<meta name="description" content="在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。
+实例：
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: &amp;#34;alpine/git&amp;#34; name: prepare env: - name: repo value: &amp;#34;https://github."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。
+实例：
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: &amp;#34;alpine/git&amp;#34; name: prepare env: - name: repo value: &amp;#34;https://github." />
+<meta name="twitter:title" content="multiple-container-in-one-pod - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="multiple-container-in-one-pod - 打工笔记" property="og:title">
+<meta content="在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。
+实例：
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: &amp;#34;alpine/git&amp;#34; name: prepare env: - name: repo value: &amp;#34;https://github." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-06-11 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "multiple-container-in-one-pod",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-06-11-multiple-container-in-one-pod\/",
+    "datePublished": "2022-06-11 00:00:00 \u002b0000 UTC",
+    "description": "在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：\n方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。\n实例：\napiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: \u0026#34;alpine\/git\u0026#34; name: prepare env: - name: repo value: \u0026#34;https:\/\/github.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">multiple-container-in-one-pod</h1>
+            <p class="post-meta"><time datetime='2022-06-11T00:00:00Z' itemprop="datePublished">June 11, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：</p>
+<h2 id="方案一">方案一</h2>
+<p>利用原生的<code>postStart</code>机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。</p>
+<p>实例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">creationTimestamp</span>: <span style="color:#66d9ef">null</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">run</span>: <span style="color:#ae81ff">my-pipline</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my-pipline</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">volumes</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+    <span style="color:#f92672">emptyDir</span>: {}
+  <span style="color:#f92672">initContainers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;alpine/git&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">prepare</span>
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">repo</span>
+      <span style="color:#f92672">value</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    <span style="color:#f92672">args</span>:
+    - <span style="color:#ae81ff">clone</span>
+    - --<span style="color:#ae81ff">single-branch</span>
+    - --<span style="color:#ae81ff">branch=main</span>
+    - --
+    - <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    - <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span> 
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;docker.io/linjinbao66/dt-maven:0.0.2&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my-pipline</span>
+    <span style="color:#f92672">workingDir</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">repo</span>
+      <span style="color:#f92672">value</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    <span style="color:#f92672">command</span>:
+    - <span style="color:#e6db74">&#34;/bin/sh&#34;</span>
+    - <span style="color:#e6db74">&#34;-c&#34;</span>
+    <span style="color:#f92672">args</span>: 
+    - <span style="color:#e6db74">&#34;mvn clean package; /bin/sidecar&#34;</span>
+    <span style="color:#f92672">lifecycle</span>:
+      <span style="color:#f92672">postStart</span>:
+        <span style="color:#f92672">exec</span>:
+          <span style="color:#f92672">command</span>:
+          - <span style="color:#e6db74">&#34;/bin/entrypoint&#34;</span>
+          - <span style="color:#e6db74">&#34;wait&#34;</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;busybox:latest&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">command</span>:
+    - <span style="color:#e6db74">&#34;/bin/sh&#34;</span>
+    - <span style="color:#e6db74">&#34;-c&#34;</span> 
+    <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;date; echo &#39;app container started&#39;&#34;</span>]
+  <span style="color:#f92672">dnsPolicy</span>: <span style="color:#ae81ff">ClusterFirst</span>
+  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+<span style="color:#f92672">status</span>: {}
+</code></pre></div><p>实例中的2个容器，my-pipline和busybox，busybox一定会在my-pipline的<code>entrypoint wait</code>信号给出返回后，才会创建。</p>
+<p>该方案的技术要点：</p>
+<ul>
+<li>需要重写前一容器的启动脚本，使得该容器启动时，执行完主程序命令后，启动sidecar一个端口，（或者监听文件），该端口给entrypoint探测用，entryoint是一只在探测，只有得到想要的结果后，才会放行。</li>
+<li>该方案需要前容器会保持Running状态，由于sidecar程序监听，所以整个Pod不会出现Completed状态，如果后一容器会执行完则退出，则会出现NotReady状态。</li>
+<li>该方案在前一容器sidecar程序执行前的日志无法实时获取，如果该阶段比较耗时，例如是mvn build命令，则不利于日志的实时推出</li>
+</ul>
+<h2 id="方案二">方案二</h2>
+<p>该方案利用多容器间共享存储卷实现</p>
+<p>实例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">creationTimestamp</span>: <span style="color:#66d9ef">null</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">run</span>: <span style="color:#ae81ff">my-pipline</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my-pipline</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">volumes</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+    <span style="color:#f92672">emptyDir</span>: {}
+  <span style="color:#f92672">initContainers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;alpine/git&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">prepare</span>
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">repo</span>
+      <span style="color:#f92672">value</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    <span style="color:#f92672">args</span>:
+    - <span style="color:#ae81ff">clone</span>
+    - --<span style="color:#ae81ff">single-branch</span>
+    - --<span style="color:#ae81ff">branch=main</span>
+    - --
+    - <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    - <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span> 
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;docker.io/linjinbao66/dt-maven:0.0.3&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">my-pipline</span>
+    <span style="color:#f92672">workingDir</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">repo</span>
+      <span style="color:#f92672">value</span>: <span style="color:#e6db74">&#34;https://github.com/linjinbao666/vrmanager.git&#34;</span>
+    <span style="color:#f92672">command</span>:
+    - <span style="color:#e6db74">&#34;/bin/sh&#34;</span>
+    - <span style="color:#e6db74">&#34;-c&#34;</span>
+    <span style="color:#f92672">args</span>: 
+    - <span style="color:#e6db74">&#34;mvn clean  package &amp;&amp; echo &#39;build finished&#39; &gt; /opt/workspace/mvn.log&#34;</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+  - <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;busybox:latest&#34;</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">command</span>:
+    - <span style="color:#e6db74">&#34;/bin/sh&#34;</span>
+    - <span style="color:#e6db74">&#34;-c&#34;</span> 
+    <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;while true; do sleep 10 &amp;&amp; [ -f &#39;/opt/workspace/mvn.log&#39; ] &amp;&amp; exit 0|| echo &#39;file not exists&#39; ;  done&#34;</span>]
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/workspace&#34;</span>
+  <span style="color:#f92672">dnsPolicy</span>: <span style="color:#ae81ff">ClusterFirst</span>
+  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+<span style="color:#f92672">status</span>: {}
+</code></pre></div><p>容器my-pipline将执行完的结果写入共享文件<code>/opt/workspace/mvn.log</code>，容器busybox检测共享文件是否存在，存在则执行自身命令，执行完退出。</p>
+<p>该方案可以同时查看2个容器的日志。</p>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://medium.com/@marko.luksa/delaying-application-start-until-sidecar-is-ready-2ec2d21a7b74">https://medium.com/@marko.luksa/delaying-application-start-until-sidecar-is-ready-2ec2d21a7b74</a></li>
+<li><a href="https://atbug.com/k8s-1.18-container-start-sequence-control/">https://atbug.com/k8s-1.18-container-start-sequence-control/</a></li>
+<li><a href="https://atbug.com/control-process-order-of-pod-containers/">https://atbug.com/control-process-order-of-pod-containers/</a></li>
+</ul>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">&laquo; mysql生成宽表脚本</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/">kubernetes二进制部署升级 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

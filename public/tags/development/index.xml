@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>development on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/development/</link>
+    <description>Recent content in development on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-29-redis-note/</link>
+      <pubDate>Mon, 29 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-29-redis-note/</guid>
+      <description>Redis笔记 key-value结构 Redis目前有5种数据类型，分别是：
+String（字符串） List（列表） Hash（字典） Set（集合） Sorted Set（有序集合） 不同的数据类型，有不同的命令方式
+String 操作
+set google http://www.google append google .com get google set visitors 0 incr visitors incr visitors get visitors incrby visitors 100 get visitors type google type visitors ttl google rename google google-site get google get google-site String 手册</description>
+    </item>
+    
+    <item>
+      <title>MYSQL笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-28-mysql-note/</link>
+      <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-28-mysql-note/</guid>
+      <description>MYSQL笔记 UUID select uuid(); 存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。 创建存储过程
+DELIMITER // CREATE PROCEDURE getAllUsers() BEGIN SELECT * FROM `user`; END // DELIMITER ; CALL getAllUsers(); 调用存储过程</description>
+    </item>
+    
+  </channel>
+</rss>

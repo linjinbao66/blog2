@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>iptables操作实例 - 打工笔记</title>
+<meta name="description" content="4个表:filter,mangle,nat,raw
+3个链:PREROUTING,PREROUTING,PREROUTING
+iptabls基本操作示例 查看规则 查看规则集
+iptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称
+修改规则 配置默认规则，不允许数据进入
+iptables -P INPUT DROP 允许转发
+iptables -P FORWARD ACCEPT 不允许数据流出"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-11-29-iptables/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="4个表:filter,mangle,nat,raw
+3个链:PREROUTING,PREROUTING,PREROUTING
+iptabls基本操作示例 查看规则 查看规则集
+iptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称
+修改规则 配置默认规则，不允许数据进入
+iptables -P INPUT DROP 允许转发
+iptables -P FORWARD ACCEPT 不允许数据流出" />
+<meta name="twitter:title" content="iptables操作实例 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="iptables操作实例 - 打工笔记" property="og:title">
+<meta content="4个表:filter,mangle,nat,raw
+3个链:PREROUTING,PREROUTING,PREROUTING
+iptabls基本操作示例 查看规则 查看规则集
+iptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称
+修改规则 配置默认规则，不允许数据进入
+iptables -P INPUT DROP 允许转发
+iptables -P FORWARD ACCEPT 不允许数据流出" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-11-29-iptables/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-11-29 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "iptables操作实例",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-11-29-iptables\/",
+    "datePublished": "2021-11-29 00:00:00 \u002b0000 UTC",
+    "description": "4个表:filter,mangle,nat,raw\n3个链:PREROUTING,PREROUTING,PREROUTING\niptabls基本操作示例 查看规则 查看规则集\niptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称\n修改规则 配置默认规则，不允许数据进入\niptables -P INPUT DROP 允许转发\niptables -P FORWARD ACCEPT 不允许数据流出",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">iptables操作实例</h1>
+            <p class="post-meta"><time datetime='2021-11-29T00:00:00Z' itemprop="datePublished">November 29, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>4个表:<code>filter</code>,<code>mangle</code>,<code>nat</code>,<code>raw</code></p>
+<p>3个链:<code>PREROUTING</code>,<code>PREROUTING</code>,<code>PREROUTING</code></p>
+<h2 id="iptabls基本操作示例">iptabls基本操作示例</h2>
+<h3 id="查看规则">查看规则</h3>
+<p>查看规则集</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables --list -n
+</code></pre></div><p>加一个-n以数字形式显示IP和端口，而不是默认的服务名称</p>
+<h3 id="修改规则">修改规则</h3>
+<p>配置默认规则，不允许数据进入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P INPUT DROP
+</code></pre></div><p>允许转发</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P FORWARD ACCEPT
+</code></pre></div><p>不允许数据流出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P OUTPUT DROP
+</code></pre></div><h3 id="添加规则">添加规则</h3>
+<p>允许源IP地址为192.168.0.0/24网段的包流进（包括所有的协议，这里也可以指定单个IP）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
+</code></pre></div><p>允许所有的IP到192.168.0.22的访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -d 192.168.0.22 -j ACCEPT
+</code></pre></div><p>开放本机80端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT
+</code></pre></div><p>开放本机的ICMP协议</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+</code></pre></div><h3 id="删除规则">删除规则</h3>
+<p>删除允许源地址进入的规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -D INPUT -s 192.168.0.21 -j ACCEPT
+</code></pre></div><p>iptables服务命令
+启动服务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/init.d/iptables start
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables start
+</code></pre></div><p>停止服务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/init.d/iptables stop
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables stop
+</code></pre></div><p>重启服务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/init.d/iptables restart
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables restart
+</code></pre></div><h3 id="空当前的所有规则和计数">空当前的所有规则和计数</h3>
+<p>清空所有的防火墙规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -F
+</code></pre></div><p>删除用户自定义的空链</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -X
+</code></pre></div><p>清空计数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -Z
+</code></pre></div><p>清空指定链 INPUT 上面的所有规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -F INPUT
+</code></pre></div><p>删除指定的链，这个链必须没有被其它任何规则引用，而且这条上必须没有任何规则。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -X INPUT
+</code></pre></div><p>如果没有指定链名，则会删除该表中所有非内置的链。</p>
+<p>把指定链，或者表中的所有链上的所有计数器清零。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -Z INPUT
+</code></pre></div><h3 id="保存规则">保存规则</h3>
+<p>保存设置,将规则保存在/etc/sysconfig/iptables文件里</p>
+<h4 id="方法1">方法1</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/init.d/iptables save
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables save
+</code></pre></div><p>iptables防火墙的配置文件存放于：/etc/sysconfig/iptables</p>
+<h4 id="方法2">方法2</h4>
+<p>修改/etc/sysconfig/iptables-config 将里面的IPTABLES_SAVE_ON_STOP=”no”, 这一句的”no”改为”yes”这样每次服务在停止之前会自动将现有的规则保存在 /etc/sysconfig/iptables 这个文件中去。</p>
+<h2 id="iptables实用案例">iptables实用案例</h2>
+<h3 id="iptables常见操作案例">iptables常见操作案例</h3>
+<p>开启Web服务端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT
+iptables -A OUTPUT -p tcp --sport <span style="color:#ae81ff">80</span> -j ACCEPT
+</code></pre></div><p>开启邮件服务的25、110端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">110</span> -j ACCEPT
+iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">25</span> -j ACCEPT
+</code></pre></div><p>开启FTP服务的21端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">21</span> -j ACCEPT
+iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">20</span> -j ACCEPT
+</code></pre></div><p>开启DNS服务的53端口,假设本机开启了DNS服务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">53</span> -j ACCEPT
+</code></pre></div><p>允许icmp服务进出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j ACCEP
+</code></pre></div><p>假设OUTPUT默认为DROP的话)</p>
+<p>允许loopback,不然会导致DNS无法正常关闭等问题，假设默认INPUT DROP，需要开放</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">IPTABLES -A INPUT -i lo -p all -j ACCEPT
+</code></pre></div><p>假设默认OUTPUT DROP，需要开放</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">IPTABLES -A OUTPUT -o lo -p all -j ACCEPT
+</code></pre></div><p>减少不安全的端口连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A OUTPUT -p tcp --sport <span style="color:#ae81ff">31337</span> -j DROP
+iptables -A OUTPUT -p tcp --dport <span style="color:#ae81ff">31337</span> -j DROP
+</code></pre></div><p>说明：有些特洛伊木马会扫描端口31337到31340(即黑客语言中的 elite 端口)上的服务。既然合法服务都不使用这些非标准端口来通信,阻塞这些端口能够有效地减少你的网络上可能被感染的机器和它们的远程主服务器进行独立通信的机会。此外，其他端口也一样,像:31335、27444、27665、20034 NetBus、9704、137-139（smb）,2049(NFS)端口也应被禁止。</p>
+<p>只允许192.168.0.3的机器进行SSH连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 192.168.0.3 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>如果允许或限制一段IP地址可用192.168.0.0/24表示192.168.0.1-255端的所有IP, 24表示子网掩码数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 192.168.0.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>注意：指定某个主机或者某个网段进行SSH连接，需要把iptables配置文件中的<code>-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT</code>删除，因为它表示所有地址都可以登陆.</p>
+<p>如果只允许除了192.168.0.3的主机外都能进行SSH连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s ! 192.168.0.3 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>开启转发功能,在做NAT网络配置时,FORWARD默认规则是DROP时,必须开启数据包转发功能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eh0 -j ACCEPT
+</code></pre></div><p>丢弃坏的TCP包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A FORWARD -p TCP ! --syn -m state --state NEW -j DROP
+</code></pre></div><p>处理IP碎片数量，防止DDOS攻击，允许每秒100个</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A FORWARD -f -m limit --limit 100/s --limit-burst <span style="color:#ae81ff">100</span> -j ACCEPT
+</code></pre></div><p>设置ICMP包过滤, 允许每秒1个包, 限制触发条件是10个包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A FORWARD -p icmp -m limit --limit 1/s --limit-burst <span style="color:#ae81ff">10</span> -j ACCEPT
+</code></pre></div><p>DROP非法连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT   -m state --state INVALID -j DROP
+iptables -A OUTPUT  -m state --state INVALID -j DROP
+iptables -A FORWARD -m state --state INVALID -j DROP
+</code></pre></div><p>允许所有已经建立的和相关的连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables-A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+/etc/rc.d/init.d/iptables save
+</code></pre></div><p>假设默认为ACCEPT,防止外网用内网IP欺骗</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -i eth0 -s 10.0.0.0/8 -j DROP
+iptables -t nat -A PREROUTING -i eth0 -s 172.16.0.0/12 -j DROP
+iptables -t nat -A PREROUTING -i eth0 -s 192.168.0.0/16 -j DROP
+</code></pre></div><p>禁止与211.101.46.253的所有连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -d 211.101.46.253 -j DROP
+</code></pre></div><p>禁用FTP(21)端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">21</span> -j DROP
+</code></pre></div><p>只禁用211.101.46.253地址的FTP连接,其他连接可以进行。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">21</span> -d 211.101.46.253 -j DROP
+</code></pre></div><p>查看iptable和行号</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -nL --line-number
+</code></pre></div><p>保存当前防火墙配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables save
+</code></pre></div><p>手动编辑防火墙策略</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vi /etc/sysconfig/iptables
+</code></pre></div><p>开放本地和Ping</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -i lo -j ACCEPT  
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+iptables -A INPUT -p icmp -j ACCEPT
+</code></pre></div><p>配置内网白名单</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
+iptables -A INPUT -s 172.16.0.0/12 -j ACCEPT
+iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
+</code></pre></div><p>配置外网白名单</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 180.168.36.198 -j ACCEPT 
+iptables -A INPUT -s 180.168.34.218 -j ACCEPT 
+iptables -A INPUT -s 222.73.202.251 -j ACCEPT
+</code></pre></div><p>控制端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT 
+iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>拒绝其它</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -j DROP
+iptables -A FORWARD -j DROP
+</code></pre></div><p>开放出口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A OUTPUT -j ACCEPT
+</code></pre></div><p>允许本地回环接口(即运行本机访问本机)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+</code></pre></div><p>允许已建立的或相关连的通行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</code></pre></div><p>允许所有本机向外的访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A OUTPUT -j ACCEPT
+</code></pre></div><p>允许访问22端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>允许访问80端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT
+</code></pre></div><p>允许ftp服务的21端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">21</span> -j ACCEPT    <span style="color:#75715e">#允许FTP服务的21端口</span>
+iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">20</span> -j ACCEPT    <span style="color:#75715e">#允许FTP服务的20端口</span>
+iptables -A INPUT -j reject       <span style="color:#75715e">#禁止其他未允许的规则访问</span>
+iptables -A FORWARD -j REJECT     <span style="color:#75715e">#禁止其他未允许的规则访问</span>
+</code></pre></div><h3 id="屏蔽ip">屏蔽IP</h3>
+<p>屏蔽单个IP的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 123.45.6.7 -j DROP
+</code></pre></div><p>封整个段即从123.0.0.1到123.255.255.254的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 123.0.0.0/8 -j DROP
+</code></pre></div><p>封IP段即从123.45.0.1到123.45.255.254的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 124.45.0.0/16 -j DROP
+</code></pre></div><p>封IP段即从123.45.6.1到123.45.6.254的命令是</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 123.45.6.0/24 -j DROP
+</code></pre></div><p>查看已添加的iptables规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -n -v
+</code></pre></div><h3 id="删除已添加的iptables规则">删除已添加的iptables规则</h3>
+<p>#将所有iptables以序号标记显示，执行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -n --line-numbers
+</code></pre></div><p>比如要删除INPUT里序号为8的规则，执行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -D INPUT <span style="color:#ae81ff">8</span>
+</code></pre></div><p>配置允许ssh端口连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>22为你的ssh端口， -s 192.168.1.0/24表示允许这个网段的机器来连接，其它网段的ip地址是登陆不了你的机器的。 -j ACCEPT表示接受这样的请求</p>
+<p>允许本地回环地址可以正常使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -i lo -j ACCEPT
+</code></pre></div><p>本地回环地址就是那个127.0.0.1，是本机上使用的,它进与出都设置为允许</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A OUTPUT -o lo -j ACCEPT
+</code></pre></div><h3 id="设置默认的规则">设置默认的规则</h3>
+<p>配置默认的不让进</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P INPUT DROP
+</code></pre></div><p>默认的不允许转发</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P FORWARD DROP
+</code></pre></div><p>默认的可以出去</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -P OUTPUT ACCEPT
+</code></pre></div><h3 id="配置白名单">配置白名单</h3>
+<p>允许机房内网机器可以访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p all -s 192.168.1.0/24 -j ACCEPT
+</code></pre></div><p>允许机房内网机器可以访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p all -s 192.168.140.0/24 -j ACCEPT
+</code></pre></div><p>允许183.121.3.7访问本机的3380端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp -s 183.121.3.7 --dport <span style="color:#ae81ff">3380</span> -j ACCEPT
+</code></pre></div><h3 id="开启相应的服务端口">开启相应的服务端口</h3>
+<p>开启80端口，因为web对外都是这个端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT
+</code></pre></div><p>允许被ping</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p icmp --icmp-type <span style="color:#ae81ff">8</span> -j ACCEPT
+</code></pre></div><p>已经建立的连接得让它进来</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</code></pre></div><p>保存规则到配置文件中，任何改动之前先备份，请保持这一优秀的习惯</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bak
+</code></pre></div><p>iptables-save &gt; /etc/sysconfig/iptables</p>
+<p>检查结果：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat /etc/sysconfig/iptables
+</code></pre></div><p>四个表名raw，nat，filter，mangle
+五个规则链名 INPUT、OUTPUT、FORWARD、PREROUTING、POSTROUTING
+filter表包含INPUT、OUTPUT、FORWARD三个规则链</p>
+<p>规则带编号</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L INPUT
+</code></pre></div><p>查看，这个列表看起来更详细</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -nv
+</code></pre></div><p>添加一条规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 192.168.1.5 -j DROP
+</code></pre></div><p>将所有iptables以序号标记显示，执行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -n --line-numbers
+</code></pre></div><p>比如要删除INPUT里序号为8的规则，执行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -D INPUT <span style="color:#ae81ff">8</span>
+</code></pre></div><h3 id="开放指定的端口">开放指定的端口</h3>
+<p>允许本地回环接口(即运行本机访问本机)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+</code></pre></div><p>允许已建立的或相关连的通行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</code></pre></div><p>允许所有本机向外的访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A OUTPUT -j ACCEPT
+</code></pre></div><p>允许访问22端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>允许访问80端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">80</span> -j ACCEPT
+</code></pre></div><p>允许ftp服务的21端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">21</span> -j ACCEPT
+</code></pre></div><p>允许FTP服务的20端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">20</span> -j ACCEPT
+</code></pre></div><p>禁止其他未允许的规则访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -j reject
+</code></pre></div><p>不允许转发</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A FORWARD -j REJECT
+</code></pre></div><p>屏蔽恶意主机(比如，192.168.0.8)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -A INPUT -p tcp -m tcp -s 192.168.0.8 -j DROP
+</code></pre></div><p>屏蔽单个IP的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 123.45.6.7 -j DROP
+</code></pre></div><p>封整个段即从123.0.0.1到123.255.255.254的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 123.0.0.0/8 -j DROP
+</code></pre></div><p>封IP段即从123.45.0.1到123.45.255.254的命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -I INPUT -s 124.45.0.0/16 -j DROP
+</code></pre></div><p>查看已添加的规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -n -v
+</code></pre></div><h3 id="nat网络转发规则">NAT网络转发规则</h3>
+<p>内网所有IP:172.16.93.0/24转为10.0.0.1</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A POSTROUTING -s 172.16.93.0/24  -j SNAT --to-source 10.0.0.1
+</code></pre></div><p>内网IP192.168.1.100转为10.0.0.1</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A POSTROUTING -s 192.168.1.100  -j SNAT --to-source 10.0.0.1
+</code></pre></div><p>假设eth0的IP经常变化,做NAT的方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A POSTROUTING -s 10.8.0.0/255.255.255.0 -o eth0 -j MASQUERADE
+</code></pre></div><p>ADSL拔号,IP经常变化,做NAT的方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A POSTROUTING -j MASQUERADE -o pppXXX
+</code></pre></div><p>公网210.14.67.7让内网192.168.188.0/24上网</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A POSTROUTING -s 192.168.188.0/24 -j SNAT --to-source 210.14.67.127
+</code></pre></div><p>端口映射,本机的 2222 端口映射到内网 虚拟机的22 端口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -d 210.14.67.127 -p tcp --dport <span style="color:#ae81ff">2222</span>  -j DNAT --to-dest 192.168.188.115:22
+</code></pre></div><p>配置NAT表防火墙,查看本机关于NAT的设置情况</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -L
+</code></pre></div><p>-t 参数指定，必须是 raw， nat，filter，mangle 中的一个</p>
+<p>带行号查看NAT表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -L -t nat  --line-numbers
+</code></pre></div><p>删除NAT表POSTROUTING链第一条规则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -D POSTROUTING <span style="color:#ae81ff">1</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-02-16-node-note/">&laquo; node节点安装笔记</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-10-28-kubeconfig/">kubeconfig签发 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

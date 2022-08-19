@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>pod挂载configmap - 打工笔记</title>
+<meta name="description" content="nginx.yaml
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx resources: {} env: - name: option # name of the env variable valueFrom: configMapKeyRef: name: options # name of config map key: var5 # name of the entity in config map dnsPolicy: ClusterFirst restartPolicy: Never status: {} options."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-03-31-pod-configmap/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="nginx.yaml
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx resources: {} env: - name: option # name of the env variable valueFrom: configMapKeyRef: name: options # name of config map key: var5 # name of the entity in config map dnsPolicy: ClusterFirst restartPolicy: Never status: {} options." />
+<meta name="twitter:title" content="pod挂载configmap - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="pod挂载configmap - 打工笔记" property="og:title">
+<meta content="nginx.yaml
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx resources: {} env: - name: option # name of the env variable valueFrom: configMapKeyRef: name: options # name of config map key: var5 # name of the entity in config map dnsPolicy: ClusterFirst restartPolicy: Never status: {} options." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-03-31-pod-configmap/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-03-31 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "pod挂载configmap",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-03-31-pod-configmap\/",
+    "datePublished": "2022-03-31 00:00:00 \u002b0000 UTC",
+    "description": "nginx.yaml\napiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx resources: {} env: - name: option # name of the env variable valueFrom: configMapKeyRef: name: options # name of config map key: var5 # name of the entity in config map dnsPolicy: ClusterFirst restartPolicy: Never status: {} options.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">pod挂载configmap</h1>
+            <p class="post-meta"><time datetime='2022-03-31T00:00:00Z' itemprop="datePublished">March 31, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>nginx.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">creationTimestamp</span>: <span style="color:#66d9ef">null</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">run</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">IfNotPresent</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">resources</span>: {}
+    <span style="color:#f92672">env</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">option</span> <span style="color:#75715e"># name of the env variable</span>
+      <span style="color:#f92672">valueFrom</span>:
+        <span style="color:#f92672">configMapKeyRef</span>:
+          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">options</span> <span style="color:#75715e"># name of config map</span>
+          <span style="color:#f92672">key</span>: <span style="color:#ae81ff">var5</span> <span style="color:#75715e"># name of the entity in config map</span>
+  <span style="color:#f92672">dnsPolicy</span>: <span style="color:#ae81ff">ClusterFirst</span>
+  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+<span style="color:#f92672">status</span>: {}
+</code></pre></div><p>options.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl create configmap options --from-literal<span style="color:#f92672">=</span>var5<span style="color:#f92672">=</span>val5 
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-04-03-network-policy/">&laquo; network-policy</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-03-13-mysql-privileges/">mysql权限高级 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>hive on spark 测试 - 打工笔记</title>
+<meta name="description" content="hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2020/2020-01-09-hive/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒" />
+<meta name="twitter:title" content="hive on spark 测试 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="hive on spark 测试 - 打工笔记" property="og:title">
+<meta content="hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2020/2020-01-09-hive/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2020-01-09 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "hive on spark 测试",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2020\/2020-01-09-hive\/",
+    "datePublished": "2020-01-09 00:00:00 \u002b0000 UTC",
+    "description": "hive on spark 测试 准备工作： 建库：\ncreate database db2; 建表：\nsql语句：\ncreate table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, \u0026#39;linjb\u0026#39;); 执行结果：1秒",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">hive on spark 测试</h1>
+            <p class="post-meta"><time datetime='2020-01-09T00:00:00Z' itemprop="datePublished">January 9, 2020</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="hive-on-spark-测试">hive on spark 测试</h2>
+<p>准备工作： 建库：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> db2;
+</code></pre></div><p>建表：</p>
+<p>sql语句：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> tb1(id int , name string);
+</code></pre></div><h3 id="测试1插入单条数据">测试1：插入单条数据</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> tb1(id, name) <span style="color:#66d9ef">values</span>(<span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;linjb&#39;</span>);
+</code></pre></div><p>执行结果：1秒</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Status: Running (Hive on Spark job[1])
+Job Progress Format
+CurrentTime StageId_StageAttemptId: SucceededTasksCount(+RunningTasksCount-FailedTasksCount)/TotalTasksCount [StageCost]
+--------------------------------------------------------------------------------------
+          STAGES   ATTEMPT        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED
+--------------------------------------------------------------------------------------
+Stage-1 ........         0      FINISHED      1          1        0        0       0
+--------------------------------------------------------------------------------------
+STAGES: 01/01    [==========================&gt;&gt;] 100%  ELAPSED TIME: 1.00 s
+--------------------------------------------------------------------------------------
+Status: Finished successfully in 1.00 seconds
+Loading data to table db2.tb1
+</code></pre></div><h3 id="测试2修改表结构">测试2：修改表结构</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> tb1 change id userid int ;
+</code></pre></div><p>不经过spark</p>
+<h3 id="测试3从物理机文件导入数据">测试3：从物理机文件导入数据</h3>
+<p>data.txt</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">201,dd,3,1,guangzhou
+123,aa,2,0,hangzhou
+245,bb,3,1,beijing
+789,cc,2,0,shanghai
+201,dd,3,1,guangzhou
+123,aa,2,0,hangzhou
+245,bb,3,1,beijing
+789,cc,2,0,shanghai
+201,dd,3,1,guangzhou
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">---建表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> tb4(id int, name string, age int, tel string, city string) <span style="color:#66d9ef">row</span> format delimited fields terminated <span style="color:#66d9ef">by</span> <span style="color:#e6db74">&#39;,&#39;</span> stored <span style="color:#66d9ef">as</span> textfile;
+<span style="color:#75715e">---导入数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">load</span> <span style="color:#66d9ef">data</span> <span style="color:#66d9ef">local</span> inpath <span style="color:#e6db74">&#39;/root/data.txt&#39;</span> <span style="color:#66d9ef">into</span> <span style="color:#66d9ef">table</span> tb2;
+<span style="color:#75715e">---从hdfs导入
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">load</span> <span style="color:#66d9ef">data</span> inpath <span style="color:#e6db74">&#39;/user/hive/warehouse/db2.db/data.txt&#39;</span> <span style="color:#66d9ef">into</span> <span style="color:#66d9ef">table</span> tb2;
+</code></pre></div><p>文件大小：1.9G 执行耗时：11秒</p>
+<h3 id="测试4统计查询">测试4：统计查询</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> tb4;
+</code></pre></div><p>使用mr引擎：无法执行出结果，等待507s后手动取消任务， 使用spark引擎：35秒执行结束</p>
+<h2 id="总结使用spark引擎替换mr引擎可以很大提升sql语句执行效率">总结：使用spark引擎替换mr引擎可以很大提升sql语句执行效率</h2>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2020/2020-03-09-linux-memory-free/">&laquo; 服务器内存优化</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/2020-01-08-spark/">spark on hive 踩坑 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

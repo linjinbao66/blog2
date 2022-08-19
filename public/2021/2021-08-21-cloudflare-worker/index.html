@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>cloudflare worker使用 - 打工笔记</title>
+<meta name="description" content="部署ariang到cloudflare workers
+mkdir -p ariang/public cd ariang/public wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f AriaNg-1.1.7.zip cd .. wrangler init --site ariang wrangler config wrangler publish wrangler."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-08-21-cloudflare-worker/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="部署ariang到cloudflare workers
+mkdir -p ariang/public cd ariang/public wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f AriaNg-1.1.7.zip cd .. wrangler init --site ariang wrangler config wrangler publish wrangler." />
+<meta name="twitter:title" content="cloudflare worker使用 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="cloudflare worker使用 - 打工笔记" property="og:title">
+<meta content="部署ariang到cloudflare workers
+mkdir -p ariang/public cd ariang/public wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f AriaNg-1.1.7.zip cd .. wrangler init --site ariang wrangler config wrangler publish wrangler." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-08-21-cloudflare-worker/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-08-21 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "cloudflare worker使用",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-08-21-cloudflare-worker\/",
+    "datePublished": "2021-08-21 00:00:00 \u002b0000 UTC",
+    "description": "部署ariang到cloudflare workers\nmkdir -p ariang\/public cd ariang\/public wget https:\/\/github.com\/mayswind\/AriaNg\/releases\/download\/1.1.7\/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f AriaNg-1.1.7.zip cd .. wrangler init --site ariang wrangler config wrangler publish wrangler.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">cloudflare worker使用</h1>
+            <p class="post-meta"><time datetime='2021-08-21T00:00:00Z' itemprop="datePublished">August 21, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>部署ariang到cloudflare workers</p>
+<pre><code class="language-code" data-lang="code">mkdir -p ariang/public
+cd ariang/public
+wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip
+unzip AriaNg-1.1.7.zip
+rm -f AriaNg-1.1.7.zip
+cd ..
+wrangler init --site ariang
+
+wrangler config
+wrangler publish
+</code></pre><p>wrangler.toml配置如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;ariang&#34;</span>
+<span style="color:#a6e22e">type</span> = <span style="color:#e6db74">&#34;webpack&#34;</span>
+<span style="color:#a6e22e">account_id</span> = <span style="color:#e6db74">&#34;1e752e20ad8ac6b74a275b64f272ef76&#34;</span>
+<span style="color:#a6e22e">route</span> = <span style="color:#e6db74">&#39;ariang.linjinbao.tk/*&#39;</span>
+<span style="color:#a6e22e">zone_id</span> = <span style="color:#e6db74">&#39;02b23e0f77225f085046a173e2402a25&#39;</span>
+<span style="color:#a6e22e">usage_model</span> = <span style="color:#e6db74">&#39;&#39;</span>
+<span style="color:#a6e22e">compatibility_flags</span> = []
+<span style="color:#a6e22e">workers_dev</span> = <span style="color:#66d9ef">true</span>
+<span style="color:#a6e22e">site</span> = {<span style="color:#a6e22e">bucket</span> = <span style="color:#e6db74">&#34;./public&#34;</span>,<span style="color:#a6e22e">entry</span><span style="color:#960050;background-color:#1e0010">-</span><span style="color:#a6e22e">point</span> = <span style="color:#e6db74">&#34;workers-site&#34;</span>}
+</code></pre></div><p><code>public</code>目录是静态文件目录</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-10-28-kubeconfig/">&laquo; kubeconfig签发</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-08-20-golang-build/">golang交叉编译 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

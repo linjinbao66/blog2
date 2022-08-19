@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gitlab on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/gitlab/</link>
+    <description>Recent content in gitlab on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个gitlab ci文件</title>
+      <link>https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/</link>
+      <pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/</guid>
+      <description>一个golang项目典型的gitlab ci文件
+image: golang:latest before_script: - export GOPROXY=https://goproxy.io,direct stages: - build - release - note build: stage: build script: - go build -o dt-release artifacts: paths: - .</description>
+    </item>
+    
+  </channel>
+</rss>

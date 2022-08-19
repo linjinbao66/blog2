@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MySQL 分库分表-ShardingSphere使用 - 打工笔记</title>
+<meta name="description" content="MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-11-17-shardingsphere/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1." />
+<meta name="twitter:title" content="MySQL 分库分表-ShardingSphere使用 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="MySQL 分库分表-ShardingSphere使用 - 打工笔记" property="og:title">
+<meta content="MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-11-17-shardingsphere/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-11-17 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "MySQL 分库分表-ShardingSphere使用",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-11-17-shardingsphere\/",
+    "datePublished": "2019-11-17 00:00:00 \u002b0000 UTC",
+    "description": "MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  \u0026lt;dependencies\u0026gt; \u0026lt;!-- 主要 --\u0026gt; \u0026lt;dependency\u0026gt; \u0026lt;groupId\u0026gt;org.apache.shardingsphere\u0026lt;\/groupId\u0026gt; \u0026lt;artifactId\u0026gt;sharding-jdbc-core\u0026lt;\/artifactId\u0026gt; \u0026lt;version\u0026gt;4.0.0-RC2\u0026lt;\/version\u0026gt; \u0026lt;\/dependency\u0026gt; \u0026lt;dependency\u0026gt; \u0026lt;groupId\u0026gt;junit\u0026lt;\/groupId\u0026gt; \u0026lt;artifactId\u0026gt;junit\u0026lt;\/artifactId\u0026gt; \u0026lt;version\u0026gt;4.12\u0026lt;\/version\u0026gt; \u0026lt;\/dependency\u0026gt; \u0026lt;dependency\u0026gt; \u0026lt;groupId\u0026gt;commons-dbcp\u0026lt;\/groupId\u0026gt; \u0026lt;artifactId\u0026gt;commons-dbcp\u0026lt;\/artifactId\u0026gt; \u0026lt;version\u0026gt;1.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">MySQL 分库分表-ShardingSphere使用</h1>
+            <p class="post-meta"><time datetime='2019-11-17T00:00:00Z' itemprop="datePublished">November 17, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="mysql-分库分表-shardingsphere使用">MySQL 分库分表-ShardingSphere使用</h2>
+<h2 id="分库和分表的实现-java工程版">分库和分表的实现-java工程版</h2>
+<ol>
+<li>依赖项</li>
+</ol>
+<pre><code class="language-markup" data-lang="markup">&lt;dependencies&gt;
+        &lt;!-- 主要 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.shardingsphere&lt;/groupId&gt;
+            &lt;artifactId&gt;sharding-jdbc-core&lt;/artifactId&gt;
+            &lt;version&gt;4.0.0-RC2&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;commons-dbcp&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;
+            &lt;version&gt;1.4&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;5.1.41&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.netty&lt;/groupId&gt;
+            &lt;artifactId&gt;netty&lt;/artifactId&gt;
+            &lt;version&gt;3.7.0.Final&lt;/version&gt;
+        &lt;/dependency&gt;
+
+    &lt;/dependencies&gt;
+</code></pre><ol>
+<li>示例代码</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShardingSphereDemo</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test01</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> SQLException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 配置真实数据源
+</span><span style="color:#75715e"></span>        Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> DataSource<span style="color:#f92672">&gt;</span> dataSourceMap <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> DataSource<span style="color:#f92672">&gt;();</span>
+
+        <span style="color:#75715e">// 配置第一个数据源
+</span><span style="color:#75715e"></span>        BasicDataSource dataSource1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BasicDataSource<span style="color:#f92672">();</span>
+        dataSource1<span style="color:#f92672">.</span><span style="color:#a6e22e">setDriverClassName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">);</span>
+        dataSource1<span style="color:#f92672">.</span><span style="color:#a6e22e">setUrl</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/test&#34;</span><span style="color:#f92672">);</span>
+        dataSource1<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">);</span>
+        dataSource1<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Gepoint&#34;</span><span style="color:#f92672">);</span>
+        dataSourceMap<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;test&#34;</span><span style="color:#f92672">,</span> dataSource1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">// 配置表规则
+</span><span style="color:#75715e"></span>        TableRuleConfiguration orderTableRuleConfig <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TableRuleConfiguration<span style="color:#f92672">(</span>
+                <span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;test.user_${1..2}&#34;</span><span style="color:#f92672">);</span>
+
+        orderTableRuleConfig<span style="color:#f92672">.</span><span style="color:#a6e22e">setTableShardingStrategyConfig</span><span style="color:#f92672">(</span>
+                <span style="color:#66d9ef">new</span> InlineShardingStrategyConfiguration<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;user_${id % 2}&#34;</span><span style="color:#f92672">));</span>
+        orderTableRuleConfig<span style="color:#f92672">.</span><span style="color:#a6e22e">setKeyGeneratorConfig</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> KeyGeneratorConfiguration<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SNOWFLAKE&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">// 配置分片规则
+</span><span style="color:#75715e"></span>        ShardingRuleConfiguration shardingRuleConfig <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ShardingRuleConfiguration<span style="color:#f92672">();</span>
+        shardingRuleConfig<span style="color:#f92672">.</span><span style="color:#a6e22e">getTableRuleConfigs</span><span style="color:#f92672">().</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>orderTableRuleConfig<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">// 省略配置order_item表规则...
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">// 获取数据源对象
+</span><span style="color:#75715e"></span>        DataSource dataSource <span style="color:#f92672">=</span> ShardingDataSourceFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">createDataSource</span><span style="color:#f92672">(</span>dataSourceMap<span style="color:#f92672">,</span> shardingRuleConfig<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> Properties<span style="color:#f92672">());</span>
+
+
+        Connection connection <span style="color:#f92672">=</span> dataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>connection<span style="color:#f92672">);</span>
+
+        Statement statement <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">createStatement</span><span style="color:#f92672">();</span>
+        ResultSet resultSet <span style="color:#f92672">=</span> statement<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;select * from  user&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            String username <span style="color:#f92672">=</span> resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username&#34;</span><span style="color:#f92672">);</span>
+            String passwd <span style="color:#f92672">=</span> resultSet<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;passwd&#34;</span><span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username=&#34;</span> <span style="color:#f92672">+</span> username <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;passwd=&#34;</span> <span style="color:#f92672">+</span> passwd<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        statement<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;insert  into  user(username, passwd) values (&#39;林金保2&#39;, &#39;Gepoint&#39;)&#34;</span><span style="color:#f92672">);</span>
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="实现-spring-容器管理代码实现">实现-Spring 容器管理代码实现</h2>
+<ol>
+<li>
+<p>xml配置</p>
+<p>```xml &lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;UTF-8&rdquo;?&gt;</p>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">2. ShardingDemo.java
+```java
+public class ShardingDemo {
+
+    ApplicationContext context = new ClassPathXmlApplicationContext(&#34;applicationcontext.xml&#34;);
+
+    @Test
+    public void test01() throws SQLException {
+        Map&lt;String, DataSource&gt; dataSourceMap = new HashMap&lt;String, DataSource&gt;();
+        DataSource dataSource1 = context.getBean(&#34;comboPooledDataSource&#34;,ComboPooledDataSource.class);
+        dataSourceMap.put(&#34;test&#34;, dataSource1);
+        //容器中取出
+        TableRuleConfiguration tableRuleConfiguration =  context.getBean(TableRuleConfiguration.class);
+        ShardingRuleConfiguration shardingRuleConfiguration = context.getBean(ShardingRuleConfiguration.class);
+        shardingRuleConfiguration.getTableRuleConfigs().add(tableRuleConfiguration);
+
+        DataSource dataSource = ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfiguration, new Properties());
+        Connection connection = dataSource.getConnection();
+        System.out.println(connection);
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(&#34;select * from  user&#34;);
+        while (resultSet.next()) {
+            String username = resultSet.getString(&#34;username&#34;);
+            String passwd = resultSet.getString(&#34;passwd&#34;);
+            System.out.println(&#34;username=&#34; + username + &#34;\t&#34; + &#34;passwd=&#34; + passwd);
+        }
+        statement.execute(&#34;insert  into  user(username, passwd) values (&#39;林金保5&#39;, &#39;Gepoint&#39;)&#34;);
+    }
+
+}
+</code></pre></div><h2 id="步骤解释">步骤解释</h2>
+<ol>
+<li>配置真实数据源dataSourceMap，在此处允许配置多个数据库，实现分库</li>
+<li>配置库规则和表规则，ShardingSphere会根据此规则解析，生成真实sql语句</li>
+<li>注意此处有虚拟表名的概念，即使用<code>user</code>表加上上面的表规则表示<code>user_1</code>和<code>user_2</code>两张表，查询语句只需要写<code>user</code>即可</li>
+<li><code>insert</code>数据时，需要数据库<code>user_1</code>和<code>user_2</code>满足<strong>主键不重复</strong>原则，此处使用Shard ingSphere提供的<code>SNOWFLAKE</code>实现</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>核心思想：在数据库和java代码之间多了一层，用户写的sql是逻辑sql，由shardingsphere根据配置方式，生成真实sql，并操作数据库连接执行，隔绝了程序员与真实数据库之间的直接连接</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-11-23-mysql-backup-cron/">&laquo; mysql 定时备份</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-11-16-vnstat/">Linux流量检测工具-vnstat使用 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>windows共享开启 - 打工笔记</title>
+<meta name="description" content="Windows共享命令  net share  C:\Users\linjinbao666&amp;gt;net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。  net share blog=E:\amrom  PS E:\&amp;gt; net share blog=E:\amrom blog 共享成功。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- IPC$ 远程 IPC C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 ADMIN$ C:\Windows 远程管理 blog E:\amrom 命令成功完成。  删除共享目录  PS E:\&amp;gt; net share blog /del blog 已经删除。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。 net use使用学习（重要） "/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-15-windows-open-share/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Windows共享命令  net share  C:\Users\linjinbao666&amp;gt;net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。  net share blog=E:\amrom  PS E:\&amp;gt; net share blog=E:\amrom blog 共享成功。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- IPC$ 远程 IPC C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 ADMIN$ C:\Windows 远程管理 blog E:\amrom 命令成功完成。  删除共享目录  PS E:\&amp;gt; net share blog /del blog 已经删除。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。 net use使用学习（重要） " />
+<meta name="twitter:title" content="windows共享开启 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="windows共享开启 - 打工笔记" property="og:title">
+<meta content="Windows共享命令  net share  C:\Users\linjinbao666&amp;gt;net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。  net share blog=E:\amrom  PS E:\&amp;gt; net share blog=E:\amrom blog 共享成功。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- IPC$ 远程 IPC C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 ADMIN$ C:\Windows 远程管理 blog E:\amrom 命令成功完成。  删除共享目录  PS E:\&amp;gt; net share blog /del blog 已经删除。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。 net use使用学习（重要） " property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-15-windows-open-share/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-15 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "windows共享开启",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-15-windows-open-share\/",
+    "datePublished": "2019-10-15 00:00:00 \u002b0000 UTC",
+    "description": "Windows共享命令  net share  C:\\Users\\linjinbao666\u0026gt;net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\\ 默认共享 D$ D:\\ 默认共享 E$ E:\\ 默认共享 F$ F:\\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\\Windows 远程管理 命令成功完成。  net share blog=E:\\amrom  PS E:\\\u0026gt; net share blog=E:\\amrom blog 共享成功。 PS E:\\\u0026gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- IPC$ 远程 IPC C$ C:\\ 默认共享 D$ D:\\ 默认共享 E$ E:\\ 默认共享 F$ F:\\ 默认共享 ADMIN$ C:\\Windows 远程管理 blog E:\\amrom 命令成功完成。  删除共享目录  PS E:\\\u0026gt; net share blog \/del blog 已经删除。 PS E:\\\u0026gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\\ 默认共享 D$ D:\\ 默认共享 E$ E:\\ 默认共享 F$ F:\\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\\Windows 远程管理 命令成功完成。 net use使用学习（重要） ",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">windows共享开启</h1>
+            <p class="post-meta"><time datetime='2019-10-15T00:00:00Z' itemprop="datePublished">October 15, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="windows共享命令">Windows共享命令</h2>
+<ol>
+<li><code>net share</code></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">C:\Users\linjinbao666&gt;net share
+
+共享名       资源                            注解
+
+-------------------------------------------------------------------------------
+C$           C:\                             默认共享
+D$           D:\                             默认共享
+E$           E:\                             默认共享
+F$           F:\                             默认共享
+IPC$                                         远程 IPC
+ADMIN$       C:\Windows                      远程管理
+命令成功完成。
+</code></pre></div><ol>
+<li>net share blog=E:\amrom</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">PS E:\&gt; net share blog=E:\amrom
+blog 共享成功。
+
+PS E:\&gt; net share
+
+共享名       资源                            注解
+
+-------------------------------------------------------------------------------
+IPC$                                         远程 IPC
+C$           C:\                             默认共享
+D$           D:\                             默认共享
+E$           E:\                             默认共享
+F$           F:\                             默认共享
+ADMIN$       C:\Windows                      远程管理
+blog         E:\amrom
+命令成功完成。
+</code></pre></div><ol>
+<li>删除共享目录</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">PS E:\&gt; net share blog /del
+blog 已经删除。
+
+PS E:\&gt; net share
+
+共享名       资源                            注解
+
+-------------------------------------------------------------------------------
+C$           C:\                             默认共享
+D$           D:\                             默认共享
+E$           E:\                             默认共享
+F$           F:\                             默认共享
+IPC$                                         远程 IPC
+ADMIN$       C:\Windows                      远程管理
+命令成功完成。
+</code></pre></div><h2 id="net-use使用学习重要">net use使用学习（重要）</h2>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-15-base64-usage/">&laquo; base64转码</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-15-view-log-blog/">博客加入访问统计 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

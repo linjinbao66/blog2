@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>笔记 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 笔记 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JAVA并发编程实战-笔记</title>
+      <link>https://amrom66.github.io/2019/2019-10-14-java-note/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-14-java-note/</guid>
+      <description>JAVA并发编程实战-笔记 Volatile变量
+ 同步的弱形式 该变量不会被缓存 不加锁 不会导致阻塞 可以修饰变量，不能修饰方法 只能保证可见性，不能保证原子性  线程封闭 访问共享的、可变的数据要求使用同步，一个可以避免同步的方法就是不共享数据。
+  Ad-hoc线程限制
+  栈限制
+  ThreadLocal</description>
+    </item>
+    
+    <item>
+      <title>React学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-28-react/</link>
+      <pubDate>Sat, 28 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-28-react/</guid>
+      <description>React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。</description>
+    </item>
+    
+    <item>
+      <title>Linux笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-13-linux-note/</link>
+      <pubDate>Fri, 13 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-13-linux-note/</guid>
+      <description>笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n +10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp.</description>
+    </item>
+    
+  </channel>
+</rss>

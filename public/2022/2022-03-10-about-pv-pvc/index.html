@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>关于pv pvc的新认识 - 打工笔记</title>
+<meta name="description" content="新认识
+ hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io/hostname: i-6fns0nua containers: - image: busybox name: app volumeMounts: - mountPath: /logs name: shared-dir args: - /bin/sh - -c - echo hostpath &amp;gt;&amp;gt; /logs/app."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="新认识
+ hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io/hostname: i-6fns0nua containers: - image: busybox name: app volumeMounts: - mountPath: /logs name: shared-dir args: - /bin/sh - -c - echo hostpath &amp;gt;&amp;gt; /logs/app." />
+<meta name="twitter:title" content="关于pv pvc的新认识 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="关于pv pvc的新认识 - 打工笔记" property="og:title">
+<meta content="新认识
+ hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io/hostname: i-6fns0nua containers: - image: busybox name: app volumeMounts: - mountPath: /logs name: shared-dir args: - /bin/sh - -c - echo hostpath &amp;gt;&amp;gt; /logs/app." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-03-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "关于pv pvc的新认识",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-03-10-about-pv-pvc\/",
+    "datePublished": "2022-03-10 00:00:00 \u002b0000 UTC",
+    "description": "新认识\n hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io\/hostname: i-6fns0nua containers: - image: busybox name: app volumeMounts: - mountPath: \/logs name: shared-dir args: - \/bin\/sh - -c - echo hostpath \u0026gt;\u0026gt; \/logs\/app.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">关于pv pvc的新认识</h1>
+            <p class="post-meta"><time datetime='2022-03-10T00:00:00Z' itemprop="datePublished">March 10, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>新认识</p>
+<ol>
+<li>hostpath可以直接使用</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-hostpath</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">nodeSelector</span>:
+    <span style="color:#f92672">kubernetes.io/hostname</span>: <span style="color:#ae81ff">i-6fns0nua</span>
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">app</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/logs</span>
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-dir</span>
+    <span style="color:#f92672">args</span>:
+    - <span style="color:#ae81ff">/bin/sh</span>
+    - -<span style="color:#ae81ff">c</span>
+    - <span style="color:#ae81ff">echo hostpath &gt;&gt; /logs/app.log; sleep 60000</span>
+  <span style="color:#f92672">volumes</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-dir</span>
+    <span style="color:#f92672">hostPath</span>:
+      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/data/logs</span>
+</code></pre></div><ol>
+<li>hostpath可以作为pv后端使用</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">storage.k8s.io/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">StorageClass</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">local</span>
+<span style="color:#f92672">provisioner</span>: <span style="color:#ae81ff">kubernetes.io/no-provisioner</span>
+<span style="color:#f92672">volumeBindingMode</span>: <span style="color:#ae81ff">WaitForFirstConsumer</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolume</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">local1</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">capacity</span>:
+    <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">30Gi </span>
+  <span style="color:#f92672">volumeMode</span>: <span style="color:#ae81ff">Filesystem</span>
+  <span style="color:#f92672">accessModes</span>:
+  - <span style="color:#ae81ff">ReadWriteOnce</span>
+  <span style="color:#f92672">persistentVolumeReclaimPolicy</span>: <span style="color:#ae81ff">Retain</span>
+  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">local</span>
+  <span style="color:#f92672">local</span>:
+    <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/data/local1</span>
+  <span style="color:#f92672">nodeAffinity</span>:
+      <span style="color:#f92672">required</span>:
+        <span style="color:#f92672">nodeSelectorTerms</span>:
+        - <span style="color:#f92672">matchExpressions</span>:
+          - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">kubernetes.io/hostname</span>
+            <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">In</span>
+            <span style="color:#f92672">values</span>:
+            - <span style="color:#ae81ff">i-6fns0nua</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc1</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">local</span>
+  <span style="color:#f92672">accessModes</span>:
+    - <span style="color:#ae81ff">ReadWriteMany</span>
+  <span style="color:#f92672">resources</span>:
+    <span style="color:#f92672">requests</span>:
+      <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">30Gi</span>
+---
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod1</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx1</span>
+      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+      <span style="color:#f92672">volumeMounts</span>:
+      - <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/var/www/html&#34;</span>
+        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod1</span>
+  <span style="color:#f92672">volumes</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod1</span>
+      <span style="color:#f92672">persistentVolumeClaim</span>:
+        <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">pvc1</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-03-13-mysql-privileges/">&laquo; mysql权限高级</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/">esxi-cloud-init使用 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

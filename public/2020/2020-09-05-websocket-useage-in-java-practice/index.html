@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>spring 使用websocket主动推送日志到页面展示 - 打工笔记</title>
+<meta name="description" content="简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。
+相关流程  logback日志切割 阻塞队列/环形队列处理并发读写 websocket推送  方案一实现 很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：
+logback.xml
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;configuration scan=&amp;#34;true&amp;#34; scanPeriod=&amp;#34;3 seconds&amp;#34;&amp;gt; &amp;lt;!--设置日志输出为控制台--&amp;gt; &amp;lt;include resource=&amp;#34;org/springframework/boot/logging/logback/defaults."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2020/2020-09-05-websocket-useage-in-java-practice/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。
+相关流程  logback日志切割 阻塞队列/环形队列处理并发读写 websocket推送  方案一实现 很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：
+logback.xml
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;configuration scan=&amp;#34;true&amp;#34; scanPeriod=&amp;#34;3 seconds&amp;#34;&amp;gt; &amp;lt;!--设置日志输出为控制台--&amp;gt; &amp;lt;include resource=&amp;#34;org/springframework/boot/logging/logback/defaults." />
+<meta name="twitter:title" content="spring 使用websocket主动推送日志到页面展示 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="spring 使用websocket主动推送日志到页面展示 - 打工笔记" property="og:title">
+<meta content="简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。
+相关流程  logback日志切割 阻塞队列/环形队列处理并发读写 websocket推送  方案一实现 很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：
+logback.xml
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;configuration scan=&amp;#34;true&amp;#34; scanPeriod=&amp;#34;3 seconds&amp;#34;&amp;gt; &amp;lt;!--设置日志输出为控制台--&amp;gt; &amp;lt;include resource=&amp;#34;org/springframework/boot/logging/logback/defaults." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2020/2020-09-05-websocket-useage-in-java-practice/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2020-09-05 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "spring 使用websocket主动推送日志到页面展示",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2020\/2020-09-05-websocket-useage-in-java-practice\/",
+    "datePublished": "2020-09-05 00:00:00 \u002b0000 UTC",
+    "description": "简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。\n相关流程  logback日志切割 阻塞队列\/环形队列处理并发读写 websocket推送  方案一实现 很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：\nlogback.xml\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34; encoding=\u0026#34;UTF-8\u0026#34; ?\u0026gt; \u0026lt;configuration scan=\u0026#34;true\u0026#34; scanPeriod=\u0026#34;3 seconds\u0026#34;\u0026gt; \u0026lt;!--设置日志输出为控制台--\u0026gt; \u0026lt;include resource=\u0026#34;org\/springframework\/boot\/logging\/logback\/defaults.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">spring 使用websocket主动推送日志到页面展示</h1>
+            <p class="post-meta"><time datetime='2020-09-05T00:00:00Z' itemprop="datePublished">September 5, 2020</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="简介">简介</h2>
+<p>Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。</p>
+<h2 id="相关流程">相关流程</h2>
+<ol>
+<li>logback日志切割</li>
+<li>阻塞队列/环形队列处理并发读写</li>
+<li>websocket推送</li>
+</ol>
+<h2 id="方案一实现">方案一实现</h2>
+<p>很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：</p>
+<p>logback.xml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+
+<span style="color:#f92672">&lt;configuration</span> <span style="color:#a6e22e">scan=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">scanPeriod=</span><span style="color:#e6db74">&#34;3 seconds&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--设置日志输出为控制台--&gt;</span>
+    <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;org/springframework/boot/logging/logback/defaults.xml&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;org/springframework/boot/logging/logback/file-appender.xml&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;encoder&gt;</span>
+            <span style="color:#f92672">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%logger{32}] %msg%n<span style="color:#f92672">&lt;/pattern&gt;</span>
+            <span style="color:#f92672">&lt;charset&gt;</span>UTF-8<span style="color:#f92672">&lt;/charset&gt;</span>
+        <span style="color:#f92672">&lt;/encoder&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ama.filter.LogFilter&#34;</span><span style="color:#f92672">&gt;&lt;/filter&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#75715e">&lt;!--设置日志输出为文件--&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;FILE&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.rolling.RollingFileAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ama.filter.LogFilter&#34;</span><span style="color:#f92672">&gt;&lt;/filter&gt;</span>
+        <span style="color:#f92672">&lt;File&gt;</span>logFile.log<span style="color:#f92672">&lt;/File&gt;</span>
+        <span style="color:#f92672">&lt;rollingPolicy</span>  <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;FileNamePattern&gt;</span>logFile.%d{yyyy-MM-dd}.log.zip<span style="color:#f92672">&lt;/FileNamePattern&gt;</span>
+        <span style="color:#f92672">&lt;/rollingPolicy&gt;</span>
+        <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.classic.PatternLayout&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;Pattern&gt;</span>%d{HH:mm:ss,SSS} [%thread] %-5level %logger{32} - %msg%n<span style="color:#f92672">&lt;/Pattern&gt;</span>
+        <span style="color:#f92672">&lt;/layout&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#f92672">&lt;root&gt;</span>
+        <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;FILE&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/root&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p>其中<code>ama.filter.LogFilter</code>是自定义的日志处理过滤器。代码如下：</p>
+<p>LogFilter.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Slf4j</span>
+<span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogFilter</span> <span style="color:#66d9ef">extends</span> Filter<span style="color:#f92672">&lt;</span>ILoggingEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> FilterReply <span style="color:#a6e22e">decide</span><span style="color:#f92672">(</span>ILoggingEvent event<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String exception <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">;</span>
+        IThrowableProxy iThrowableProxy1 <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span><span style="color:#a6e22e">getThrowableProxy</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>iThrowableProxy1<span style="color:#f92672">!=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            exception <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;span class=&#39;excehtext&#39;&gt;&#34;</span><span style="color:#f92672">+</span>iThrowableProxy1<span style="color:#f92672">.</span><span style="color:#a6e22e">getClassName</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">+</span>iThrowableProxy1<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34;&lt;/span&gt;&lt;/br&gt;&#34;</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>iThrowableProxy1<span style="color:#f92672">.</span><span style="color:#a6e22e">getStackTraceElementProxyArray</span><span style="color:#f92672">().</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span>i<span style="color:#f92672">++){</span>
+                exception <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;span class=&#39;excetext&#39;&gt;&#34;</span><span style="color:#f92672">+</span>iThrowableProxy1<span style="color:#f92672">.</span><span style="color:#a6e22e">getStackTraceElementProxyArray</span><span style="color:#f92672">()[</span>i<span style="color:#f92672">].</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34;&lt;/span&gt;&lt;/br&gt;&#34;</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        LoggerMessage loggerMessage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LoggerMessage<span style="color:#f92672">(</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">(),</span>
+                DateFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">getDateTimeInstance</span><span style="color:#f92672">().</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">(</span>event<span style="color:#f92672">.</span><span style="color:#a6e22e">getTimeStamp</span><span style="color:#f92672">())),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getThreadName</span><span style="color:#f92672">(),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getLoggerName</span><span style="color:#f92672">(),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getLevel</span><span style="color:#f92672">().</span><span style="color:#a6e22e">levelStr</span><span style="color:#f92672">,</span>
+                exception<span style="color:#f92672">,</span>
+                <span style="color:#e6db74">&#34;&#34;</span>
+        <span style="color:#f92672">);</span>
+        LoggerQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">getInstance</span><span style="color:#f92672">().</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>loggerMessage<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> FilterReply<span style="color:#f92672">.</span><span style="color:#a6e22e">ACCEPT</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>重写decide方法，格式化日志，然后放入阻塞队列，<code> LoggerQueue.getInstance().push(loggerMessage);</code></p>
+<p>LoggerMessage 是一个简单的实体类，用于存放消息实体类，代码如下：</p>
+<p>LoggerMessage.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Getter</span>
+<span style="color:#a6e22e">@Setter</span>
+<span style="color:#a6e22e">@ToString</span>
+<span style="color:#a6e22e">@AllArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerMessage</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String body<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String timestamp<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String threadName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String className<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String level<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String exception<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String cause<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>阻塞队列LoggerQueue的实现：</p>
+<p>LoggerQueue.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerQueue</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//队列大小
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> QUEUE_MAX_SIZE <span style="color:#f92672">=</span> 1000<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> LoggerQueue alarmMessageQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LoggerQueue<span style="color:#f92672">();</span>
+    <span style="color:#75715e">//阻塞队列
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> BlockingQueue blockingQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;&gt;(</span>QUEUE_MAX_SIZE<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">LoggerQueue</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> LoggerQueue <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> alarmMessageQueue<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 消息入队
+</span><span style="color:#75715e">     *
+</span><span style="color:#75715e">     * @param log
+</span><span style="color:#75715e">     * @return
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>LoggerMessage log<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">blockingQueue</span><span style="color:#f92672">.</span><span style="color:#a6e22e">offer</span><span style="color:#f92672">(</span>log<span style="color:#f92672">);</span><span style="color:#75715e">//队列满了就抛出异常，不阻塞
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 消息出队
+</span><span style="color:#75715e">     *
+</span><span style="color:#75715e">     * @return
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> LoggerMessage <span style="color:#a6e22e">poll</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        LoggerMessage result <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            result <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>LoggerMessage<span style="color:#f92672">)</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">blockingQueue</span><span style="color:#f92672">.</span><span style="color:#a6e22e">take</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>利用阻塞队列BlockingQueue 的特点，实现消息的并发读写。至此，日志消息的切割和发送队列完成了，接下来是websocket发送的逻辑，首先需要开启websocket：</p>
+<p>WebSocketConfig.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span>
+<span style="color:#a6e22e">@EnableWebSocket</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebSocketConfig</span> <span style="color:#66d9ef">implements</span> WebSocketConfigurer <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">registerWebSocketHandlers</span><span style="color:#f92672">(</span>WebSocketHandlerRegistry webSocketHandlerRegistry<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        webSocketHandlerRegistry<span style="color:#f92672">.</span><span style="color:#a6e22e">addHandler</span><span style="color:#f92672">(</span>logHandler<span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;/buildImage/log&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">setAllowedOrigins</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">private</span> LogHandler <span style="color:#a6e22e">logHandler</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> LogHandler<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>消息处理器LogHandler代码如下：</p>
+<p>LogHandler.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogHandler</span> <span style="color:#66d9ef">extends</span> TextWebSocketHandler <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleTextMessage</span><span style="color:#f92672">(</span>WebSocketSession session<span style="color:#f92672">,</span> TextMessage message<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        String playload <span style="color:#f92672">=</span> message<span style="color:#f92672">.</span><span style="color:#a6e22e">getPayload</span><span style="color:#f92672">();</span>
+        session<span style="color:#f92672">.</span><span style="color:#a6e22e">sendMessage</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> TextMessage<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;收到了消息&#34;</span> <span style="color:#f92672">+</span> playload<span style="color:#f92672">));</span>
+        <span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">(){</span>
+            <span style="color:#a6e22e">@SneakyThrows</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">){</span>
+                    LoggerMessage poll <span style="color:#f92672">=</span> LoggerQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">getInstance</span><span style="color:#f92672">().</span><span style="color:#a6e22e">poll</span><span style="color:#f92672">();</span>
+                    session<span style="color:#f92672">.</span><span style="color:#a6e22e">sendMessage</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> TextMessage<span style="color:#f92672">(</span>poll<span style="color:#f92672">.</span><span style="color:#a6e22e">getBody</span><span style="color:#f92672">()));</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>至此可以实现消息的主动推送了，浏览器访问<code>ws://ip:port/buildImage/log</code>建立ws连接即可。</p>
+<h2 id="方案二实现">方案二实现</h2>
+<p>此种方案使用了环形队列，以及stomp来实现。</p>
+<h3 id="日志消息处理">日志消息处理</h3>
+<p>和上面一直，定义过滤器统一处理，发送到环形队列。</p>
+<p>logback.xml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configuration</span> <span style="color:#a6e22e">scan=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;org/springframework/boot/logging/logback/defaults.xml&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;org/springframework/boot/logging/logback/file-appender.xml&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;IMGFILE&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.FileAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;file&gt;</span>imageBuild.log<span style="color:#f92672">&lt;/file&gt;</span>
+        <span style="color:#f92672">&lt;encoder&gt;</span>
+            <span style="color:#f92672">&lt;pattern&gt;</span>
+                %date %level [%thread] %logger{10} [%file:%line] %msg%n
+            <span style="color:#f92672">&lt;/pattern&gt;</span>
+        <span style="color:#f92672">&lt;/encoder&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;encoder&gt;</span>
+            <span style="color:#f92672">&lt;pattern&gt;</span>${CONSOLE_LOG_PATTERN}<span style="color:#f92672">&lt;/pattern&gt;</span>
+        <span style="color:#f92672">&lt;/encoder&gt;</span>
+        <span style="color:#f92672">&lt;filter</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ama.filter.LogFilter&#34;</span><span style="color:#f92672">&gt;&lt;/filter&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;com.github.dockerjava&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;IMGFILE&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ama&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;IMGFILE&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;org.springframework.messaging.simp.broker&#34;</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;ERROR&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;org.springframework.web.SimpLogging&#34;</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;ERROR&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+
+    <span style="color:#f92672">&lt;root</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/root&gt;</span>
+
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p>LogFilter.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogFilter</span> <span style="color:#66d9ef">extends</span> Filter<span style="color:#f92672">&lt;</span>ILoggingEvent<span style="color:#f92672">&gt;{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> FilterReply <span style="color:#a6e22e">decide</span><span style="color:#f92672">(</span>ILoggingEvent event<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        LoggerMessage loggerMessage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LoggerMessage<span style="color:#f92672">(</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getMessage</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">,</span> DateFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">getDateTimeInstance</span><span style="color:#f92672">().</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">(</span>event<span style="color:#f92672">.</span><span style="color:#a6e22e">getTimeStamp</span><span style="color:#f92672">())),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getThreadName</span><span style="color:#f92672">(),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getLoggerName</span><span style="color:#f92672">(),</span>
+                event<span style="color:#f92672">.</span><span style="color:#a6e22e">getLevel</span><span style="color:#f92672">().</span><span style="color:#a6e22e">levelStr</span>
+        <span style="color:#f92672">);</span>
+        LoggerDisruptorQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">publishEvent</span><span style="color:#f92672">(</span>loggerMessage<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> FilterReply<span style="color:#f92672">.</span><span style="color:#a6e22e">ACCEPT</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="环形队列实现">环形队列实现</h3>
+<p>环形队列使用Disruptor实现，代码如下：</p>
+<p>LoggerDisruptorQueue.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerDisruptorQueue</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> Executor executor <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newCachedThreadPool</span><span style="color:#f92672">();</span>
+
+    <span style="color:#75715e">// The factory for the event
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> LoggerEventFactory factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LoggerEventFactory<span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">private</span> FileLoggerEventFactory fileLoggerEventFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileLoggerEventFactory<span style="color:#f92672">();</span>
+
+    <span style="color:#75715e">// Specify the size of the ring buffer, must be power of 2.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> bufferSize <span style="color:#f92672">=</span> 2 <span style="color:#f92672">*</span> 1024<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">// Construct the Disruptor
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Disruptor<span style="color:#f92672">&lt;</span>LoggerEvent<span style="color:#f92672">&gt;</span> disruptor <span style="color:#f92672">=</span>
+            <span style="color:#66d9ef">new</span> Disruptor<span style="color:#f92672">&lt;&gt;(</span>factory<span style="color:#f92672">,</span> bufferSize<span style="color:#f92672">,</span> executor<span style="color:#f92672">);;</span>
+
+    <span style="color:#66d9ef">private</span> Disruptor<span style="color:#f92672">&lt;</span>FileLoggerEvent<span style="color:#f92672">&gt;</span> fileLoggerEventDisruptor <span style="color:#f92672">=</span>
+            <span style="color:#66d9ef">new</span> Disruptor<span style="color:#f92672">&lt;&gt;(</span>fileLoggerEventFactory<span style="color:#f92672">,</span> bufferSize<span style="color:#f92672">,</span> executor<span style="color:#f92672">);;</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span>  RingBuffer<span style="color:#f92672">&lt;</span>LoggerEvent<span style="color:#f92672">&gt;</span> ringBuffer<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span>  RingBuffer<span style="color:#f92672">&lt;</span>FileLoggerEvent<span style="color:#f92672">&gt;</span> fileLoggerEventRingBuffer<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    LoggerDisruptorQueue<span style="color:#f92672">(</span>LoggerEventHandler eventHandler<span style="color:#f92672">,</span>FileLoggerEventHandler fileLoggerEventHandler<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        disruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">handleEventsWith</span><span style="color:#f92672">(</span>eventHandler<span style="color:#f92672">);</span>
+        fileLoggerEventDisruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">handleEventsWith</span><span style="color:#f92672">(</span>fileLoggerEventHandler<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ringBuffer</span> <span style="color:#f92672">=</span> disruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">getRingBuffer</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">fileLoggerEventRingBuffer</span> <span style="color:#f92672">=</span> fileLoggerEventDisruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">getRingBuffer</span><span style="color:#f92672">();</span>
+        disruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        fileLoggerEventDisruptor<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">publishEvent</span><span style="color:#f92672">(</span>LoggerMessage log<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">long</span> sequence <span style="color:#f92672">=</span> ringBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>  <span style="color:#75715e">// Grab the next sequence
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            LoggerEvent event <span style="color:#f92672">=</span> ringBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>sequence<span style="color:#f92672">);</span> <span style="color:#75715e">// Get the entry in the Disruptor
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// for the sequence
+</span><span style="color:#75715e"></span>            event<span style="color:#f92672">.</span><span style="color:#a6e22e">setLog</span><span style="color:#f92672">(</span>log<span style="color:#f92672">);</span>  <span style="color:#75715e">// Fill with data
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            ringBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">publish</span><span style="color:#f92672">(</span>sequence<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">getSize</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">return</span> ringBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">getBufferSize</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">publishEvent</span><span style="color:#f92672">(</span>String log<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>fileLoggerEventRingBuffer <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">long</span> sequence <span style="color:#f92672">=</span> fileLoggerEventRingBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>  <span style="color:#75715e">// Grab the next sequence
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            FileLoggerEvent event <span style="color:#f92672">=</span> fileLoggerEventRingBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>sequence<span style="color:#f92672">);</span> <span style="color:#75715e">// Get the entry in the Disruptor
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// for the sequence
+</span><span style="color:#75715e"></span>            event<span style="color:#f92672">.</span><span style="color:#a6e22e">setLog</span><span style="color:#f92672">(</span>log<span style="color:#f92672">);</span>  <span style="color:#75715e">// Fill with data
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            fileLoggerEventRingBuffer<span style="color:#f92672">.</span><span style="color:#a6e22e">publish</span><span style="color:#f92672">(</span>sequence<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><p>环形队列和阻塞队列在这里的区别不大，都是用作消息的处理，实现并发读写。此处一方面实现了输出控制台日志，另一方面也实现了从日志文件读写然后推送。</p>
+<h3 id="控制台日志相关">控制台日志相关</h3>
+<p>LoggerEvent.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerEvent</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> LoggerMessage log<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> LoggerMessage <span style="color:#a6e22e">getLog</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> log<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLog</span><span style="color:#f92672">(</span>LoggerMessage log<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">log</span> <span style="color:#f92672">=</span> log<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>LoggerEventFactory.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerEventFactory</span> <span style="color:#66d9ef">implements</span> EventFactory<span style="color:#f92672">&lt;</span>LoggerEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> LoggerEvent <span style="color:#a6e22e">newInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> LoggerEvent<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>LoggerEventHandler.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoggerEventHandler</span> <span style="color:#66d9ef">implements</span> EventHandler<span style="color:#f92672">&lt;</span>LoggerEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> SimpMessagingTemplate messagingTemplate<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onEvent</span><span style="color:#f92672">(</span>LoggerEvent stringEvent<span style="color:#f92672">,</span> <span style="color:#66d9ef">long</span> l<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        messagingTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">convertAndSend</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/consoleLog&#34;</span><span style="color:#f92672">,</span>stringEvent<span style="color:#f92672">.</span><span style="color:#a6e22e">getLog</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="日志文件相关">日志文件相关</h3>
+<p>FileLoggerEvent.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileLoggerEvent</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String log<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getLog</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> log<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLog</span><span style="color:#f92672">(</span>String log<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">log</span> <span style="color:#f92672">=</span> log<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>FileLoggerEventFactory.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileLoggerEventFactory</span>  <span style="color:#66d9ef">implements</span> EventFactory<span style="color:#f92672">&lt;</span>FileLoggerEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> FileLoggerEvent <span style="color:#a6e22e">newInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FileLoggerEvent<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>FileLogListening.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileLogListening</span> <span style="color:#66d9ef">implements</span> ApplicationContextAware<span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> lastTimeFileSize <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setApplicationContext</span><span style="color:#f92672">(</span>ApplicationContext applicationContext<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> BeansException <span style="color:#f92672">{</span>
+        String logPath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;imageBuild.log&#34;</span><span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            File logFile <span style="color:#f92672">=</span> ResourceUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getFile</span><span style="color:#f92672">(</span>logPath<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">final</span> RandomAccessFile randomFile <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RandomAccessFile<span style="color:#f92672">(</span>logFile<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;rw&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#75715e">//指定文件可读可写
+</span><span style="color:#75715e"></span>            ScheduledExecutorService exec <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newScheduledThreadPool</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+            exec<span style="color:#f92672">.</span><span style="color:#a6e22e">scheduleWithFixedDelay</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                        randomFile<span style="color:#f92672">.</span><span style="color:#a6e22e">seek</span><span style="color:#f92672">(</span>lastTimeFileSize<span style="color:#f92672">);</span>
+                        String tmp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">;</span>
+                        <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>tmp <span style="color:#f92672">=</span> randomFile<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">())</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                            String log<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>tmp<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ISO8859-1&#34;</span><span style="color:#f92672">));</span>
+                            LoggerDisruptorQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">publishEvent</span><span style="color:#f92672">(</span>log<span style="color:#f92672">);</span>
+                        <span style="color:#f92672">}</span>
+                        lastTimeFileSize <span style="color:#f92672">=</span> randomFile<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">},</span> 0<span style="color:#f92672">,</span> 1<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 监听日志文件
+</span><span style="color:#75715e">     *
+</span><span style="color:#75715e">     * @throws IOException
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#a6e22e">@PostConstruct</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>FileLoggerEventHandler.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileLoggerEventHandler</span> <span style="color:#66d9ef">implements</span> EventHandler<span style="color:#f92672">&lt;</span>FileLoggerEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> SimpMessagingTemplate messagingTemplate<span style="color:#f92672">;</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onEvent</span><span style="color:#f92672">(</span>FileLoggerEvent fileLoggerEvent<span style="color:#f92672">,</span> <span style="color:#66d9ef">long</span> l<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        messagingTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">convertAndSend</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/fileLog&#34;</span><span style="color:#f92672">,</span>fileLoggerEvent<span style="color:#f92672">.</span><span style="color:#a6e22e">getLog</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="websocket配置">websocket配置</h3>
+<p>WebSocketConfig.java</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span>
+<span style="color:#a6e22e">@EnableWebSocketMessageBroker</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebSocketConfig</span> <span style="color:#66d9ef">extends</span> AbstractWebSocketMessageBrokerConfigurer <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">registerStompEndpoints</span><span style="color:#f92672">(</span>StompEndpointRegistry registry<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        registry<span style="color:#f92672">.</span><span style="color:#a6e22e">addEndpoint</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/log&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">setAllowedOrigins</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">addInterceptors</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">withSockJS</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="页面示例">页面示例</h3>
+<p>index.html</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;WebSocket Logger&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.bootcss.com/jquery/2.1.4/jquery.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+&lt;<span style="color:#f92672">h1</span>&gt;jvm进程内的日志&lt;/<span style="color:#f92672">h1</span>&gt;
+&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;openSocket()&#34;</span>&gt;开启日志&lt;/<span style="color:#f92672">button</span>&gt;&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;closeSocket()&#34;</span>&gt;关闭日志&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;log-container&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;height: 300px; overflow-y: scroll; background: #333; color: #aaa; padding: 10px;&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">h1</span>&gt;指定监听日志文件的日志&lt;/<span style="color:#f92672">h1</span>&gt;
+&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;openSocket()&#34;</span>&gt;开启日志&lt;/<span style="color:#f92672">button</span>&gt;&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;closeSocket()&#34;</span>&gt;关闭日志&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;filelog-container&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;height: 300px; overflow-y: scroll; background: #333; color: #aaa; padding: 10px;&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">stompClient</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+    <span style="color:#a6e22e">$</span>(document).<span style="color:#a6e22e">ready</span>(<span style="color:#66d9ef">function</span>() {<span style="color:#a6e22e">openSocket</span>();});
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">openSocket</span>() {
+        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">stompClient</span><span style="color:#f92672">==</span><span style="color:#66d9ef">null</span>){
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">socket</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SockJS</span>(<span style="color:#e6db74">&#39;http://localhost:9005/log?token=kl&#39;</span>);
+            <span style="color:#a6e22e">stompClient</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Stomp</span>.<span style="color:#a6e22e">over</span>(<span style="color:#a6e22e">socket</span>);
+            <span style="color:#a6e22e">stompClient</span>.<span style="color:#a6e22e">connect</span>({<span style="color:#a6e22e">token</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;kl&#34;</span>}, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">frame</span>) {
+                <span style="color:#a6e22e">stompClient</span>.<span style="color:#a6e22e">subscribe</span>(<span style="color:#e6db74">&#39;/consoleLog&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>) {
+                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">body</span>);
+                    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#log-container div&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">timestamp</span> <span style="color:#f92672">+</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">level</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34; --- [&#34;</span><span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">threadName</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;] &#34;</span><span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">className</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;   :&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">body</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;&lt;br/&gt;&#34;</span>);
+                    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#log-container&#34;</span>).<span style="color:#a6e22e">scrollTop</span>(<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#log-container div&#34;</span>).<span style="color:#a6e22e">height</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#log-container&#34;</span>).<span style="color:#a6e22e">height</span>());
+                },{
+                    <span style="color:#a6e22e">token</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;kltoen&#34;</span>
+                });
+                <span style="color:#a6e22e">stompClient</span>.<span style="color:#a6e22e">subscribe</span>(<span style="color:#e6db74">&#39;/fileLog&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>) {
+                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">body</span>;
+                    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#filelog-container div&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">content</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;&lt;br/&gt;&#34;</span>);
+                    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#filelog-container&#34;</span>).<span style="color:#a6e22e">scrollTop</span>(<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#filelog-container div&#34;</span>).<span style="color:#a6e22e">height</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#filelog-container&#34;</span>).<span style="color:#a6e22e">height</span>());
+                },{
+                    <span style="color:#a6e22e">token</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;kltoen&#34;</span>
+                });
+            });
+        }
+    }
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">closeSocket</span>() {
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">stompClient</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+            <span style="color:#a6e22e">stompClient</span>.<span style="color:#a6e22e">disconnect</span>();
+            <span style="color:#a6e22e">stompClient</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span>;
+        }
+    }
+&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h2 id="总结">总结</h2>
+<p>推送的流程如下：</p>
+<p>logback收集日志-&gt;自定义filter拦截-&gt;发送到消息队列（本地或者远程，需要实现并发读写）-&gt;websocket线程东队列读取数据推送。</p>
+<h2 id="注意">注意</h2>
+<p>sprint-boot-websocket与spring-boot-devtools依赖冲突，会导致无法读到数据。</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2020/2020-10-14-linux-cgroups/">&laquo; linux cgroups简单使用</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/2020-07-17-the-new-beginning/">新的开始 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

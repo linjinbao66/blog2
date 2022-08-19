@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>包含min函数的栈 - 打工笔记</title>
+<meta name="description" content="牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+解法一 双栈实现，数据栈加最小值栈 代码如下：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; dataStack = new Stack(); Stack&amp;lt;Integer&amp;gt; minStack = new Stack&amp;lt;&amp;gt;(); public void push(int node) { dataStack."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+解法一 双栈实现，数据栈加最小值栈 代码如下：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; dataStack = new Stack(); Stack&amp;lt;Integer&amp;gt; minStack = new Stack&amp;lt;&amp;gt;(); public void push(int node) { dataStack." />
+<meta name="twitter:title" content="包含min函数的栈 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="包含min函数的栈 - 打工笔记" property="og:title">
+<meta content="牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+解法一 双栈实现，数据栈加最小值栈 代码如下：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; dataStack = new Stack(); Stack&amp;lt;Integer&amp;gt; minStack = new Stack&amp;lt;&amp;gt;(); public void push(int node) { dataStack." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="栈" /><meta property="article:section" content="算法" />
+<meta property="article:published_time" content="2019-10-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "包含min函数的栈",
+    "genre": "栈算法",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-10-stack-which-include-min-func\/",
+    "datePublished": "2019-10-10 00:00:00 \u002b0000 UTC",
+    "description": "牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。\n解法一 双栈实现，数据栈加最小值栈 代码如下：\nimport java.util.Stack; public class Solution { Stack\u0026lt;Integer\u0026gt; dataStack = new Stack(); Stack\u0026lt;Integer\u0026gt; minStack = new Stack\u0026lt;\u0026gt;(); public void push(int node) { dataStack.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">包含min函数的栈</h1>
+            <p class="post-meta"><time datetime='2019-10-10T00:00:00Z' itemprop="datePublished">October 10, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="牛客网题目-包含min函数的栈">牛客网题目-包含min函数的栈</h2>
+<h2 id="题目描述">题目描述</h2>
+<p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
+<h2 id="解法一">解法一</h2>
+<p>双栈实现，数据栈加最小值栈 代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.Stack<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+
+
+    Stack<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> dataStack <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Stack<span style="color:#f92672">();</span>
+    Stack<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> minStack <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Stack<span style="color:#f92672">&lt;&gt;();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">push</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> node<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">()</span> <span style="color:#f92672">||</span> node<span style="color:#f92672">&lt;</span>minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">())</span>minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">else</span> minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pop</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">pop</span><span style="color:#f92672">();</span>
+        minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">pop</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">top</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">min</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> minStack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">();</span>    <span style="color:#75715e">//辅助栈取值
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法二">解法二</h2>
+<p>栈+ArrayList实现 代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.Stack<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+    Stack<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> dataStack <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Stack<span style="color:#f92672">();</span>
+    List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> minList <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">push</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> node<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minList<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">()</span> <span style="color:#f92672">||</span> node <span style="color:#f92672">&lt;</span> min<span style="color:#f92672">())</span> minList<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">else</span> minList<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span> min<span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pop</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">pop</span><span style="color:#f92672">();</span>
+        minList<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>minList<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>minList<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()-</span>1<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">top</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> dataStack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">min</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> minList<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>minList<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()-</span>1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-10-webpack/">&laquo; webpack学习</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/">java创建线程的7种方式 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

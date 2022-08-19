@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>vue - 打工笔记</title>
+<meta name="description" content="vue学习 模板语法   v-html用于输出html代码；
+  v-bind用于设置html属性中的值；
+  指令
+指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；
+  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-06-24-vue/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="vue学习 模板语法   v-html用于输出html代码；
+  v-bind用于设置html属性中的值；
+  指令
+指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；
+  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；" />
+<meta name="twitter:title" content="vue - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="vue - 打工笔记" property="og:title">
+<meta content="vue学习 模板语法   v-html用于输出html代码；
+  v-bind用于设置html属性中的值；
+  指令
+指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；
+  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-06-24-vue/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="前端" /><meta property="article:section" content="JavaScript" />
+<meta property="article:published_time" content="2019-06-24 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "vue",
+    "genre": "前端JavaScript",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-06-24-vue\/",
+    "datePublished": "2019-06-24 00:00:00 \u002b0000 UTC",
+    "description": "vue学习 模板语法   v-html用于输出html代码；\n  v-bind用于设置html属性中的值；\n  指令\n指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；\n  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">vue</h1>
+            <p class="post-meta"><time datetime='2019-06-24T00:00:00Z' itemprop="datePublished">June 24, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="vue学习">vue学习</h2>
+<h3 id="模板语法">模板语法</h3>
+<ol>
+<li>
+<p><code>v-html</code>用于输出html代码；</p>
+</li>
+<li>
+<p><code>v-bind</code>用于设置html属性中的值；</p>
+</li>
+<li>
+<p>指令</p>
+<p>指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；</p>
+</li>
+<li>
+<p>参数，参数在指令后以冒号指明。例如， <code>v-bind</code> 指令被用来响应地更新 HTML 属性；</p>
+</li>
+<li>
+<p>修饰符，修饰符是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;form v-on:submit.prevent=&#34;onSubmit&#34;&gt;&lt;/form&gt;
+</code></pre></div></li>
+<li>
+<p>用户输入，在 input 输入框中我们可以使用 <code>v-model</code> 指令来实现双向数据绑定</p>
+<p><code>v-model</code> 指令用来在 <code>input</code>、<code>select</code>、<code>textarea</code>、<code>checkbox</code>、<code>radio</code> 等表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值</p>
+</li>
+<li>
+<p>过滤器</p>
+<p>Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由&quot;管道符&quot;指示, 格式如下；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;div v-bind:id=&#34;rawId | formatId&#34;&gt;&lt;/div&gt;
+</code></pre></div><p>```html</p>
+<p>&lt;!DOCTYPE html&gt;</p>
+<p>Vue 测试实例</p>
+<p>&lt;/head&gt;</p>
+<p>{{ message | capitalize }}</p>
+</li>
+</ol>
+<p>new Vue({ el: '#app', data: { message: 'runoob' }, filters: { capitalize: function (value) { if (!value) return '' value = value.toString() return value.charAt(0).toUpperCase() + value.slice(1) } } })  &lt;/body&gt; &lt;/html&gt;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">8. 缩写
+`v-bind` 缩写，
+```code
+&lt;!-- 完整语法 --&gt;
+&lt;a v-bind:href=&#34;url&#34;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a :href=&#34;url&#34;&gt;&lt;/a&gt;
+</code></pre></div><p><code>v-on</code>缩写</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;!-- 完整语法 --&gt;
+&lt;a v-on:click=&#34;doSomething&#34;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a @click=&#34;doSomething&#34;&gt;&lt;/a&gt;
+</code></pre></div><h3 id="条件语句">条件语句</h3>
+<ol>
+<li>
+<p><code>v-if</code></p>
+<p>```code</p>
+<p>现在你看到我了</p>
+<p><strong>菜鸟教程</strong></p>
+<p>学的不仅是技术，更是梦想！</p>
+<p>哈哈哈，打字辛苦啊！！！</p>
+</li>
+</ol>
+<p>new Vue({ el: '#app', data: { seen: false, ok: false } })</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">2. `v-else`
+```code
+&lt;div id=&#34;app&#34;&gt;
+    &lt;div v-if=&#34;Math.random() &gt; 0.5&#34;&gt;
+      Sorry
+    &lt;/div&gt;
+    &lt;div v-else&gt;
+      Not sorry
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: &#39;#app&#39;
+})
+&lt;/script&gt;
+</code></pre></div><ol>
+<li>
+<p><code>v-else-if</code></p>
+<p>```code</p>
+<p>A B C Not A/B/C</p>
+</li>
+</ol>
+<p>new Vue({ el: '#app', data: { type: 'C' } })</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">4. `v-show`
+```code
+&lt;div id=&#34;app&#34;&gt;
+    &lt;h1 v-show=&#34;ok&#34;&gt;Hello!&lt;/h1&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: &#39;#app&#39;,
+  data: {
+    ok: true
+  }
+})
+&lt;/script&gt;
+</code></pre></div><h3 id="循环语句">循环语句</h3>
+<ol>
+<li>
+<p><code>v-for</code></p>
+<p>```code</p>
+<ol>
+<li>{{ site.name }}</li>
+</ol>
+</li>
+</ol>
+<p>new Vue({ el: '#app', data: { sites: [ { name: 'Runoob' }, { name: 'Google' }, { name: 'Taobao' } ] } })</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">2. `v-for` 迭代对象
+```code
+&lt;div id=&#34;app&#34;&gt;
+  &lt;ul&gt;
+    &lt;li v-for=&#34;value in object&#34;&gt;
+    {{ value }}
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: &#39;#app&#39;,
+  data: {
+    object: {
+      name: &#39;菜鸟教程&#39;,
+      url: &#39;http://www.runoob.com&#39;,
+      slogan: &#39;学的不仅是技术，更是梦想！&#39;
+    }
+  }
+})
+&lt;/script&gt;
+</code></pre></div><ol>
+<li>
+<p><code>v-for</code> 迭代整数</p>
+<p>```code</p>
+<ul>
+<li>{{ n }}</li>
+</ul>
+</li>
+</ol>
+<p>new Vue({ el: '#app' })</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">### 计算属性
+```code
+&lt;div id=&#34;app&#34;&gt;
+  &lt;p&gt;原始字符串: {{ message }}&lt;/p&gt;
+  &lt;p&gt;计算后反转字符串: {{ reversedMessage }}&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var vm = new Vue({
+  el: &#39;#app&#39;,
+  data: {
+    message: &#39;Runoob!&#39;
+  },
+  computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)
+    }
+  }
+})
+&lt;/script&gt;
+</code></pre></div><h3 id="监听属性">监听属性</h3>
+<pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;vuejs学习&lt;/title&gt;
+    &lt;script src=&quot;./lib/vue.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;style&gt;
+    .class1{
+        background: #444;
+        color: #eee;
+    }
+&lt;/style&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;p style = &quot;font-size:25px;&quot;&gt;计数器: {{ counter }}&lt;/p&gt;
+        &lt;button @click = &quot;counter++&quot; style = &quot;font-size:25px;&quot;&gt;点我&lt;/button&gt;
+
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            message:'&lt;h3&gt;vue测试&lt;/h3&gt;',
+            use: false,
+            counter:1
+        }
+    });
+    vm.$watch('counter',function (nval, oval) {
+        alert('计数器数值变化：'+oval+'变为'+nval+'!');
+    })
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;vuejs学习&lt;/title&gt;
+    &lt;script src=&quot;./lib/vue.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;style&gt;
+    .class1{
+        background: #444;
+        color: #eee;
+    }
+&lt;/style&gt;
+&lt;body&gt;
+    &lt;div id = &quot;computed_props&quot;&gt;
+        千米 : &lt;input type = &quot;text&quot; v-model = &quot;kilometers&quot;&gt;
+        米 : &lt;input type = &quot;text&quot; v-model = &quot;meters&quot;&gt;
+    &lt;/div&gt;
+    &lt;p id=&quot;info&quot;&gt;&lt;/p&gt;
+
+    &lt;script&gt;
+    var vm = new Vue({
+        el:'#computed_props',
+        data:{
+            kilometers:0,
+            meters:0
+        },
+        watch:{
+            kilometers: function (val) {
+                this.kilometers = val;
+                this.meters = this.kilometers*1000;
+            },
+            meters:function (val) {
+                this.kilometers = val/1000;
+                this.meters = val;
+            }
+        }
+    });
+    vm.$watch('kilometers',function (newValue, oldValue) {
+        document.getElementById (&quot;info&quot;).innerHTML = &quot;修改前值为: &quot; + oldValue + &quot;，修改后值为: &quot; + newValue;
+    })
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="样式绑定">样式绑定</h3>
+<pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;Vue 测试实例 - 菜鸟教程(runoob.com)&lt;/title&gt;
+&lt;script src=&quot;https://cdn.staticfile.org/vue/2.2.2/vue.min.js&quot;&gt;&lt;/script&gt;
+&lt;style&gt;
+.active {
+    width: 100px;
+    height: 100px;
+    background: green;
+}
+.text-danger {
+    background: red;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;app&quot;&gt;
+  &lt;div class=&quot;static&quot;
+     v-bind:class=&quot;{ active: isActive, 'text-danger': hasError }&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+    isActive: true,
+    hasError: true
+  }
+})
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="案例">案例</h3>
+<pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;lib/bootstrap.css&quot;&gt;
+    &lt;script src=&quot;lib/vue.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;div class=&quot;panel panel-primary&quot;&gt;
+            &lt;div class=&quot;panel-heading&quot;&gt;
+                &lt;h3 class=&quot;panel-title&quot;&gt;添加品牌&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;panel-body form-inline&quot;&gt;
+                &lt;label&gt;
+                    Id:
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; v-model=&quot;id&quot;&gt;
+                &lt;/label&gt;
+                &lt;label&gt;
+                    Name:
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; v-model=&quot;name&quot;&gt;
+                &lt;/label&gt;
+                &lt;input type=&quot;button&quot; value=&quot;添加&quot; class=&quot;btn btn-primary&quot; @click=&quot;add&quot;&gt;
+                &lt;label&gt;
+                    搜索：
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; v-model=&quot;keywords&quot;&gt;
+                &lt;/label&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;table class=&quot;table table-bordered table-hover table-striped&quot;&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Id&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Ctime&lt;/td&gt;
+                    &lt;td&gt;Operation&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                &lt;tr v-for=&quot;item in search(keywords)&quot; :key=&quot;item.id&quot;&gt;
+                    &lt;td&gt;{{item.id}}&lt;/td&gt;
+                    &lt;td&gt;{{item.name}}&lt;/td&gt;
+                    &lt;td&gt;{{item.time}}&lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;a href=&quot;&quot; @click.prevent=&quot;del(item)&quot;&gt;删除&lt;/a&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;script&gt;
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            id:'',
+            name:'',
+            keywords:'',
+            list:[
+                {id:1,name:'奔驰',time:new Date()},
+                {id:2,name:'宝马',time:new Date()}
+            ]
+        },
+        methods:{
+            add(){
+                var car = {id:this.id,name:this.name,time:new Date()}
+                this.list.push(car)
+                this.id= this.name = &quot;&quot;
+            },
+            del(item){
+                this.list.pop(item)
+            },
+            search(keywords){
+                var newList = [];
+                this.list.forEach(item =&gt;{
+                    if ((item.name.indexOf(keywords)) != -1)  newList.push(item)
+                })
+                return newList;
+            }
+        }
+    })
+
+
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre><h3 id="vue过滤器">Vue过滤器</h3>
+<p>使用场景：<code>v-bind</code>表达式，mustache插值</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Vue.filter(&#39;dateFormat&#39;,function (dateStr) {
+        var dt = new Date(dateStr);
+        var y = dt.getFullYear();
+        var m = dt.getMonth()+1;
+        var d = dt.getDate();
+        return `${y}-${m}-${d}`
+    })
+&lt;td&gt;{{item.time | dateFormat }}&lt;/td&gt;
+</code></pre></div><h3 id="键盘事件">键盘事件</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;input type=&#34;text&#34; class=&#34;form-control&#34; v-model=&#34;name&#34; @keyup.enter=&#34;add&#34;&gt;
+</code></pre></div><h3 id="自定义指令">自定义指令</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Vue.directive(&#39;focus&#39;,{
+        bind:function (el) {
+            el.focus()
+        },
+        inserted:function (el) {
+            el.focus()
+        },
+        update:function (el) {
+
+        }
+    })
+Vue.directive(&#39;color&#39;,{
+        bind:function (el,binding) {
+            el.style.color = binding.value
+        }
+    })
+&lt;input type=&#34;text&#34; class=&#34;form-control&#34; v-model=&#34;keywords&#34; v-focus v-color=&#34;&#39;blue&#39;&#34;&gt;
+</code></pre></div><h3 id="vue实例的生命周期">Vue实例的生命周期</h3>
+<h3 id="vue-ajax">Vue ajax</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">getInfo</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/wymusic?id=19723756&#39;</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$http</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">url</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">response</span>=&gt;{
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">list</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">tracks</span>;
+        },<span style="color:#a6e22e">error</span>=&gt;{
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;请求失败&#39;</span>);
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">error</span>);
+    });
+    }
+},
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-07-01-ssm-merge/">&laquo; ssm整合</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-06-11-android/">Android学习笔记 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

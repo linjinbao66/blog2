@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ssm整合 - 打工笔记</title>
+<meta name="description" content="ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-07-01-ssm-merge/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www." />
+<meta name="twitter:title" content="ssm整合 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="ssm整合 - 打工笔记" property="og:title">
+<meta content="ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-07-01-ssm-merge/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="java" />
+<meta property="article:published_time" content="2019-07-01 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "ssm整合",
+    "genre": "java",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-07-01-ssm-merge\/",
+    "datePublished": "2019-07-01 00:00:00 \u002b0000 UTC",
+    "description": "ssm整合 pom.xml \u0026lt;?xml version=\u0026quot;1.0\u0026quot; encoding=\u0026quot;UTF-8\u0026quot;?\u0026gt; \u0026lt;project xmlns=\u0026quot;http:\/\/maven.apache.org\/POM\/4.0.0\u0026quot; xmlns:xsi=\u0026quot;http:\/\/www.w3.org\/2001\/XMLSchema-instance\u0026quot; xsi:schemaLocation=\u0026quot;http:\/\/maven.apache.org\/POM\/4.0.0 http:\/\/maven.apache.org\/xsd\/maven-4.0.0.xsd\u0026quot;\u0026gt; \u0026lt;modelVersion\u0026gt;4.0.0\u0026lt;\/modelVersion\u0026gt; \u0026lt;groupId\u0026gt;tk.amrom\u0026lt;\/groupId\u0026gt; \u0026lt;artifactId\u0026gt;crms\u0026lt;\/artifactId\u0026gt; \u0026lt;version\u0026gt;1.0-SNAPSHOT\u0026lt;\/version\u0026gt; \u0026lt;packaging\u0026gt;war\u0026lt;\/packaging\u0026gt; \u0026lt;name\u0026gt;crms Maven Webapp\u0026lt;\/name\u0026gt; \u0026lt;!-- FIXME change it to the project\u0027s website --\u0026gt; \u0026lt;url\u0026gt;http:\/\/www.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">ssm整合</h1>
+            <p class="post-meta"><time datetime='2019-07-01T00:00:00Z' itemprop="datePublished">July 1, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="ssm整合">ssm整合</h2>
+<h3 id="pomxml">pom.xml</h3>
+<pre><code class="language-markup" data-lang="markup">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;tk.amrom&lt;/groupId&gt;
+  &lt;artifactId&gt;crms&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;war&lt;/packaging&gt;
+
+  &lt;name&gt;crms Maven Webapp&lt;/name&gt;
+  &lt;!-- FIXME change it to the project's website --&gt;
+  &lt;url&gt;http://www.example.com&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;spring.version&gt;3.1.0.RELEASE&lt;/spring.version&gt;
+  &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.11&lt;/version&gt;
+      &lt;scope&gt;compile&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!--spring核心包--&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-core&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-aspects&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-expression&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-orm&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-tx&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 数据库 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;mysql&lt;/groupId&gt;
+      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+      &lt;version&gt;5.1.31&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;commons-dbcp&lt;/groupId&gt;
+      &lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;
+      &lt;version&gt;1.4&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--mybatis--&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+      &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+      &lt;version&gt;3.4.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+      &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+      &lt;version&gt;1.3.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 通用包--&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;commons-logging&lt;/groupId&gt;
+      &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+      &lt;version&gt;1.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 其他 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+      &lt;version&gt;4.0.1&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+      &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+      &lt;version&gt;1.2.47&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 连接池 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+      &lt;artifactId&gt;druid&lt;/artifactId&gt;
+      &lt;version&gt;1.0.9&lt;/version&gt;
+    &lt;/dependency&gt;
+
+  &lt;/dependencies&gt;
+
+  &lt;build&gt;
+    &lt;finalName&gt;crms&lt;/finalName&gt;
+    &lt;pluginManagement&gt;&lt;!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) --&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-clean-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.1.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging --&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.0.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.8.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.22.1&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.2.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-install-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.5.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.8.2&lt;/version&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+    &lt;/pluginManagement&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+</code></pre><h2 id="1webxml">1.web.xml</h2>
+<pre><code class="language-markup" data-lang="markup">&lt;!DOCTYPE web-app PUBLIC
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;
+ &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot; &gt;
+
+&lt;web-app&gt;
+  &lt;display-name&gt;Archetype Created Web Application&lt;/display-name&gt;
+  &lt;!--配置Spring监听器 Spring配置--&gt;
+  &lt;listener&gt;
+  &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+  &lt;!--设置配置文件的路径--&gt;
+  &lt;context-param&gt;
+    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+  &lt;/context-param&gt;
+
+  &lt;!--配置前端控制器 SpringMVC配置--&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+      &lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+
+  &lt;!--解决中文乱码--&gt;
+  &lt;filter&gt;
+    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;encoding&lt;/param-name&gt;
+      &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+  &lt;/filter&gt;
+  &lt;filter-mapping&gt;
+    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+  &lt;/filter-mapping&gt;
+
+&lt;/web-app&gt;
+</code></pre><h2 id="2applicationcontextxml">2.applicationContext.xml</h2>
+<pre><code class="language-markup" data-lang="markup">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
+    &lt;!-- 自动扫描 --&gt;
+    &lt;context:component-scan base-package=&quot;crms&quot;&gt;
+        &lt;!--排除Controller目录--&gt;
+        &lt;context:exclude-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot; /&gt;
+    &lt;/context:component-scan&gt;
+    &lt;!--Spring整合Mybatis--&gt;
+    &lt;!--配置连接池--&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;
+        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/crms?characterEncoding=utf8&quot; /&gt;
+        &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
+        &lt;property name=&quot;password&quot; value=&quot;Gepoint&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!--配置工厂对象--&gt;
+    &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!--配置借口所在的包--&gt;
+    &lt;bean id=&quot;mapperScanner&quot; class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+        &lt;property name=&quot;basePackage&quot; value=&quot;crms.dao&quot; /&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><h2 id="3springmvcxml">3.springmvc.xml</h2>
+<pre><code class="language-markup" data-lang="markup">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd &quot;&gt;
+
+    &lt;!-- 自动扫描  @Controller--&gt;
+    &lt;context:component-scan base-package=&quot;crms&quot;&gt;
+        &lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;
+    &lt;/context:component-scan&gt;
+
+    &lt;!--配置视图解析器--&gt;
+    &lt;bean id=&quot;internalResourceViewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/pages/&quot; /&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
+    &lt;/bean&gt;
+
+    &lt;!--过滤静态资源--&gt;
+    &lt;mvc:resources mapping=&quot;/static/&quot; location=&quot;/WEB-INF/static/**&quot; /&gt;
+
+    &lt;!--开启SpringMVC注解的支持--&gt;
+    &lt;mvc:annotation-driven /&gt;
+&lt;/beans&gt;
+</code></pre><h2 id="4mybatis-configxml不需要">4.mybatis-config.xml(不需要)</h2>
+<pre><code class="language-markup" data-lang="markup">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+
+&lt;configuration&gt;
+    &lt;!--环境--&gt;
+    &lt;environments default=&quot;mysql&quot;&gt;
+        &lt;environment id=&quot;mysql&quot;&gt;
+            &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
+            &lt;dataSource type=&quot;POOLED&quot;&gt;
+                &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+                &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/crms?characterEncoding=utf8&quot;/&gt;
+                &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+                &lt;property name=&quot;password&quot; value=&quot;&quot;/&gt;
+            &lt;/dataSource&gt;
+        &lt;/environment&gt;
+    &lt;/environments&gt;
+    &lt;!--引入的映射配置文件--&gt;
+    &lt;mappers&gt;
+        &lt;package name=&quot;crms.dao&quot;/&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre><h2 id="5jdbcproperties">5.jdbc.properties</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">driverClasss=com.mysql.jdbc.Driver
+jdbcUrl=jdbc:mysql://localhost:3306/crms?characterEncoding=utf8&amp;useSSL=false
+#数据库的用户名
+username=root
+#数据库的密码，别像我一样不设置
+password= 
+#定义初始连接数
+initialSize=0
+#定义最大连接数
+maxActive=20
+#定义最大空闲
+maxIdle=20
+#定义最小空闲
+minIdle=1
+#定义最长等待时间
+maxWait=60000
+</code></pre></div><h2 id="6log4jproperties">6.log4j.properties</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#日志输出级别
+log4j.rootLogger=debug,stdout,D,E
+#设置stdout的日志输出控制台
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+#输出日志到控制台的方式，默认为System.out
+log4j.appender.stdout.Target = System.out
+#设置使用灵活布局
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+#灵活定义输出格式
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} -[%p]  method:[%c (%rms)] - %m%n
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-07-28-mysql-note/">&laquo; MYSQL笔记</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-06-24-vue/">vue &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kubernetes on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>multiple-container-in-one-pod</title>
+      <link>https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/</link>
+      <pubDate>Sat, 11 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/</guid>
+      <description>在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。
+实例：
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: &amp;#34;alpine/git&amp;#34; name: prepare env: - name: repo value: &amp;#34;https://github.</description>
+    </item>
+    
+    <item>
+      <title>kubernetes二进制部署升级</title>
+      <link>https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/</guid>
+      <description>前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。
+   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1.</description>
+    </item>
+    
+    <item>
+      <title>etcd强制删除k8s数据</title>
+      <link>https://amrom66.github.io/2022/2022-02-28-etcd-clean/</link>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-02-28-etcd-clean/</guid>
+      <description>k8s由于各种原因，导致pod等数据一直处于terminting状态中，可以考虑到etcd中强制删除
+#检索pod数据 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/ca.crt --key=/etc/kubernetes/pki/etcd/ca.key get /registry/pod --prefix --keys-only #根据关键字清楚 export ssss=calico etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/ca.crt --key=/etc/kubernetes/pki/etcd/ca.key get /registry --prefix --keys-only | grep ${ssss} | xargs -I{} etcdctl --endpoints=https://127.</description>
+    </item>
+    
+    <item>
+      <title>kubernetes多用户切换</title>
+      <link>https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/</link>
+      <pubDate>Wed, 30 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/</guid>
+      <description>k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set current-context my-context&amp;quot; The loading order follows these rules: 1.</description>
+    </item>
+    
+    <item>
+      <title>云原生时代日志采集方案浅谈</title>
+      <link>https://amrom66.github.io/2021/2021-05-10-log-metrics-in-cloud-native-environment/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-05-10-log-metrics-in-cloud-native-environment/</guid>
+      <description>引言 本文基于kubernetes容器平台，分析容器日志采集的前因后果，通过比对EFK和Loki的方案，讨论云原生时代容器日志收集与分析的重点所在。
+当服务从裸机部署进入容器时代，容器的强大隔离性与封装性，使得服务的日志变得不稳定。原本裸机运行的程序使用容器运行时，极易由于自动重启，或者自动重建等特性而丢失日志，即便采用了持久化挂载，依然无法根本问题：日志易丢失。对于一个大规模集群而言，完善的日志收集变得越来越重要。
+需要采集日志的场景 可以说，基本上所有的程序的日志都应该采集，即使是那些一次性的job等。日志的采集不仅仅是提供给排查bug人员，而且应当作为系统审计的角色存在。收集整个容器平台的所有日志看起来是件多余的事情，毕竟大多数的日志并无用处，但是对于严谨的业务而言，日志是发现问题的最佳途径。
+方案一 EFK 就kubernetes平台而言，日志的采集方案比较流行的有EFK，其中E是指elasticsearch，K是指kibana，但是F，有两种说法，一种是指fluentd，另一种是指filebeat；一般分析认为，fluentd相比较于filebeat属于重量级程序。本文任务此处为fluentd。EFK方案的架构很明确，fluentd以DaemonSet形式运行在集群所有节点上，在即指定路径的宿主机日志，例如：/var/log/pods；fluentd采集到日志后，传输到elasticsearch存储，elastic作为一个强大的全文检索引擎，具备良好的并发存储于查询的能力；kibana作为日志的展示工具。
+EFK方案实现起来比较成熟，目前多数的方案都是用的是这种，包括k8s官方提供的插件中就有此种方案。但是该方案存在明显的缺陷：
+ Elastic Search 的编写语言是Java，其运行时非常占用内存，有时需要把elastic移除到集群外部部署。 Elastic Search存储的内容虽然比较多，但是大多数并不需要采集。  方案二 Loki Loki是近期比较流行的k8s日志采集方案。博主认为，说Loki是日志采集方案其实是不准确的。先来看Loki采集的原理：
+Loki也采用了代理程序与服务端结合的设计：</description>
+    </item>
+    
+    <item>
+      <title>k8s整合glusterfs做后端存储</title>
+      <link>https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/</link>
+      <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/</guid>
+      <description>安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群</description>
+    </item>
+    
+    <item>
+      <title>k8s in action 阅读笔记</title>
+      <link>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</link>
+      <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</guid>
+      <description>如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client.</description>
+    </item>
+    
+  </channel>
+</rss>

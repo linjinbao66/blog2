@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>webpack学习 - 打工笔记</title>
+<meta name="description" content="webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-10-webpack/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package." />
+<meta name="twitter:title" content="webpack学习 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="webpack学习 - 打工笔记" property="og:title">
+<meta content="webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-10-webpack/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="学习" /><meta property="article:section" content="笔记" />
+<meta property="article:published_time" content="2019-10-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "webpack学习",
+    "genre": "学习笔记",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-10-webpack\/",
+    "datePublished": "2019-10-10 00:00:00 \u002b0000 UTC",
+    "description": "webpack学习 安装 \/\/全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash \/\/安装到你的项目目录 npm install --save-dev webpack 创建package.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">webpack学习</h1>
+            <p class="post-meta"><time datetime='2019-10-10T00:00:00Z' itemprop="datePublished">October 10, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="webpack学习">webpack学习</h2>
+<h2 id="安装">安装</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">//全局安装
+npm install -g webpack
+npm install -g webpack-cli
+npm install --save lodash
+
+//安装到你的项目目录
+npm install --save-dev webpack
+</code></pre></div><h2 id="创建packagejson文件">创建<code>package.json</code>文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">npm init
+</code></pre></div><h2 id="创建目录结构">创建目录结构</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">webpack-demo
+  |- /dist
+    |- index.html
+  |- /src
+    |- index.js
+  |- package.json
+</code></pre></div><p>src/index.js</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">function component() {
+  var element = document.createElement(&#39;div&#39;);
+
+  // Lodash（目前通过一个 script 脚本引入）对于执行这一行是必需的
+  element.innerHTML = _.join([&#39;Hello&#39;, &#39;webpack&#39;], &#39; &#39;);
+
+  return element;
+}
+
+document.body.appendChild(component());
+</code></pre></div><p>dist/index.html</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;起步&lt;/title&gt;
+    &lt;script src=&#34;https://unpkg.com/lodash@4.16.6&#34;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src=&#34;./src/index.js&#34;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div><p>package.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  {
+    &#34;name&#34;: &#34;webpack-demo&#34;,
+    &#34;version&#34;: &#34;1.0.0&#34;,
+    &#34;description&#34;: &#34;&#34;,
++   &#34;private&#34;: true,
+-   &#34;main&#34;: &#34;index.js&#34;,
+    &#34;scripts&#34;: {
+      &#34;test&#34;: &#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;
+    },
+    &#34;keywords&#34;: [],
+    &#34;author&#34;: &#34;&#34;,
+    &#34;license&#34;: &#34;ISC&#34;,
+    &#34;devDependencies&#34;: {
+      &#34;webpack&#34;: &#34;^4.0.1&#34;,
+      &#34;webpack-cli&#34;: &#34;^2.0.9&#34;
+    },
+    &#34;dependencies&#34;: {}
+  }
+</code></pre></div><p>打包命令</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">npx webpack
+</code></pre></div><p>在浏览器中打开 <code>index.html</code>，如果一切访问都正常，你应该能看到以下文本：&lsquo;Hello webpack&rsquo;。</p>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-11-stack-note/">&laquo; 牛客网题目-栈的压入、弹出序列</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/">包含min函数的栈 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

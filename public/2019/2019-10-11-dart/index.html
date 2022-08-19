@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dart学习 - 打工笔记</title>
+<meta name="description" content="Dart 语法  代码片段  void main\(\) { for \(int i = 0; i &amp;amp;lt; 5; i&#43;&#43;\) { print\(&amp;#39;hello ${i &#43; 1}&amp;#39;\); prinfNUmber\(i\); } } prinfNUmber\(num number\){ print\(&amp;#39;The number is $number."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-11-dart/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Dart 语法  代码片段  void main\(\) { for \(int i = 0; i &amp;amp;lt; 5; i&#43;&#43;\) { print\(&amp;#39;hello ${i &#43; 1}&amp;#39;\); prinfNUmber\(i\); } } prinfNUmber\(num number\){ print\(&amp;#39;The number is $number." />
+<meta name="twitter:title" content="Dart学习 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="Dart学习 - 打工笔记" property="og:title">
+<meta content="Dart 语法  代码片段  void main\(\) { for \(int i = 0; i &amp;amp;lt; 5; i&#43;&#43;\) { print\(&amp;#39;hello ${i &#43; 1}&amp;#39;\); prinfNUmber\(i\); } } prinfNUmber\(num number\){ print\(&amp;#39;The number is $number." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-11-dart/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-11 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "Dart学习",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-11-dart\/",
+    "datePublished": "2019-10-11 00:00:00 \u002b0000 UTC",
+    "description": "Dart 语法  代码片段  void main\\(\\) { for \\(int i = 0; i \u0026amp;lt; 5; i\u002b\u002b\\) { print\\(\u0026#39;hello ${i \u002b 1}\u0026#39;\\); prinfNUmber\\(i\\); } } prinfNUmber\\(num number\\){ print\\(\u0026#39;The number is $number.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">Dart学习</h1>
+            <p class="post-meta"><time datetime='2019-10-11T00:00:00Z' itemprop="datePublished">October 11, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="dart">Dart</h2>
+<h2 id="语法">语法</h2>
+<ol>
+<li>代码片段</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">
+<span style="color:#66d9ef">void</span> main<span style="color:#960050;background-color:#1e0010">\</span>(<span style="color:#960050;background-color:#1e0010">\</span>) { <span style="color:#66d9ef">for</span> <span style="color:#960050;background-color:#1e0010">\</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&amp;</span>lt; <span style="color:#ae81ff">5</span>; i<span style="color:#f92672">++</span><span style="color:#960050;background-color:#1e0010">\</span>) { print<span style="color:#960050;background-color:#1e0010">\</span>(<span style="color:#e6db74">&#39;hello </span><span style="color:#e6db74">${</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#960050;background-color:#1e0010">\</span>); prinfNUmber<span style="color:#960050;background-color:#1e0010">\</span>(i<span style="color:#960050;background-color:#1e0010">\</span>); }
+
+} prinfNUmber<span style="color:#960050;background-color:#1e0010">\</span>(<span style="color:#66d9ef">num</span> number<span style="color:#960050;background-color:#1e0010">\</span>){ print<span style="color:#960050;background-color:#1e0010">\</span>(<span style="color:#e6db74">&#39;The number is </span><span style="color:#e6db74">$</span>number<span style="color:#e6db74">.&#39;</span><span style="color:#960050;background-color:#1e0010">\</span>); }
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">输出：
+
+```code
+
+hello 1
+The number is 0.
+hello 2
+The number is 1.
+hello 3
+The number is 2.
+hello 4
+The number is 3.
+hello 5
+The number is 4.
+</code></pre></div><h2 id="重要的概念">重要的概念</h2>
+<ul>
+<li>所有能够使用变量引用的都是对象， 每个对象都是一个类的实例。在 Dart 中 甚至连 数字、方法和 null 都是对象。所有的对象都继承于 Object 类。</li>
+<li>使用静态类型(例如前面示例中的 num ) 可以更清晰的表明你的意图，并且可以让静态分析工具来分析你的代码， 但这并不是牵制性的。（在调试代码的时候你可能注意到 没有指定类型的变量的类型为 dynamic。）</li>
+<li>Dart 在运行之前会先解析你的代码。你可以通过使用 类型或者编译时常量来帮助 Dart 去捕获异常以及 让代码运行的更高效。</li>
+<li>Dart 支持顶级方法 (例如 main())，同时还支持在类中定义函数。 （静态函数和实例函数）。 你还可以在方法中定义方法 （嵌套方法或者局部方法）。</li>
+<li>同样，Dart 还支持顶级变量，以及 在类中定义变量（静态变量和实例变量）。 实例变量有时候被称之为域（Fields）或者属性（Properties）。</li>
+<li>和 Java 不同的是，Dart 没有 public、 protected、 和 private 关键字。如果一个标识符以 (_) 开头，则该标识符 在库内是私有的。详情请参考： 库和可见性。</li>
+<li>标识符可以以字母或者 _ 下划线开头，后面可以是 其他字符和数字的组合</li>
+<li>有时候 表达式 expression 和 语句 statement 是有区别的，所以这种情况我们会分别指明每种情况</li>
+<li>Dart 工具可以指出两种问题：警告和错误。 警告只是说你的代码可能有问题， 但是并不会阻止你的代码执行。 错误可以是编译时错误也可以是运行时错误。遇到编译时错误时，代码将 无法执行；运行时错误将会在运行代码的时候导致一个 异常。</li>
+</ul>
+<h2 id="关键字">关键字</h2>
+<p>下表为 Dart 语言的关键字。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:right"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">abstract</td>
+<td style="text-align:left">continue</td>
+<td style="text-align:right">false</td>
+<td style="text-align:right">new</td>
+<td style="text-align:right">this</td>
+</tr>
+<tr>
+<td style="text-align:left">as</td>
+<td style="text-align:left">default</td>
+<td style="text-align:right">final</td>
+<td style="text-align:right">null</td>
+<td style="text-align:right">throw</td>
+</tr>
+<tr>
+<td style="text-align:left">assert</td>
+<td style="text-align:left">deferred</td>
+<td style="text-align:right">finally</td>
+<td style="text-align:right">operator</td>
+<td style="text-align:right">true</td>
+</tr>
+<tr>
+<td style="text-align:left">async</td>
+<td style="text-align:left">do</td>
+<td style="text-align:right">for</td>
+<td style="text-align:right">part</td>
+<td style="text-align:right">try</td>
+</tr>
+<tr>
+<td style="text-align:left">async*</td>
+<td style="text-align:left">dynamic</td>
+<td style="text-align:right">get</td>
+<td style="text-align:right">rethrow</td>
+<td style="text-align:right">typedef</td>
+</tr>
+<tr>
+<td style="text-align:left">await</td>
+<td style="text-align:left">else</td>
+<td style="text-align:right">if</td>
+<td style="text-align:right">return</td>
+<td style="text-align:right">var</td>
+</tr>
+<tr>
+<td style="text-align:left">break</td>
+<td style="text-align:left">enum</td>
+<td style="text-align:right">implements</td>
+<td style="text-align:right">set</td>
+<td style="text-align:right">void</td>
+</tr>
+<tr>
+<td style="text-align:left">case</td>
+<td style="text-align:left">export</td>
+<td style="text-align:right">import</td>
+<td style="text-align:right">static</td>
+<td style="text-align:right">while</td>
+</tr>
+<tr>
+<td style="text-align:left">catch</td>
+<td style="text-align:left">external</td>
+<td style="text-align:right">in</td>
+<td style="text-align:right">super</td>
+<td style="text-align:right">with</td>
+</tr>
+<tr>
+<td style="text-align:left">class</td>
+<td style="text-align:left">extends</td>
+<td style="text-align:right">is</td>
+<td style="text-align:right">switch</td>
+<td style="text-align:right">yield</td>
+</tr>
+<tr>
+<td style="text-align:left">const</td>
+<td style="text-align:left">factory</td>
+<td style="text-align:right">library</td>
+<td style="text-align:right">sync*</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-12-jdk-proxy-sample/">&laquo; jdk的代理Proxy使用</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-11-stack-note/">牛客网题目-栈的压入、弹出序列 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

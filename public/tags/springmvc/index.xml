@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>springmvc on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/springmvc/</link>
+    <description>Recent content in springmvc on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/springmvc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ssm整合</title>
+      <link>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</guid>
+      <description>ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

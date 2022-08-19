@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shell on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/shell/</link>
+    <description>Recent content in shell on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 05 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux端口扫描</title>
+      <link>https://amrom66.github.io/2019/2019-12-05-port-scan/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-05-port-scan/</guid>
+      <description>2019-12-05-Linux端口扫描 Linux扫描网段主机是否可通  单纯扫描  ##!/bin/sh declare -i I=1 declare -i S=100 while \[ $I -le $S \] ; do IP=&amp;#34;192.</description>
+    </item>
+    
+    <item>
+      <title>netcat使用教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</link>
+      <pubDate>Sat, 21 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</guid>
+      <description>netcat使用教程 @author linjinbao666@gmail.com fork me on github
+netcat简介 netcat 一般简称为 nc，直译为中文就是“网猫”，被誉为——【网络上的瑞士军刀】。它诞生于1995年，在网络安全社区的名气很大（就如同 AK47 在军事领域的名气）。长期在安全圈内混的人，应该都知道它。想当年，insecure.org 网站在本世纪初搞过几次“年度投票”，评选优秀的安全工具。每次投票，netcat 都能排进前几名。参考链接
+nc命令行简介 形式： nc 命令选项 主机 端口 命令选项 这部分可能包含 0~N 个选项 （注：这部分最复杂，下一个小节单独聊） 主机 这部分可能没有，可能以“点分十进制”形式表示，也可能以“域名”形式表示。 端口 这部分可能没有，可能是单个端口，可能是端口范围（以减号分隔） 举例：</description>
+    </item>
+    
+    <item>
+      <title>Linux笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-13-linux-note/</link>
+      <pubDate>Fri, 13 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-13-linux-note/</guid>
+      <description>笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n +10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp.</description>
+    </item>
+    
+  </channel>
+</rss>

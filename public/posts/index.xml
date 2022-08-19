@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 打工笔记</title>
+    <link>https://amrom66.github.io/posts/</link>
+    <description>Recent content in Posts on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mvn-generate-project</title>
+      <link>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</link>
+      <pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/</guid>
+      <description>use mvn cli to generate a project:
+mvn archetype:generate -DgroupId=tk.amrom -DartifactId=proto-java -DinteractiveMode=false -DoutputDirectory=./ explain:
+ use plugin archetype:generate require args groutId and artifactId and DinteractiveMode  </description>
+    </item>
+    
+    <item>
+      <title>mysql生成宽表脚本</title>
+      <link>https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/</link>
+      <pubDate>Thu, 14 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/</guid>
+      <description>需求描述 生成一张有1000个字段的表，每个字段的类型随机，用测试使用。
+解决方案 shell脚本生成建表sql generate_sql.sh
+#!/bin/bash echo &amp;#34;USE amrom;&amp;#34; echo &amp;#34;CREATE TABLE ONE_K_COLS (&amp;#34; for (( i = 0; i &amp;lt; 999; i++ )) { col_type=`echo &amp;#34;tinyint int(11) bigint(20) varchar(50) char(30) date $RANDOM&amp;#34; | awk &amp;#39;{print $($NF%(NF-1)+1)}&amp;#39;` suffix=`cat /proc/sys/kernel/random/uuid | cut -f5 -d&amp;#34;-&amp;#34;` echo &amp;#34;col&amp;#34;_$suffix&amp;#39; &amp;#39;${col_type}&amp;#39;,&amp;#39; } echo &amp;#34;id int auto_increment,&amp;#34; echo &amp;#34;primary key (id)&amp;#34; echo &amp;#34;) engine=innodb;&amp;#34; exit 0  使用方式：.</description>
+    </item>
+    
+    <item>
+      <title>multiple-container-in-one-pod</title>
+      <link>https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/</link>
+      <pubDate>Sat, 11 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/</guid>
+      <description>在kubernetes中，默认场景下，initContainers中的容器是按照顺序启动的，且存在先后依赖关系，即前一个启动完了，才会启动后一个，containers中则是按照顺序启动，但是不存在依赖关系，这就给一些使用场景带来了麻烦。例如，在使用pod作为流水线的时候，containers中的容器顺序需要存在先后依赖关系。以下记录一些实践方案：
+方案一 利用原生的postStart机制，该机制保证了后一个容器在前一个容器发出该信号前不会创建。
+实例：
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: my-pipline name: my-pipline spec: volumes: - name: data emptyDir: {} initContainers: - image: &amp;#34;alpine/git&amp;#34; name: prepare env: - name: repo value: &amp;#34;https://github.</description>
+    </item>
+    
+    <item>
+      <title>kubernetes二进制部署升级</title>
+      <link>https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-06-07-kubernetes-binary-upgrade/</guid>
+      <description>前提 k8s的部署方式基本上有2中，其一是全部利用kubeadm部署，这种方式会以static pod形式部署各个组件，升级的时候按照kubeadm的手册就行，需要先使用kubeadm upgrade plan获得提示，第二种部署方式是组件全部以二进制形式部署，这种部署的升级的时候需要手动操作，以下记录了一次升级操作的过程。
+   组件 升级前 升级后     Etcd 3.4.15 3.4.15   kube-apiserver 1.</description>
+    </item>
+    
+    <item>
+      <title>cetos升级内核</title>
+      <link>https://amrom66.github.io/2022/2022-05-19-upgrade-kernel/</link>
+      <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-05-19-upgrade-kernel/</guid>
+      <description>背景 发现了一个netns的问题，在v站提问了https://v2ex.com/t/853722#reply2，最后决定升级内核.
+upgrade-kernel.sh # 载入公钥 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org # 安装ELRepo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm # 载入elrepo-kernel元数据 yum --disablerepo=\* --enablerepo=elrepo-kernel repolist # 查看可用的rpm包 yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 安装长期支持版本的kernel yum --disablerepo=\* --enablerepo=elrepo-kernel install -y kernel-lt.</description>
+    </item>
+    
+    <item>
+      <title>使用deployment来模拟daemonset</title>
+      <link>https://amrom66.github.io/2022/2022-05-12-use-deployment-simuator-daemonset/</link>
+      <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-05-12-use-deployment-simuator-daemonset/</guid>
+      <description>一个yaml文件
+apiVersion: apps/v1 kind: Deployment metadata: creationTimestamp: null labels: id: very-important name: deploy-important namespace: project-tiger spec: replicas: 3 selector: matchLabels: id: very-important strategy: {} template: metadata: creationTimestamp: null labels: id: very-important spec: affinity: podAntiAffinity: requiredDuringSchedulingIgnoredDuringExecution: - topologyKey: kubernetes.</description>
+    </item>
+    
+    <item>
+      <title>linux network namespace 详解</title>
+      <link>https://amrom66.github.io/2022/2022-04-26-linux-namespace-overview/</link>
+      <pubDate>Tue, 26 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-04-26-linux-namespace-overview/</guid>
+      <description>网络名称空间 linux 网络空间用于管理容器的网络，编排工具创建容器的时候往往会为容器创建一个独立的namespace，然后将容器的网络与宿主机的网络打通，即可实现容器与外部网络的通信。
+linux namespace的操作命令是ip netns
+使用实例   创建一个namespace
+[root@localhost ~]# ip netns add net1  [root@localhost ~]# ip netns ls  net1 net0 [root@localhost ~]# ip netns exec net1 ip addr  1: lo: &amp;lt;LOOPBACK&amp;gt; mtu 65536 qdisc noop state DOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00   不同namespace通信</description>
+    </item>
+    
+    <item>
+      <title>k8sd多网卡方案</title>
+      <link>https://amrom66.github.io/2022/2022-04-22-multus-cni/</link>
+      <pubDate>Fri, 22 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-04-22-multus-cni/</guid>
+      <description>简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。
+方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https://github.com/k8snetworkplumbingwg/multus-cni.git
+使用 第一步 部署crd文件，multus-daemonset-thick-plugin.yml
+--- apiVersion: apiextensions.k8s.io/v1 kind: CustomResourceDefinition metadata: name: network-attachment-definitions.k8s.cni.cncf.io spec: group: k8s.</description>
+    </item>
+    
+    <item>
+      <title>network-policy</title>
+      <link>https://amrom66.github.io/2022/2022-04-03-network-policy/</link>
+      <pubDate>Sun, 03 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-04-03-network-policy/</guid>
+      <description>一个网络隔离策略讲解 apiVersion: networking.k8s.io/v1 kind: NetworkPolicy metadata: name: my-networkpolicy namespace: mysql spec: podSelector: {} policyTypes: - Ingress ingress: - from: - namespaceSelector: matchLabels: name: internal ports: - protocol: TCP port: 8080 解释 该策略：</description>
+    </item>
+    
+    <item>
+      <title>pod挂载configmap</title>
+      <link>https://amrom66.github.io/2022/2022-03-31-pod-configmap/</link>
+      <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-03-31-pod-configmap/</guid>
+      <description>nginx.yaml
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx resources: {} env: - name: option # name of the env variable valueFrom: configMapKeyRef: name: options # name of config map key: var5 # name of the entity in config map dnsPolicy: ClusterFirst restartPolicy: Never status: {} options.</description>
+    </item>
+    
+    <item>
+      <title>mysql权限高级</title>
+      <link>https://amrom66.github.io/2022/2022-03-13-mysql-privileges/</link>
+      <pubDate>Sat, 12 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-03-13-mysql-privileges/</guid>
+      <description>问题： 如何创建一个新用户，并屏蔽旧库权限？
+答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。
+操作实例
+create user &#39;test&#39;@&#39;%&#39; identified by &#39;123456&#39;; grant all privileges on `test%` to &#39;test&#39;@&#39;%&#39;; 以上操作会给予test用户，作用域test开头的所有库的所有权限。</description>
+    </item>
+    
+    <item>
+      <title>关于pv pvc的新认识</title>
+      <link>https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/</guid>
+      <description>新认识
+ hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io/hostname: i-6fns0nua containers: - image: busybox name: app volumeMounts: - mountPath: /logs name: shared-dir args: - /bin/sh - -c - echo hostpath &amp;gt;&amp;gt; /logs/app.</description>
+    </item>
+    
+    <item>
+      <title>esxi-cloud-init使用</title>
+      <link>https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/</guid>
+      <description>esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。
+cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操作；原生部署虚拟机的时候，无法添加自定义源，cloud-init可以实现。
+使用到的工具  govc  govc 是vmware出的cli工具，用于操作vcenter
+第一步 配置esxi.env配置 # vCenter host export GOVC_URL=192.168.123.138 # vCenter credentials export GOVC_USERNAME=administrator@vsphere.local export GOVC_PASSWORD=rpK0qGVhd#YIxP4~S26+ # disable cert validation export GOVC_INSECURE=1 export GOVC_DATASTORE=bigdata export GOVC_NETWORK=&amp;#34;&amp;#34; export GOVC_RESOURCE_POOL=&amp;#39;default-cluster/Resources&amp;#39; export GOVC_DATACENTER=default-dc jinbao666lin@jinbao666deMacBook-Pro govc-practice % govc about FullName: VMware vCenter Server 6.</description>
+    </item>
+    
+    <item>
+      <title>etcd强制删除k8s数据</title>
+      <link>https://amrom66.github.io/2022/2022-02-28-etcd-clean/</link>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-02-28-etcd-clean/</guid>
+      <description>k8s由于各种原因，导致pod等数据一直处于terminting状态中，可以考虑到etcd中强制删除
+#检索pod数据 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/ca.crt --key=/etc/kubernetes/pki/etcd/ca.key get /registry/pod --prefix --keys-only #根据关键字清楚 export ssss=calico etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/ca.crt --key=/etc/kubernetes/pki/etcd/ca.key get /registry --prefix --keys-only | grep ${ssss} | xargs -I{} etcdctl --endpoints=https://127.</description>
+    </item>
+    
+    <item>
+      <title>node节点安装笔记</title>
+      <link>https://amrom66.github.io/2022/2022-02-16-node-note/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2022/2022-02-16-node-note/</guid>
+      <description>node节点安装笔记
+yum install containerd.io cat &amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/containerd.conf overlay br_netfilter EOF sudo modprobe overlay sudo modprobe br_netfilter # Setup required sysctl params, these persist across reboots.</description>
+    </item>
+    
+    <item>
+      <title>iptables操作实例</title>
+      <link>https://amrom66.github.io/2021/2021-11-29-iptables/</link>
+      <pubDate>Mon, 29 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-11-29-iptables/</guid>
+      <description>4个表:filter,mangle,nat,raw
+3个链:PREROUTING,PREROUTING,PREROUTING
+iptabls基本操作示例 查看规则 查看规则集
+iptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称
+修改规则 配置默认规则，不允许数据进入
+iptables -P INPUT DROP 允许转发
+iptables -P FORWARD ACCEPT 不允许数据流出</description>
+    </item>
+    
+    <item>
+      <title>kubeconfig签发</title>
+      <link>https://amrom66.github.io/2021/2021-10-28-kubeconfig/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-10-28-kubeconfig/</guid>
+      <description>签发一个kubeconfig文件的详细流程 大致步骤：
+ cfssl证书 定义集群 定义用户 定义上下文 绑定角色  cfssl证书 ca-config.json cfssl的配置文件
+{ &amp;#34;signing&amp;#34;: { &amp;#34;default&amp;#34;: { &amp;#34;expiry&amp;#34;: &amp;#34;87600h&amp;#34; }, &amp;#34;profiles&amp;#34;: { &amp;#34;kubernetes&amp;#34;: { &amp;#34;usages&amp;#34;: [ &amp;#34;signing&amp;#34;, &amp;#34;key encipherment&amp;#34;, &amp;#34;server auth&amp;#34;, &amp;#34;client auth&amp;#34; ], &amp;#34;expiry&amp;#34;: &amp;#34;876000h&amp;#34; } } } } user-csr.</description>
+    </item>
+    
+    <item>
+      <title>cloudflare worker使用</title>
+      <link>https://amrom66.github.io/2021/2021-08-21-cloudflare-worker/</link>
+      <pubDate>Sat, 21 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-21-cloudflare-worker/</guid>
+      <description>部署ariang到cloudflare workers
+mkdir -p ariang/public cd ariang/public wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f AriaNg-1.1.7.zip cd .. wrangler init --site ariang wrangler config wrangler publish wrangler.</description>
+    </item>
+    
+    <item>
+      <title>golang交叉编译</title>
+      <link>https://amrom66.github.io/2021/2021-08-20-golang-build/</link>
+      <pubDate>Fri, 20 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-20-golang-build/</guid>
+      <description>Golang 支持在一个平台下生成另一个平台可执行程序的交叉编译功能。
+1、Mac下编译Linux, Windows平台的64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go 2、Linux下编译Mac, Windows平台的64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build test.</description>
+    </item>
+    
+    <item>
+      <title>关于镜像oci规范</title>
+      <link>https://amrom66.github.io/2021/2021-08-18-oci/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-18-oci/</guid>
+      <description>早就知道镜像存在OCI规范，就是在镜像的元数据中加入一些表明镜像信息的标签，不知道如何，一次偶然就会在github的流水线中看到了，记录下来：
+{ &amp;#34;target&amp;#34;: { &amp;#34;docker-metadata-action&amp;#34;: { &amp;#34;tags&amp;#34;: [ &amp;#34;ghcr.io/linjinbao666/conda-base:main&amp;#34; ], &amp;#34;labels&amp;#34;: { &amp;#34;org.opencontainers.image.title&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.description&amp;#34;: &amp;#34;conda-base&amp;#34;, &amp;#34;org.opencontainers.image.url&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org.opencontainers.image.source&amp;#34;: &amp;#34;https://github.com/linjinbao666/conda-base&amp;#34;, &amp;#34;org.</description>
+    </item>
+    
+    <item>
+      <title>一个gitlab ci文件</title>
+      <link>https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/</link>
+      <pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-13-gitlab-ci-sample/</guid>
+      <description>一个golang项目典型的gitlab ci文件
+image: golang:latest before_script: - export GOPROXY=https://goproxy.io,direct stages: - build - release - note build: stage: build script: - go build -o dt-release artifacts: paths: - .</description>
+    </item>
+    
+    <item>
+      <title>一个shell程序</title>
+      <link>https://amrom66.github.io/2021/2021-08-10-shell/</link>
+      <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-10-shell/</guid>
+      <description>一个简单的shell程序： app.sh
+#!/bin/bash  action=$1 version=$2 app_name=shuqi-public-${version} load() { file_name=shuqi-public-${version}.tar docker load -i data/${file_name} } clean() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序运行中，请先停止程序&amp;#34; exit; fi docker rm ${app_name} } start() { old_container=`docker container ls | grep ${app_name}` if [ -n &amp;#34;${old_container}&amp;#34; ]; then echo &amp;#34;程序已经在运行，请先停止&amp;#34; exit; fi ip=`ip a | grep -v docker0 |grep inet|grep -v 127.</description>
+    </item>
+    
+    <item>
+      <title>华为云sdk踩坑</title>
+      <link>https://amrom66.github.io/2021/2021-08-06-hcloud-sdk-trip/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-06-hcloud-sdk-trip/</guid>
+      <description>简介 工作中用到了华为云，想使用华为云的sdk实现批量启动流水线，分发代码等任务，简单试用了下，发现问题太多。
+问题   api区域开放问题
+华为云的api调用大致有3种方式，apiexplorer在线调用、hcloud命令行调用，以及通过sdk调用。而同时华为云有区域的区分，比如华东-上海二，华东-北京一这种。api在有些区域开放了调用，但是在另一区域则不开放。举例说明：CloudPipeline（流水线）api开放区域为：上海二、上海一、北京一、北京四、广州，一共5个区域，但是CloudBuild（编译构建）api开放区域则缺少了上海一。要知道CloudBuild会依赖CloudPipeline使用，前一步的api开放了，后一步却不开放，导致根本无法使用。
+  文档没有示例或者示例是错误的
+CloudPipeline的一个接口，ListPipelineSimpleInfo，官方给出的请求示例为：
+&amp;quot;POST https://{endpoint}/v3/pipelines/list&amp;quot; 文档中根本没给出这个endpoint是什么样式的，后续经过尝试发现hcloud也会配置这个endpoint，其为cn-east-3，但是sdk调用时，其格式变成了：cloudpipeline-ext.cn-east-3.myhuaweicloud.com。样例的缺失，导致了调试成本巨大。
+  api混乱，缺少
+举例来说，CloudPipeline流水线api，没有查看单条流水线详情的api等等
+  收获 经过不断的踩坑，实验出来了几个api的调用示例，贴出来以后备用。</description>
+    </item>
+    
+    <item>
+      <title>冒号端口</title>
+      <link>https://amrom66.github.io/2021/2021-08-05-bubble-ports/</link>
+      <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-08-05-bubble-ports/</guid>
+      <description>Linux程序监听网卡端口的时候会有各种缩写，其中有一种叫做冒号端口的写法。
+现象 首先，我们看一段netstat的输出：
+root@VM-0-4-debian:~# netstat -tunlp Active Internet connections (only servers) Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name tcp 0 0 0.</description>
+    </item>
+    
+    <item>
+      <title>一条复杂的sql</title>
+      <link>https://amrom66.github.io/2021/2021-07-15-one-complex-sql/</link>
+      <pubDate>Thu, 15 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-07-15-one-complex-sql/</guid>
+      <description>USE zentao; SELECT zt_task.id AS &amp;#39;编号&amp;#39;, zt_projectproduct.product AS &amp;#39;所属产品&amp;#39;, zt_product.`name` AS &amp;#39;产品名称&amp;#39;, zt_project.NAME AS &amp;#39;所属项目&amp;#39;, zt_story.title AS &amp;#39;相关需求&amp;#39;, zt_task.NAME AS &amp;#39;任务名称&amp;#39;, CASE zt_task.</description>
+    </item>
+    
+    <item>
+      <title>kubernetes多用户切换</title>
+      <link>https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/</link>
+      <pubDate>Wed, 30 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/</guid>
+      <description>k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set current-context my-context&amp;quot; The loading order follows these rules: 1.</description>
+    </item>
+    
+    <item>
+      <title>GitOps入门</title>
+      <link>https://amrom66.github.io/2021/2021-06-15-gitops/</link>
+      <pubDate>Tue, 15 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-06-15-gitops/</guid>
+      <description>GitOps概念 GitOps是一种实现持续交付的模型，利用Git开发工具对云原生应用程序进行操作和管理。当将应用程序部署到Kubernetes时，Git应该是唯一的事实来源。当开发人员更改应用程序时，Git将自动把它们push到Kubernetes进行部署。而且，如果Kubernetes内的运行状态发生变化但与Git内的状态不一致，则它们会从Git内恢复到已知状态。
+参考：https://about.gitlab.com/topics/gitops/
+GitOps与CI/CD GitOps和CI/CD是十分重要的工作伙伴。CI/CD可以让开发人员持续迭代、开发和部署应用程序。而迭代通常通过一个Git配置仓库进行（尽管也会有其他配置仓库）。在部署/交付阶段，构建的基于容器的应用程序被“push”到Kubernetes进行部署。GitOps会通过Kubernetes使用“pull”的方法来增强CI/CD模型，从而将运维层面带入部署/交付中。
+但是，如果有人更改了Kubernetes集群中运行的某些内容，会发生什么？我们将使用Git作为声明性部署工具的主要事实来源，并利用其他工具在出现差异时向我们发出警报。此外，通过利用可以识别运行状态和声明状态之间差异的工具，Kubernetes可以修复为已知/声明的运行状态。
+注意：持续集成和持续开发是互补但独立的过程。在理想状态下，GitOps会将批处理规模拆分为单件流程，每次只处理一个单元。但是，由于CI和CD流程发生在不同的组中，因此组织之间的流程可能会有所不同。
+GitOps和应用程序生命周期 让我们从应用程序生命周期的视角来看一下GitOps的作用。在典型的生命周期中，应用程序会经历多个状态，包括：
+  代码
+  构建
+  创建镜像
+  测试</description>
+    </item>
+    
+    <item>
+      <title>golang fallthrough用法</title>
+      <link>https://amrom66.github.io/2021/2021-06-01-golang-fallthrough/</link>
+      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-06-01-golang-fallthrough/</guid>
+      <description>fallthrough：Go里面switch默认相当于每个case最后带有break，匹配成功后不会自动向下执行其他case，而是跳出整个switch, 但是可以使用fallthrough强制执行后面的case代码。
+示例：切割字符串输出格式
+func main() { const text = `Galaksinin Batı Sarmal Kolu&amp;#39;nun bir ucunda, haritası bile çıkarılmamış ücra bir köşede, gözlerden uzak, küçük ve sarı bir güneş vardır.</description>
+    </item>
+    
+    <item>
+      <title>云原生时代日志采集方案浅谈</title>
+      <link>https://amrom66.github.io/2021/2021-05-10-log-metrics-in-cloud-native-environment/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-05-10-log-metrics-in-cloud-native-environment/</guid>
+      <description>引言 本文基于kubernetes容器平台，分析容器日志采集的前因后果，通过比对EFK和Loki的方案，讨论云原生时代容器日志收集与分析的重点所在。
+当服务从裸机部署进入容器时代，容器的强大隔离性与封装性，使得服务的日志变得不稳定。原本裸机运行的程序使用容器运行时，极易由于自动重启，或者自动重建等特性而丢失日志，即便采用了持久化挂载，依然无法根本问题：日志易丢失。对于一个大规模集群而言，完善的日志收集变得越来越重要。
+需要采集日志的场景 可以说，基本上所有的程序的日志都应该采集，即使是那些一次性的job等。日志的采集不仅仅是提供给排查bug人员，而且应当作为系统审计的角色存在。收集整个容器平台的所有日志看起来是件多余的事情，毕竟大多数的日志并无用处，但是对于严谨的业务而言，日志是发现问题的最佳途径。
+方案一 EFK 就kubernetes平台而言，日志的采集方案比较流行的有EFK，其中E是指elasticsearch，K是指kibana，但是F，有两种说法，一种是指fluentd，另一种是指filebeat；一般分析认为，fluentd相比较于filebeat属于重量级程序。本文任务此处为fluentd。EFK方案的架构很明确，fluentd以DaemonSet形式运行在集群所有节点上，在即指定路径的宿主机日志，例如：/var/log/pods；fluentd采集到日志后，传输到elasticsearch存储，elastic作为一个强大的全文检索引擎，具备良好的并发存储于查询的能力；kibana作为日志的展示工具。
+EFK方案实现起来比较成熟，目前多数的方案都是用的是这种，包括k8s官方提供的插件中就有此种方案。但是该方案存在明显的缺陷：
+ Elastic Search 的编写语言是Java，其运行时非常占用内存，有时需要把elastic移除到集群外部部署。 Elastic Search存储的内容虽然比较多，但是大多数并不需要采集。  方案二 Loki Loki是近期比较流行的k8s日志采集方案。博主认为，说Loki是日志采集方案其实是不准确的。先来看Loki采集的原理：
+Loki也采用了代理程序与服务端结合的设计：</description>
+    </item>
+    
+    <item>
+      <title>什么是DevOps</title>
+      <link>https://amrom66.github.io/2021/2021-05-05-what-is-devops/</link>
+      <pubDate>Wed, 05 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-05-05-what-is-devops/</guid>
+      <description>什么是DevOps：
+维基百科的解释：https://en.wikipedia.org/wiki/DevOps
+ DevOps is a set of practices that combines software development (Dev) and IT operations (Ops). It aims to shorten the systems development life cycle and provide continuous delivery with high software quality.</description>
+    </item>
+    
+    <item>
+      <title>k8s整合glusterfs做后端存储</title>
+      <link>https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/</link>
+      <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-25-k8s-glusterfs/</guid>
+      <description>安装glusterfs和heketi
+#所有存储服务器下载安装glusterfs yum install centos-release-gluster -y yum install glusterfs-server -y #启动 systemctl start glusterd #安装heketi yum install -y heketi heketi-client   部署gluster集群</description>
+    </item>
+    
+    <item>
+      <title>tar打包现有的系统</title>
+      <link>https://amrom66.github.io/2021/2021-03-22-tar-system/</link>
+      <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-22-tar-system/</guid>
+      <description>选择一个系统，在根目录下将已有系统打包成tar文件：
+tar -cvpf /tmp/system.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev --exclude=run --exclude=boot --exclude=/opt/software . 导入方式一：
+cat system.tar | docker import - redhat:6.5 导入方式二：</description>
+    </item>
+    
+    <item>
+      <title>git单独忽略一个文件的历史提交</title>
+      <link>https://amrom66.github.io/2021/2021-03-19-git-ignore-one-file/</link>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-19-git-ignore-one-file/</guid>
+      <description>使用场景：
+将一个重要文件，勿加入git的版本管理中了，后续又更新了好多版本，此时想要去除该文件的所有历史提交。
+ 方案一：删除所有git记录 方案二：单独删除该文件的历史记录  方案二操作如下：
+git filter-branch --force --index-filter &#39;git rm --cached --ignore-unmatch visitor-consumer/src/main/java/com/fline/util/SMSUtil.java&#39; --prune-empty --tag-name-filter cat -- --all git push origin --force --all git push origin --force --tags git for-each-ref --format=&#39;delete %(refname)&#39; refs/original | git update-ref --stdin git reflog expire --expire=now --all git gc --prune=now </description>
+    </item>
+    
+    <item>
+      <title>空镜像</title>
+      <link>https://amrom66.github.io/2021/2021-03-17-scratch/</link>
+      <pubDate>Wed, 17 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-03-17-scratch/</guid>
+      <description>如何将当前宿主机制作成镜像？
+答案：借助scratch 镜像
+scratch 是一个空镜像，只能用于构建其他镜像，比如你要运行一个包含所有依赖的二进制文件，如Golang 程序，可以直接使用 scratch 作为基础镜像。例如busybox的Dockerfile写法：
+FROM scratch ADD busybox.tar.xz / CMD [&amp;quot;sh&amp;quot;] 将当前机器制作成OS镜像，使用docker build即可。</description>
+    </item>
+    
+    <item>
+      <title>子网掩码表示</title>
+      <link>https://amrom66.github.io/2021/2021-02-01-cidr/</link>
+      <pubDate>Mon, 01 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-02-01-cidr/</guid>
+      <description>示例：
+192.168.2.0/24 表示 固定前24位，后8位可以任意变动，所以表示的ip段为192.168.2.0-192.168.2.255。
+192.168.2.0/24 表示 固定前26位，后6位可以任意变动，所以表示的ip共有2^6-2个。</description>
+    </item>
+    
+    <item>
+      <title>k8s in action 阅读笔记</title>
+      <link>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</link>
+      <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/</guid>
+      <description>如何保证多次请求命中同一个pod？  If you execute the same command a few more times, you should hit a different pod with every invocation, because the service proxy normally forwards each connection to a randomly selected backing pod, even if the connections are coming from the same client.</description>
+    </item>
+    
+    <item>
+      <title>jdk1.15编译</title>
+      <link>https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/</link>
+      <pubDate>Wed, 30 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/</guid>
+      <description>jdk1.15编译 github下载项目 https://github.com/openjdk/jdk
+安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum install fontconfig-devel yum install autoconf yum install -y centos-release-scl yum install -y devtoolset-7 yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y yum install cups-devel yum install fontconfig-devel yum install alsa-lib-devel -y 编译 make images</description>
+    </item>
+    
+    <item>
+      <title>containerd手动导入镜像</title>
+      <link>https://amrom66.github.io/2020/2020-11-16-containerd-image-import/</link>
+      <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-11-16-containerd-image-import/</guid>
+      <description>众所周知，k8s.gcr.io 长期被墙，导致 k8s 的基础容器 pause 经常无法获取。k8s docker 可使用代理服拉取，再利用 docker tag 解决问题
+docker pull mirrorgooglecontainers/pause:3.1 docker tag mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1 我在 k8s 集群中尝试使用 containerd 作为 CRI，发现镜像下载和导入与 docker 存在一些区别，大致如下：</description>
+    </item>
+    
+    <item>
+      <title>nginx拦截空reffer</title>
+      <link>https://amrom66.github.io/2020/2020-11-10-nginx-reffer/</link>
+      <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-11-10-nginx-reffer/</guid>
+      <description>背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。
+解决方案 方案一：引入完善的权限框架，例如shiro
+方案二：nginx控制reffer，禁止直接访问
+配置实例：
+location /login.html { root D:\code2\fdmp-pages; autoindex on; index index.html; } location / { valid_referers server_names ~.</description>
+    </item>
+    
+    <item>
+      <title>关于</title>
+      <link>https://amrom66.github.io/2020/about/</link>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/about/</guid>
+      <description>Across the great wall, we can reach the world.
+越过长城，走向世界。</description>
+    </item>
+    
+    <item>
+      <title>k8s的rbac权限控制</title>
+      <link>https://amrom66.github.io/2020/2020-10-16-k8s-rbac/</link>
+      <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-10-16-k8s-rbac/</guid>
+      <description>简介 rbac权限控制是role based access control的简写，中文名基于角色的权限控制。
+RBAC API 对象 Kubernetes有一个很基本的特性就是它的所有资源对象都是模型化的 API 对象，允许执行 CRUD(Create、Read、Update、Delete)操作(也就是我们常说的增、删、改、查操作)，比如下面的这下资源：
+ Pods ConfigMaps Deployments Nodes Secrets Namespaces  上面这些资源对象的可能存在的操作有：</description>
+    </item>
+    
+    <item>
+      <title>linux cgroups简单使用</title>
+      <link>https://amrom66.github.io/2020/2020-10-14-linux-cgroups/</link>
+      <pubDate>Wed, 14 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-10-14-linux-cgroups/</guid>
+      <description>简介 cgroups 是Linux内核提供的一种可以限制单个进程或者多个进程所使用资源的机制，可以对 cpu，内存等资源实现精细化的控制，目前越来越火的轻量级容器 Docker 就使用了 cgroups 提供的资源限制能力来完成cpu，内存等部分的资源控制。另外，开发者也可以使用 cgroups 提供的精细化控制能力，限制某一个或者某一组进程的资源使用。比如在一个既部署了前端 web 服务，也部署了后端计算模块的八核服务器上，可以使用 cgroups 限制 web server 仅可以使用其中的六个核，把剩下的两个核留给后端计算模块。
+简单理解：cgroups可以实现cpu和内存的机器资源的精细化控制，比如限制使用10%的cpu资源，使用100M内存等功能。Docker容器运行时通过参数指定内存和cpu占用功能就是基于这个实现的。
+主要作用 实现 cgroups 的主要目的是为不同用户层面的资源管理提供一个统一化的接口。从单个任务的资源控制到操作系统层面的虚拟化，cgroups 提供了四大功能：</description>
+    </item>
+    
+    <item>
+      <title>spring 使用websocket主动推送日志到页面展示</title>
+      <link>https://amrom66.github.io/2020/2020-09-05-websocket-useage-in-java-practice/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-09-05-websocket-useage-in-java-practice/</guid>
+      <description>简介 Java程序运行的时候会产生大量的日志，有的是自己主动打印的，有些的第三方包中打印的日志，一些场景下需要将程序执行过程中的日志主动推送出去，例如使用docker-java制作镜像的时候，我需要将制作过程大日志输出到页面，用来判断制作过程。
+相关流程  logback日志切割 阻塞队列/环形队列处理并发读写 websocket推送  方案一实现 很明显，日志需要通过log4j等日志框架收集。我们需要自定义一个过滤器，处理需要的日志信息，在过滤器中将日志存到阻塞队列或者环形队列。配置如下：
+logback.xml
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;configuration scan=&amp;#34;true&amp;#34; scanPeriod=&amp;#34;3 seconds&amp;#34;&amp;gt; &amp;lt;!--设置日志输出为控制台--&amp;gt; &amp;lt;include resource=&amp;#34;org/springframework/boot/logging/logback/defaults.</description>
+    </item>
+    
+    <item>
+      <title>新的开始</title>
+      <link>https://amrom66.github.io/2020/2020-07-17-the-new-beginning/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-07-17-the-new-beginning/</guid>
+      <description>新的开始 面试了两次
+ 端点 腾讯  感觉，能力还是不够，研究不够深入的全当做会的写在简历上了。
+面试题整理
+[mysql]联合索引字段顺序会产生影响吗？什么情况下需要建索引？什么情况下不建？mysql 查看连接数和进程数?慢查询是什么？[linux]Linux 端口数一共多少，怎么确定的？sh 和 bash 的区别脚本首行的#!</description>
+    </item>
+    
+    <item>
+      <title>服务器内存优化</title>
+      <link>https://amrom66.github.io/2020/2020-03-09-linux-memory-free/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-03-09-linux-memory-free/</guid>
+      <description>服务器内存优化  释放缓存  sync echo 3 &amp;gt; /proc/sys/vm/drop_caches  排序  ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -r | less  查看启动的服务  systemctl list-unit-files --type=service --state=enabled </description>
+    </item>
+    
+    <item>
+      <title>hive on spark 测试</title>
+      <link>https://amrom66.github.io/2020/2020-01-09-hive/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-09-hive/</guid>
+      <description>hive on spark 测试 准备工作： 建库：
+create database db2; 建表：
+sql语句：
+create table tb1(id int , name string); 测试1：插入单条数据 insert into tb1(id, name) values(10, &amp;#39;linjb&amp;#39;); 执行结果：1秒</description>
+    </item>
+    
+    <item>
+      <title>spark on hive 踩坑</title>
+      <link>https://amrom66.github.io/2020/2020-01-08-spark/</link>
+      <pubDate>Wed, 08 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-08-spark/</guid>
+      <description>spark on hive 踩坑 搭建hadoop环境 掠过
+搭建hive环境 掠过
+搭建spark  注意版本兼容  在pom文件中查看
+ 下载spark-2.0.0-bin-hadoop2.4-without-hive版本，without-hive必须  我的版本 hive:2.3.6 spark :spark-2.0.0-bin-hadoop2.4-without-hive hadoop:2.</description>
+    </item>
+    
+    <item>
+      <title>互联网的遗忘</title>
+      <link>https://amrom66.github.io/2020/2020-01-07-the-ignorance-of-www/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2020/2020-01-07-the-ignorance-of-www/</guid>
+      <description>故事的由来从我熟悉的一个网站开始。14年，上大学的第一年，那时谷歌的封锁还没有这么严格，可以通过修改hosts文件上网。电脑修改hosts，安卓手机通过root权限修改hosts文件。总而言之，那时的上网环境要比现在好很多。在四下里找谷歌的hosts文件的时候，我找到一个后来一直使用的网站，老D博客。站长应该是个极客，一直在网站上分享一些实用软件，业界新闻，以及我最想要的最新hosts文件。我平时没事的时候就会打开这个网站看看最近有没有什么新的新闻，后来随着hosts失效的越来越快，我几乎每天都要打开网站看。
+ 就这样，时间一晃到了17年底，我记得是从下半年开始的，封锁越来越快，几乎早上出现的hosts文件，下午就失效了。那时看到的解释是说，GFW升级，已经可以直接识别HTTPS流量的内容了（PS：这个说法应该不准确）。于是，想要访问外网，这种方法自然失效了。于是我先是买了搬瓦工自己搭建SSR使用，但总是IP被封禁，没办法又看着站长的文章转战可以换IP的Vultr。从这时候开始，我已经不怎么上这个网站找hosts文件了，但是偶尔还是会登上去看看新闻，或者看看历史文章里面的教程。
+ 时间再晃，到了19年，我毕业了。毕业后由于工作的不顺，一直游离在贫困县边缘的我忙着找工作和换工作，上老D博客的次数更少了。甚至连历史文章里的教程都想不起来看。我的生活被其他的占满了，整天忙的不可开胶，却又毫无收获。甚至到今年，我脑子偶尔想起来一个非常有用的网站，但是一时竟然记不起来名字，隔了一会才反应过来，这个网站叫老D博客。
+ 时隔许久，再次访问老D博客，还是熟悉的Tab栏，熟悉的页面，似乎没有什么变化。仔细一看，却有淡淡的落寞。
+老D博客的最新一篇文章Google Chrome现已支持DNS over HTTPS加密服务，发布日期是2020-05-30，15265的阅读量。我写这篇博文的时间是2021-01-07，时间已经过去了半年之久，作者却不再更新了。我检查了域名的信息，续费到2029年，检查了SSL证书情况，是2020年10月签的证书&amp;hellip;&amp;hellip;
+ 网站的作者或许会回来，或许不会，或许服务器到期后，这个站点在搜素引擎消失，互联网会遗忘的，正如人生一样。有人说人的一生经历3次死亡，第一次是葬礼，第二次是被社会忘记，第三次是被亲朋好友忘记，互联网的遗忘第一次是服务器，域名到期，第二次是搜索引擎无法检索。我现在写这篇博文用的主题是一个叫做柳志超的人开发，github地址LeaveIt，这个主题停更在2年前，issue留下了22个未处理，看他的github主页最后一次提交在2018年10月4号，他也被互联网遗忘了，抑或是他遗忘了互联网？
+ 不禁感慨，将来的我在这浩大的互联网上，会留下什么呢？在这比互联网还要浩大的人世间又能留下什么呢？我们的遗忘与被遗忘，会在什么时间到来呢？</description>
+    </item>
+    
+    <item>
+      <title>jvm学习02</title>
+      <link>https://amrom66.github.io/2019/2019-12-07-jvm-note/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-07-jvm-note/</guid>
+      <description>jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava.</description>
+    </item>
+    
+    <item>
+      <title>jvmGC日志分析</title>
+      <link>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</link>
+      <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</guid>
+      <description>jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出</description>
+    </item>
+    
+    <item>
+      <title>Linux端口扫描</title>
+      <link>https://amrom66.github.io/2019/2019-12-05-port-scan/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-05-port-scan/</guid>
+      <description>2019-12-05-Linux端口扫描 Linux扫描网段主机是否可通  单纯扫描  ##!/bin/sh declare -i I=1 declare -i S=100 while \[ $I -le $S \] ; do IP=&amp;#34;192.</description>
+    </item>
+    
+    <item>
+      <title>批处理解决IE浏览器设置问题</title>
+      <link>https://amrom66.github.io/2019/2019-11-29-bat-repari-ie/</link>
+      <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-29-bat-repari-ie/</guid>
+      <description>批处理解决IE浏览器设置问题 功能集合.bat
+@echo off title ★ IEl浏览器设置，请先确保浏览器是IE11 ，否则会有设置无法生效 ★ echo 正在启用IE的 ActiveX控件、JAVA脚本、活动脚本，请稍候... ping 127.0.0.1 -n 2 &amp;gt;nul 2&amp;gt;nul set bl=0 :setreg if &amp;#34;%bl%&amp;#34;==&amp;#34;3&amp;#34; goto ex set regpath=HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\%bl% cls echo 本脚本可快速启用IE的 ActiveX控件、JAVA脚本、活动脚本 echo 正在进行 ZONE%bl% 的设置.</description>
+    </item>
+    
+    <item>
+      <title>nginx代理出来的页面使用IE无法加载png问题</title>
+      <link>https://amrom66.github.io/2019/2019-11-25-nginx-problem/</link>
+      <pubDate>Mon, 25 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-25-nginx-problem/</guid>
+      <description>nginx代理出来的页面使用IE无法加载png问题 问题描述： 使用nginx对站点进行反代，其他都正常，但是有个png图片无法加载。排查了情况如下： 1. 其他浏览器正常 2. IE在内网正常，访问原始地址 3. IE在外网异常，访问nginx代理后地址
+问题分析： 检查F12，发现图片状态码200，已经加载出来，但是没有渲染出来，推测是由于安全策略问题；比对内网header和外网访问header，发现区别在外网多了个X-Content-Type-Options: nosniff，估计问题在这。
+问题解决： 在nginx代理中，去掉add_header X-Content-Type-Options nosniff;配置项 问题解决
+总结 X-Content-Type-Options nosniff是什么？</description>
+    </item>
+    
+    <item>
+      <title>linux find 按文件时间查询</title>
+      <link>https://amrom66.github.io/2019/2019-11-23-linux-find/</link>
+      <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-23-linux-find/</guid>
+      <description>需求:删除 /home/ljbao/myback/files 目录下7分钟之前生成的gz类型的文件 find /home/ljbao/myback/files -mtime +7 -name &amp;#34;*.gz&amp;#34; -exec rm {} \; //时间条件
+-amin n: 查找n分钟以前被访问过的所有文件。 -atime n: 查找n天以前被访问过的所有文件。 -cmin n: 查找n分钟以前文件状态被修改过的所有文件。 -ctime n: 查找n天以前文件状态被修改过的所有文件。 -mmin n: 查找n分钟以前文件内容被修改过的所有文件。 -mtime n: 查找n天以前文件内容被修改过的所有文件。 </description>
+    </item>
+    
+    <item>
+      <title>mysql 定时备份</title>
+      <link>https://amrom66.github.io/2019/2019-11-23-mysql-backup-cron/</link>
+      <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-23-mysql-backup-cron/</guid>
+      <description>mysql 定时备份 第一步：写备份脚本 backup_full.sh
+#!/bin/bash BACKUP_ROOT=/home/ljbao/myback BACKUP_FILEDIR=$BACKUP_ROOT/files BACKUP_LOGDIR=$BACKUP_ROOT/logs #当前日期 DATE=$(date +%Y%m%d) DATABASES=$(mysql -uroot -p*** -e &amp;#34;show databases&amp;#34; | grep -Ev &amp;#34;Database|sys|information_schema&amp;#34;) echo $DATABASES #循环数据库进行备份 for db in $DATABASES do echo echo ----------$BACKUP_FILEDIR/${db}_$DATE.</description>
+    </item>
+    
+    <item>
+      <title>MySQL 分库分表-ShardingSphere使用</title>
+      <link>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</link>
+      <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-17-shardingsphere/</guid>
+      <description>MySQL 分库分表-ShardingSphere使用 分库和分表的实现-java工程版  依赖项  &amp;lt;dependencies&amp;gt; &amp;lt;!-- 主要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.shardingsphere&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;sharding-jdbc-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.0-RC2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-dbcp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-dbcp&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.</description>
+    </item>
+    
+    <item>
+      <title>Linux流量检测工具-vnstat使用</title>
+      <link>https://amrom66.github.io/2019/2019-11-16-vnstat/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-16-vnstat/</guid>
+      <description>2019-11-16-Linux流量检测工具-vnstat使用 安装 yum install epel-release -y &amp;amp;&amp;amp; yum install -y vnstat 为指定网卡创建监控数据库 vnstat -u -i eth0 #网卡名，使用 ip a查看 流量查看命令 vnstat -d #每日统计 vnstat -m #每月统计 实时监控 vnstat -l -i eth0 Monitoring eth0.</description>
+    </item>
+    
+    <item>
+      <title>简单操作excel apache POI使用</title>
+      <link>https://amrom66.github.io/2019/2019-11-11-poi-excel/</link>
+      <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-11-poi-excel/</guid>
+      <description>使用apace POI操作excel   pom依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.poi&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;poi&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.8&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;   部分java 代码
+//部分代码 FileSystemView fsv = FileSystemView.getFileSystemView(); String desktop = fsv.</description>
+    </item>
+    
+    <item>
+      <title>jvm指令学习</title>
+      <link>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</link>
+      <pubDate>Fri, 08 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</guid>
+      <description>jvm 指令学习 编写源代码 Hello.java
+public class Hello{ public static void main(String[] args){ System.out.println(&amp;#34;Hello!&amp;#34;); } } 编译 javac Hello.java 生成Hello.class
+反编译 javap -v -verbose Hello.</description>
+    </item>
+    
+    <item>
+      <title>Linux 网卡配置</title>
+      <link>https://amrom66.github.io/2019/2019-10-23-linux-networkd-config/</link>
+      <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-23-linux-networkd-config/</guid>
+      <description>Linux 网卡配置 1：临时修改： 1.1：修改IP地址 ifconfig eth0 192.168.100.100
+1.2：修改网关地址 route add default gw 192.168.100.1 dev eth0
+1.3：修改DNS echo &amp;quot;nameserver 8.8.8.8&amp;quot; &amp;gt;&amp;gt; /etc/resolv.</description>
+    </item>
+    
+    <item>
+      <title>Centos 7 下编译openjdk</title>
+      <link>https://amrom66.github.io/2019/2019-10-22-how-to-build-openjdk/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-22-how-to-build-openjdk/</guid>
+      <description>openjdk编译 最近在学习java虚拟机的技术，尝试下手动编译openjdk
+准备工作  CentOS7 环境 openjdk8 源码 bootstrap jdk源码（我用的是openjdk 7）  注意事项：
+  目标jdk版本号比bootstrap jdk 大1
+  准备可能需要安装各种编译工具</description>
+    </item>
+    
+    <item>
+      <title>Vmware虚拟机Linux修改磁盘大小</title>
+      <link>https://amrom66.github.io/2019/2019-10-18-linux-scale-disk/</link>
+      <pubDate>Fri, 18 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-18-linux-scale-disk/</guid>
+      <description>Linux修改磁盘大小 注明： 1. 教程是在Vmware虚拟机环境下制作 2. 真机和这个差不多，只是第一步不一样
+第一步 在Vmware中进行分配磁盘大小 如图所示： 第二步：fdisk命令 fdisk /dev/sda p　查看已分区数量（我看到有两个 /dev/sda1 /dev/sda2） n　新增加一个分区 p　分区类型我们选择为主分区 分区号输入3（因为1,2已经用过了,sda1是分区1,sda2是分区2,sda3分区3） 回车　默认（起始扇区） 回车　默认（结束扇区） t　修改分区类型 选分区3 8e　修改为LVM（8e就是LVM） w　写分区表 q　完成，退出fdisk命令 第三步：添加新LVM到已有的LVM组，实现扩容 lvm　进入lvm管理 lvm&amp;gt;pvcreate /dev/sda3　这是初始化刚才的分区3 lvm&amp;gt;vgextend centos /dev/sda3 将初始化过的分区加入到虚拟卷组centos (卷和卷组的命令可以通过 vgdisplay ) vm&amp;gt;vgdisplay lvm&amp;gt;lvextend -l+6793 /dev/mapper/centos-root　扩展已有卷的容量（6793 是通过vgdisplay查看free PE /Site的大小） lvm&amp;gt;pvdisplay 查看卷容量，这时你会看到一个很大的卷了 lvm&amp;gt;quit 退出 第四步：文件系统的扩容 xfs_growfs /dev/mapper/centos-root 查看结果-扩容了30G [root@192-168-200-130 ~]# df -h Filesystem Size Used Avail Use% Mounted on /dev/mapper/centos-root 47G 17G 31G 36% / devtmpfs 475M 0 475M 0% /dev tmpfs 487M 0 487M 0% /dev/shm tmpfs 487M 7.</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ示例代码</title>
+      <link>https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/</link>
+      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-16-rabbitmq-java/</guid>
+      <description>RabbitMQ 官网文档 涉及jar包amqp-client-5.7.3.jar
+ 发送  package myrabbitmq; import com.rabbitmq.client.Channel; import com.rabbitmq.client.Connection; import com.rabbitmq.client.ConnectionFactory; public class Send { private final static String QUEUE_NAME = &amp;#34;hello&amp;#34;; private final static String IP = &amp;#34;localhost&amp;#34;; public static void main(String[] args) { ConnectionFactory factory = new ConnectionFactory(); factory.</description>
+    </item>
+    
+    <item>
+      <title>base64转码</title>
+      <link>https://amrom66.github.io/2019/2019-10-15-base64-usage/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-15-base64-usage/</guid>
+      <description>2019-10-15-base64转码 名词解释 Base64算法最早是为了解决电子邮件传输的问题的，早先的邮件传输协议中只支持ASCII码传递，如果要传输二进制文件，如图片和视频，是无法传输的，而BASE64可以将二进制文件内容编码成为只包含ASCII码的内容，这样就可以传输了。 Base64算法大家常常说成是加密算法，但准确的来说，Base64不是一种加密算法，只能算是一种基于64个字符的编码算法。 它有一个字符映射表，每个字符映射了一个十进制编码，共映射了64个字符。Base64将给定的数据经二进制转换后与字符映射表相对应，得到所谓的密文；映射表如下，映射表的最后是一个等号，是作为补位符用来补位的。
+编号 字符 编号 字符 编号 字符 编号 字符 0 A 16 Q 32 g 48 w 1 B 17 R 33 h 49 x 2 C 18 S 34 i 50 y 3 D 19 T 35 j 51 z 4 E 20 U 36 k 52 0 5 F 21 V 37 l 53 1 6 G 22 W 38 m 54 2 7 H 23 X 39 n 55 3 8 I 24 Y 40 o 56 4 9 J 25 Z 41 p 57 5 10 K 26 a 42 q 58 6 11 L 27 b 43 r 59 7 12 M 28 c 44 s 60 8 13 N 29 d 45 t 61 9 14 O 30 e 46 u 62 + 15 P 31 f 47 v 63 / JAVA中Base64编码使用 涉及jdk工具类，java.</description>
+    </item>
+    
+    <item>
+      <title>windows共享开启</title>
+      <link>https://amrom66.github.io/2019/2019-10-15-windows-open-share/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-15-windows-open-share/</guid>
+      <description>Windows共享命令  net share  C:\Users\linjinbao666&amp;gt;net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。  net share blog=E:\amrom  PS E:\&amp;gt; net share blog=E:\amrom blog 共享成功。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- IPC$ 远程 IPC C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 ADMIN$ C:\Windows 远程管理 blog E:\amrom 命令成功完成。  删除共享目录  PS E:\&amp;gt; net share blog /del blog 已经删除。 PS E:\&amp;gt; net share 共享名 资源 注解 ------------------------------------------------------------------------------- C$ C:\ 默认共享 D$ D:\ 默认共享 E$ E:\ 默认共享 F$ F:\ 默认共享 IPC$ 远程 IPC ADMIN$ C:\Windows 远程管理 命令成功完成。 net use使用学习（重要） </description>
+    </item>
+    
+    <item>
+      <title>博客加入访问统计</title>
+      <link>https://amrom66.github.io/2019/2019-10-15-view-log-blog/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-15-view-log-blog/</guid>
+      <description>2019-10-15-博客加入访问计数 博客加入访问统计 使用valine的实现
+步骤  修改comments.html  将以下内容加入：
+&amp;lt;p class=&amp;quot;copyright-item&amp;quot;&amp;gt; &amp;lt;span id=&amp;quot;{{ .RelPermalink | relURL }}&amp;quot; class=&amp;quot;leancloud_visitors&amp;quot; data-flag-title=&amp;quot;{{ .Title }}&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;Reading: 本文累计被阅读 &amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;leancloud-visitors-count&amp;quot;&amp;gt;1000000&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;次&amp;lt;/span&amp;gt; &amp;lt;/span&amp;gt; &amp;lt;/p&amp;gt; 加入后内容如下：</description>
+    </item>
+    
+    <item>
+      <title>JAVA并发编程实战-笔记</title>
+      <link>https://amrom66.github.io/2019/2019-10-14-java-note/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-14-java-note/</guid>
+      <description>JAVA并发编程实战-笔记 Volatile变量
+ 同步的弱形式 该变量不会被缓存 不加锁 不会导致阻塞 可以修饰变量，不能修饰方法 只能保证可见性，不能保证原子性  线程封闭 访问共享的、可变的数据要求使用同步，一个可以避免同步的方法就是不共享数据。
+  Ad-hoc线程限制
+  栈限制
+  ThreadLocal</description>
+    </item>
+    
+    <item>
+      <title>简单工程模式</title>
+      <link>https://amrom66.github.io/2019/2019-10-14-factory-model/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-14-factory-model/</guid>
+      <description>2019-10-14-工厂模式 含义  简单工厂模式又叫静态方法模式（因为工厂类定义了一个静态方法） 现实生活中，工厂是负责生产产品的；同样在设计模式中，简单工厂模式我们可以理解为负责生产对象的一个类，称为“工厂类”。  解决的问题 将“类实例化的操作”与“使用对象的操作”分开，让使用者不用知道具体参数就可以实例化出所需要的“产品”类，从而避免了在客户端代码中显式指定，实现了解耦。
+步骤  创建抽象产品类 &amp;amp; 定义具体产品的公共接口； 创建具体产品类（继承抽象产品类） &amp;amp; 定义生产的具体产品； 创建工厂类，通过创建静态方法根据传入不同参数从而创建不同具体产品类的实例； 外界通过调用工厂类的静态方法，传入不同参数从而创建不同具体产品类的实例  示例  创建抽象产品类  abstract class Product{ public abstract void Show(); }  创建具体产品类  //具体产品类A class ProductA extends Product{ @Override public void Show() { System.</description>
+    </item>
+    
+    <item>
+      <title>jdk的代理Proxy使用</title>
+      <link>https://amrom66.github.io/2019/2019-10-12-jdk-proxy-sample/</link>
+      <pubDate>Sat, 12 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-12-jdk-proxy-sample/</guid>
+      <description>使用jdk的代理-Proxy动态代理 核心思想：反射，不改变原有代码，使用代理对象执行原有方法，侵入原始类内部 用处：解耦，切面编程
+CalculatorProxy.java
+public class CalculatorProxy { /** * 代理 * @param calcultor * @return */ public static Calcultor getCaluctor(Calcultor calcultor) { ClassLoader loader = calcultor.</description>
+    </item>
+    
+    <item>
+      <title>Dart学习</title>
+      <link>https://amrom66.github.io/2019/2019-10-11-dart/</link>
+      <pubDate>Fri, 11 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-11-dart/</guid>
+      <description>Dart 语法  代码片段  void main\(\) { for \(int i = 0; i &amp;amp;lt; 5; i++\) { print\(&amp;#39;hello ${i + 1}&amp;#39;\); prinfNUmber\(i\); } } prinfNUmber\(num number\){ print\(&amp;#39;The number is $number.</description>
+    </item>
+    
+    <item>
+      <title>牛客网题目-栈的压入、弹出序列</title>
+      <link>https://amrom66.github.io/2019/2019-10-11-stack-note/</link>
+      <pubDate>Fri, 11 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-11-stack-note/</guid>
+      <description>2019-10-11-栈的压入、弹出序列 题目描述 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+分析 1.辅助栈 2.找到弹出的位置
+代码实现 package nowcoder; import java.util.Stack; /** * 栈的压入、弹出序列 */ public class IsPopOrder { public boolean isPopOrder(int [] pushA,int [] popA) { if (pushA.</description>
+    </item>
+    
+    <item>
+      <title>webpack学习</title>
+      <link>https://amrom66.github.io/2019/2019-10-10-webpack/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-10-webpack/</guid>
+      <description>webpack学习 安装 //全局安装 npm install -g webpack npm install -g webpack-cli npm install --save lodash //安装到你的项目目录 npm install --save-dev webpack 创建package.</description>
+    </item>
+    
+    <item>
+      <title>包含min函数的栈</title>
+      <link>https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-10-stack-which-include-min-func/</guid>
+      <description>牛客网题目-包含min函数的栈 题目描述 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+解法一 双栈实现，数据栈加最小值栈 代码如下：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; dataStack = new Stack(); Stack&amp;lt;Integer&amp;gt; minStack = new Stack&amp;lt;&amp;gt;(); public void push(int node) { dataStack.</description>
+    </item>
+    
+    <item>
+      <title>java创建线程的7种方式</title>
+      <link>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</link>
+      <pubDate>Wed, 09 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-09-seven-ways-to-create-thread-in-java/</guid>
+      <description>java创建线程的7种方式  继承Thread类并重写run()方法  public class MyThread extends Thread { @Override public void run() { System.out.println(this.getId()+this.getName()+ &amp;#34; is running&amp;#34;); } public static void main(String[] arg){ new MyThread().</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://amrom66.github.io/2019/2019-10-03-thread-sample-of-pi/</link>
+      <pubDate>Thu, 03 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-10-03-thread-sample-of-pi/</guid>
+      <description>多线程计算圆周率 使用公式1-1/3+1/5&amp;hellip;&amp;hellip;
+代码示例 package learn; import java.math.BigDecimal; import java.util.ArrayList; import java.util.concurrent.*; /** * 多线程计算圆周率 */ public class Pie { public static double sum = 0.</description>
+    </item>
+    
+    <item>
+      <title>React学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-28-react/</link>
+      <pubDate>Sat, 28 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-28-react/</guid>
+      <description>React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。</description>
+    </item>
+    
+    <item>
+      <title>博客加入评论功能</title>
+      <link>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</link>
+      <pubDate>Thu, 26 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-26-comment-of-my-blog/</guid>
+      <description>2019-09-26-个人博客加入评论功能 个人博客加入评论功能 实现思路： 使用第三方存储，白嫖美滋滋
+按照姑苏流白的教程，我使用Valine的评论系统
+配置Valine  注册 登录账号 略过 建立应用 配置应用keys，配置项：AppID， AppKey  修改博客配置  修改config.toml配置  加入以下内容：
+# Valine.</description>
+    </item>
+    
+    <item>
+      <title>Mongodb安装与使用</title>
+      <link>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</guid>
+      <description>Mongodb安装与使用 背景知识 最近在项目实施过程中遇到一个问题：由于客户提供的Linux机器没有最下滑化安装，导致使用公司的bin包方式安装Mongodb失败。本着能自己解决就自己解决的态度，我开始了Mongodb的研究。
+安装和启动   下载
+因为centos的官放的yum源中没有提供Mongodb的安装包，此时我们需要自己下载下来（也可以修改yum源，不推荐） 执行命令wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.0.tgz 下载安装包
+  解压
+执行解压命令tar zxvf mongodb-linux-x86_64-4.0.0.tgz，如果为了统一的化，可以把解压出来的文件夹重命名，以及移动到/opt/下去。这个不重要，可以不用看。
+  添加启动配置</description>
+    </item>
+    
+    <item>
+      <title>MySQL一键备份脚本</title>
+      <link>https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-24-mysql-backup-script/</guid>
+      <description>MySQL一键备份脚本 备份脚本-Windows版本 脚本下载
+@echo off pause set year=%Date:~0,4% set month=%Date:~5,2% set day=%Date:~8,2% set address=f:\ set host=localhost set user=root set password=123321 set mysqlpath=D:\epoint_mysql_5.</description>
+    </item>
+    
+    <item>
+      <title>GitHub博客教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-23-how-to-write-blog/</guid>
+      <description>GitHub博客 作为一名程序员，每天的学习必不可少，但是，如果只是乱糟糟的学习，而不懂得如何去记笔记，那效率可想而知。一个技术博客，是大多数程序员的必须品。漂亮的博客，让工作顺心，让学习更有效率，更有动力。今天，我来教大家如何利用GitHub提供的免费服务，打造自己的专属博客，白嫖美滋滋。
+前期准备   GitHub账号
+  Hugo 软件
+  Git客户端
+  掌握Markdown语法
+需要准备的东西就是这么多，账号去官网注册就行，几个软件下载安装就可以，具体怎么安装，以及如何跨平台啥的，这里不作阐述。需要注意的是Markdown语法一定要会，起码简单的语法懂得，因为写文章都要用Markdown来写，.md是他的标志。
+  第一篇文章 准备好以上条件后，我们来写一篇博客</description>
+    </item>
+    
+    <item>
+      <title>windows常用批处理命令</title>
+      <link>https://amrom66.github.io/2019/2019-09-23-windows-cmd/</link>
+      <pubDate>Mon, 23 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-23-windows-cmd/</guid>
+      <description>Windows批处理 常用dos命令 echo 打印 dir 列文件名 cd　改变当前目录 ren 改变文件名 copy　拷贝文件 del 删除文件 md　建立子目录 rd　删除目录 deltree　删除目录树 format　格式化磁盘 edit　文本编辑 type　显示文件内容 mem 查看内存状况 ## 以下是新增加的命令 help　显示帮助提示 cls 清屏 move　移动文件，改目录名 more　分屏显示 xcopy 拷贝目录和文件 显示篇  echo @ 和 pause 在DOS命令提示符中使用 echo /?</description>
+    </item>
+    
+    <item>
+      <title>第155场周赛--LeetCode</title>
+      <link>https://amrom66.github.io/2019/2019-09-22-155th-weekly-game/</link>
+      <pubDate>Sun, 22 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-22-155th-weekly-game/</guid>
+      <description>第 155 场周赛&amp;ndash;LeetCode 第一题：最小绝对差 题目描述： 给你个整数数组 arr，其中每个元素都 不相同。 请你找到所有具有最小绝对差的元素对，并且按升序的顺序返回。 示例 1：
+输入：arr = [4,2,1,3] 输出：[[1,2],[2,3],[3,4]] 示例 2：
+输入：arr = [1,3,6,10,15] 输出：[[1,3]] 示例 3：</description>
+    </item>
+    
+    <item>
+      <title>netcat使用教程</title>
+      <link>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</link>
+      <pubDate>Sat, 21 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-21-netcat-sample/</guid>
+      <description>netcat使用教程 @author linjinbao666@gmail.com fork me on github
+netcat简介 netcat 一般简称为 nc，直译为中文就是“网猫”，被誉为——【网络上的瑞士军刀】。它诞生于1995年，在网络安全社区的名气很大（就如同 AK47 在军事领域的名气）。长期在安全圈内混的人，应该都知道它。想当年，insecure.org 网站在本世纪初搞过几次“年度投票”，评选优秀的安全工具。每次投票，netcat 都能排进前几名。参考链接
+nc命令行简介 形式： nc 命令选项 主机 端口 命令选项 这部分可能包含 0~N 个选项 （注：这部分最复杂，下一个小节单独聊） 主机 这部分可能没有，可能以“点分十进制”形式表示，也可能以“域名”形式表示。 端口 这部分可能没有，可能是单个端口，可能是端口范围（以减号分隔） 举例：</description>
+    </item>
+    
+    <item>
+      <title>Linux笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-13-linux-note/</link>
+      <pubDate>Fri, 13 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-13-linux-note/</guid>
+      <description>笔记 查找软件包rsync rpm -qa | grep rsync 客户端拉取 rsync -av root@192.168.59.130::backup /home/ljbao/ 打印指定行数据 sed -n &amp;#39;10,10p&amp;#39; file.txt cat file.txt | head -n 10 | tail -n +10 awk使用 awk &amp;#39;{print $2} {print $1}&amp;#39; emp.</description>
+    </item>
+    
+    <item>
+      <title>Redis笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-29-redis-note/</link>
+      <pubDate>Mon, 29 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-29-redis-note/</guid>
+      <description>Redis笔记 key-value结构 Redis目前有5种数据类型，分别是：
+String（字符串） List（列表） Hash（字典） Set（集合） Sorted Set（有序集合） 不同的数据类型，有不同的命令方式
+String 操作
+set google http://www.google append google .com get google set visitors 0 incr visitors incr visitors get visitors incrby visitors 100 get visitors type google type visitors ttl google rename google google-site get google get google-site String 手册</description>
+    </item>
+    
+    <item>
+      <title>MYSQL笔记</title>
+      <link>https://amrom66.github.io/2019/2019-07-28-mysql-note/</link>
+      <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-28-mysql-note/</guid>
+      <description>MYSQL笔记 UUID select uuid(); 存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。 创建存储过程
+DELIMITER // CREATE PROCEDURE getAllUsers() BEGIN SELECT * FROM `user`; END // DELIMITER ; CALL getAllUsers(); 调用存储过程</description>
+    </item>
+    
+    <item>
+      <title>ssm整合</title>
+      <link>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-07-01-ssm-merge/</guid>
+      <description>ssm整合 pom.xml &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;tk.amrom&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;crms&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;name&amp;gt;crms Maven Webapp&amp;lt;/name&amp;gt; &amp;lt;!-- FIXME change it to the project&#39;s website --&amp;gt; &amp;lt;url&amp;gt;http://www.</description>
+    </item>
+    
+    <item>
+      <title>vue</title>
+      <link>https://amrom66.github.io/2019/2019-06-24-vue/</link>
+      <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-06-24-vue/</guid>
+      <description>vue学习 模板语法   v-html用于输出html代码；
+  v-bind用于设置html属性中的值；
+  指令
+指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；
+  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；</description>
+    </item>
+    
+    <item>
+      <title>Android学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-06-11-android/</link>
+      <pubDate>Tue, 11 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-06-11-android/</guid>
+      <description>Android学习 ListView package com.amrom.linjinbao.listviewtest; import android.support.v7.app.AppCompatActivity; import android.os.Bundle; import android.view.View; import android.widget.AdapterView; import android.widget.ArrayAdapter; import android.widget.ListView; import android.widget.Toast; import java.util.ArrayList; import java.</description>
+    </item>
+    
+    <item>
+      <title>修复Office文件默认图标</title>
+      <link>https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-04-05-repari-office-default-icon/</guid>
+      <description>修复office文件默认图标 rem 修复office文件默认图标.bat :: office图标文件路径，请根据自己电脑上的安装目录设置 set officepath=C:\Program Files\Microsoft Office\root\vfs\Windows\Installer\{90160000-000F-0000-1000-0000000FF1CE}\ :: 修复word图标 reg add &amp;#34;HKCR\Word.Document.8\DefaultIcon&amp;#34; /ve /t REG_SZ /d &amp;#34;%officepath%WORDICON.EXE,1&amp;#34; reg delete &amp;#34;HKCR\Word.</description>
+    </item>
+    
+  </channel>
+</rss>

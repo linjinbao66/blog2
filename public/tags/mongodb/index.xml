@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mongodb on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/mongodb/</link>
+    <description>Recent content in Mongodb on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mongodb安装与使用</title>
+      <link>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</link>
+      <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-24-mongodb-install/</guid>
+      <description>Mongodb安装与使用 背景知识 最近在项目实施过程中遇到一个问题：由于客户提供的Linux机器没有最下滑化安装，导致使用公司的bin包方式安装Mongodb失败。本着能自己解决就自己解决的态度，我开始了Mongodb的研究。
+安装和启动   下载
+因为centos的官放的yum源中没有提供Mongodb的安装包，此时我们需要自己下载下来（也可以修改yum源，不推荐） 执行命令wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.0.tgz 下载安装包
+  解压
+执行解压命令tar zxvf mongodb-linux-x86_64-4.0.0.tgz，如果为了统一的化，可以把解压出来的文件夹重命名，以及移动到/opt/下去。这个不重要，可以不用看。
+  添加启动配置</description>
+    </item>
+    
+  </channel>
+</rss>

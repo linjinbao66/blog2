@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>kubernetes多用户切换 - 打工笔记</title>
+<meta name="description" content="k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set current-context my-context&amp;quot; The loading order follows these rules: 1."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set current-context my-context&amp;quot; The loading order follows these rules: 1." />
+<meta name="twitter:title" content="kubernetes多用户切换 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="kubernetes多用户切换 - 打工笔记" property="og:title">
+<meta content="k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：
+[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like &amp;quot;kubectl config set current-context my-context&amp;quot; The loading order follows these rules: 1." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-06-30 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "kubernetes多用户切换",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-06-30-kubernetes-contexts\/",
+    "datePublished": "2021-06-30 00:00:00 \u002b0000 UTC",
+    "description": "k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：\n[root@node1 ansible]# kubectl config Modify kubeconfig files using subcommands like \u0026quot;kubectl config set current-context my-context\u0026quot; The loading order follows these rules: 1.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">kubernetes多用户切换</h1>
+            <p class="post-meta"><time datetime='2021-06-30T00:00:00Z' itemprop="datePublished">June 30, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <p>k8s中多用户使用，主要命令在kubectl config命令下，执行kubectl config可以看到提示：</p>
+<pre><code class="language-shel" data-lang="shel">[root@node1 ansible]# kubectl config 
+Modify kubeconfig files using subcommands like &quot;kubectl config set current-context my-context&quot;
+
+ The loading order follows these rules:
+
+  1.  If the --kubeconfig flag is set, then only that file is loaded. The flag may only be set once and no merging takes
+place.
+  2.  If $KUBECONFIG environment variable is set, then it is used as a list of paths (normal path delimiting rules for
+your system). These paths are merged. When a value is modified, it is modified in the file that defines the stanza. When
+a value is created, it is created in the first file that exists. If no files in the chain exist, then it creates the
+last file in the list.
+  3.  Otherwise, ${HOME}/.kube/config is used and no merging takes place.
+
+Available Commands:
+  current-context 显示 current_context
+  delete-cluster  删除 kubeconfig 文件中指定的集群
+  delete-context  删除 kubeconfig 文件中指定的 context
+  delete-user     Delete the specified user from the kubeconfig
+  get-clusters    显示 kubeconfig 文件中定义的集群
+  get-contexts    描述一个或多个 contexts
+  get-users       Display users defined in the kubeconfig
+  rename-context  Renames a context from the kubeconfig file.
+  set             设置 kubeconfig 文件中的一个单个值
+  set-cluster     设置 kubeconfig 文件中的一个集群条目
+  set-context     设置 kubeconfig 文件中的一个 context 条目
+  set-credentials 设置 kubeconfig 文件中的一个用户条目
+  unset           取消设置 kubeconfig 文件中的一个单个值
+  use-context     设置 kubeconfig 文件中的当前上下文
+  view            显示合并的 kubeconfig 配置或一个指定的 kubeconfig 文件
+
+Usage:
+  kubectl config SUBCOMMAND [options]
+
+Use &quot;kubectl &lt;command&gt; --help&quot; for more information about a given command.
+Use &quot;kubectl options&quot; for a list of global command-line options (applies to all commands).
+[root@node1 ansible]# 
+
+</code></pre><p>kubectl confg的子命令包含，对user和context以及cluster的操作，其实现原理为修改~/.kube/config文件内容。</p>
+<p>案例：创建一个新的用户，限定只能操作<code>test</code>名称空间资源。</p>
+<ol>
+<li>
+<p>创建名称空间test</p>
+<pre><code class="language-code" data-lang="code">kubectl create ns test
+</code></pre></li>
+<li>
+<p>创建用户test-user</p>
+<pre><code class="language-code" data-lang="code">kubectl create -n test serviceaccount test-user
+</code></pre></li>
+<li>
+<p>设置证书</p>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export TOKEN_CONTENT<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>kubectl describe -n test sa test-user | grep Tokens | awk -F <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#e6db74">&#39;{print$2}&#39;</span> | xargs kubectl describe secret -n test|grep token: | awk -F <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#e6db74">&#39;{print $2}&#39;</span> | tr -d <span style="color:#e6db74">&#39; \t&#39;</span><span style="color:#e6db74">`</span>
+kubectl config set-credentials test-cred --token<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>TOKEN_CONTENT<span style="color:#e6db74">}</span>
+</code></pre></div><ol>
+<li>
+<p>设置context</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl config set-context test-context --user<span style="color:#f92672">=</span>test-cred --cluster<span style="color:#f92672">=</span>kubernetes --namespace<span style="color:#f92672">=</span>test
+</code></pre></div><p>注意&ndash;user=test-cred需要和上一步设置证书中的test-cred一致</p>
+</li>
+<li>
+<p>切换到context</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl config use-context test-context
+</code></pre></div></li>
+<li>
+<p>授予权限</p>
+</li>
+</ol>
+<p>按照上述流程操作得出的context，使用时时没有权限的。</p>
+<p>想要授予权限，可以使用rolebinding，绑定到admin角色</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl create rolebinding test-admin --clusterrole<span style="color:#f92672">=</span>admin --serviceaccount<span style="color:#f92672">=</span>test:test-user --namespace test 
+</code></pre></div><p>注意此处的&ndash;serviceaccount=test:test-user使用的上面的serviceaccount test-user</p>
+<p>至此，使用test-context即可访问名称空间test下的所有资源了，访问其他名称空间下的会报没权限。</p>
+<p>附：kubeconfig签发</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export KUBE_APISERVER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://172.20.0.113:6443&#34;</span>
+<span style="color:#75715e"># 设置集群参数</span>
+kubectl config set-cluster kubernetes <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --certificate-authority<span style="color:#f92672">=</span>/etc/kubernetes/ssl/ca.pem <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --embed-certs<span style="color:#f92672">=</span>true <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --server<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>KUBE_APISERVER<span style="color:#e6db74">}</span>
+<span style="color:#75715e"># 设置客户端认证参数</span>
+kubectl config set-credentials admin <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --client-certificate<span style="color:#f92672">=</span>/etc/kubernetes/ssl/admin.pem <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --embed-certs<span style="color:#f92672">=</span>true <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --client-key<span style="color:#f92672">=</span>/etc/kubernetes/ssl/admin-key.pem
+<span style="color:#75715e"># 设置上下文参数</span>
+kubectl config set-context kubernetes <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --cluster<span style="color:#f92672">=</span>kubernetes <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --user<span style="color:#f92672">=</span>admin
+<span style="color:#75715e"># 设置默认上下文</span>
+kubectl config use-context kubernetes
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-07-15-one-complex-sql/">&laquo; 一条复杂的sql</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-06-15-gitops/">GitOps入门 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

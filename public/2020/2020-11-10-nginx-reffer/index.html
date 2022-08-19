@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>nginx拦截空reffer - 打工笔记</title>
+<meta name="description" content="背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。
+解决方案 方案一：引入完善的权限框架，例如shiro
+方案二：nginx控制reffer，禁止直接访问
+配置实例：
+location /login.html { root D:\code2\fdmp-pages; autoindex on; index index.html; } location / { valid_referers server_names ~."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2020/2020-11-10-nginx-reffer/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。
+解决方案 方案一：引入完善的权限框架，例如shiro
+方案二：nginx控制reffer，禁止直接访问
+配置实例：
+location /login.html { root D:\code2\fdmp-pages; autoindex on; index index.html; } location / { valid_referers server_names ~." />
+<meta name="twitter:title" content="nginx拦截空reffer - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="nginx拦截空reffer - 打工笔记" property="og:title">
+<meta content="背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。
+解决方案 方案一：引入完善的权限框架，例如shiro
+方案二：nginx控制reffer，禁止直接访问
+配置实例：
+location /login.html { root D:\code2\fdmp-pages; autoindex on; index index.html; } location / { valid_referers server_names ~." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2020/2020-11-10-nginx-reffer/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2020-11-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "nginx拦截空reffer",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2020\/2020-11-10-nginx-reffer\/",
+    "datePublished": "2020-11-10 00:00:00 \u002b0000 UTC",
+    "description": "背景解释 web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。\n解决方案 方案一：引入完善的权限框架，例如shiro\n方案二：nginx控制reffer，禁止直接访问\n配置实例：\nlocation \/login.html { root D:\\code2\\fdmp-pages; autoindex on; index index.html; } location \/ { valid_referers server_names ~.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">nginx拦截空reffer</h1>
+            <p class="post-meta"><time datetime='2020-11-10T00:00:00Z' itemprop="datePublished">November 10, 2020</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="背景解释">背景解释</h2>
+<p>web系统出现垂直越权的现象，具体表现为，低权限账户登录后，直接请求高权限的接口可以获取数据，原因在于后台并没有实现对接口的权限校验，只是在菜单上简单隐藏。</p>
+<h2 id="解决方案">解决方案</h2>
+<p>方案一：引入完善的权限框架，例如shiro</p>
+<p>方案二：nginx控制reffer，禁止直接访问</p>
+<p>配置实例：</p>
+<pre><code class="language-code" data-lang="code">location /login.html {
+    root        D:\code2\fdmp-pages;
+    autoindex on;
+    index  index.html;
+    }
+
+    location / {
+    valid_referers server_names ~.;       ##校验所有请求的reffer 
+    if ($invalid_referer) {     ##非法则返回403
+    return 403;
+    }
+    root        D:\code2\fdmp-pages;
+    autoindex on;
+    index  index.html;
+}
+</code></pre>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2020/2020-11-16-containerd-image-import/">&laquo; containerd手动导入镜像</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/about/">关于 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

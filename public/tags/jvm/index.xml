@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jvm on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/jvm/</link>
+    <description>Recent content in jvm on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>jvm学习02</title>
+      <link>https://amrom66.github.io/2019/2019-12-07-jvm-note/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-07-jvm-note/</guid>
+      <description>jvm学习02-jdk自带工具使用 jps 解释：虚拟机进程状况工具 参数： -q 只输出lvmid，省略主类的名称 -m 输出虚拟机进程启动的时候传递给朱磊main()函数的参数 -l 输出主类的全名，如果进程执行的是jar包，则输出jar包路径 -v 输出虚拟机进程启动的时候的jvm参数
+示例：
+C:\Users\linjinbao666\Desktop&amp;gt;jps -v 11776 Bootstrap -Dcatalina.base=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0 -Dcatalina.home=D:\tomcat\apache-tomcat-7.0.92 -Dwtp.deploy=C:\Users\linjinbao666\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps -Djava.</description>
+    </item>
+    
+    <item>
+      <title>jvmGC日志分析</title>
+      <link>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</link>
+      <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-12-06-jvm-gc-log/</guid>
+      <description>jvmGC日志分析 TestGC.java
+public class TestGc { private static final int _1MB = 1024*1024; public static void main(String[] args) { byte[] allocation1, allocation2, allocation3, allocation4,allocation5,allocation6; allocation1 = new byte[2 * _1MB]; allocation2 = new byte[2 * _1MB]; allocation3 = new byte[4 * _1MB]; allocation4 = new byte[4 * _1MB]; // allocation5 = new byte[2 * _1MB]; // allocation6 = new byte[1 * _1MB];  } } gc输出</description>
+    </item>
+    
+    <item>
+      <title>jvm指令学习</title>
+      <link>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</link>
+      <pubDate>Fri, 08 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-11-08-jvm-practice/</guid>
+      <description>jvm 指令学习 编写源代码 Hello.java
+public class Hello{ public static void main(String[] args){ System.out.println(&amp;#34;Hello!&amp;#34;); } } 编译 javac Hello.java 生成Hello.class
+反编译 javap -v -verbose Hello.</description>
+    </item>
+    
+  </channel>
+</rss>

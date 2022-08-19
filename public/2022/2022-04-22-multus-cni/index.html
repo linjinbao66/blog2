@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>k8sd多网卡方案 - 打工笔记</title>
+<meta name="description" content="简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。
+方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https://github.com/k8snetworkplumbingwg/multus-cni.git
+使用 第一步 部署crd文件，multus-daemonset-thick-plugin.yml
+--- apiVersion: apiextensions.k8s.io/v1 kind: CustomResourceDefinition metadata: name: network-attachment-definitions.k8s.cni.cncf.io spec: group: k8s."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2022/2022-04-22-multus-cni/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。
+方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https://github.com/k8snetworkplumbingwg/multus-cni.git
+使用 第一步 部署crd文件，multus-daemonset-thick-plugin.yml
+--- apiVersion: apiextensions.k8s.io/v1 kind: CustomResourceDefinition metadata: name: network-attachment-definitions.k8s.cni.cncf.io spec: group: k8s." />
+<meta name="twitter:title" content="k8sd多网卡方案 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="k8sd多网卡方案 - 打工笔记" property="og:title">
+<meta content="简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。
+方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https://github.com/k8snetworkplumbingwg/multus-cni.git
+使用 第一步 部署crd文件，multus-daemonset-thick-plugin.yml
+--- apiVersion: apiextensions.k8s.io/v1 kind: CustomResourceDefinition metadata: name: network-attachment-definitions.k8s.cni.cncf.io spec: group: k8s." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2022/2022-04-22-multus-cni/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2022-04-22 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "k8sd多网卡方案",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2022\/2022-04-22-multus-cni\/",
+    "datePublished": "2022-04-22 00:00:00 \u002b0000 UTC",
+    "description": "简介 k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。 场景如下： 应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。\n方案 使用方案 multus-cni 该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https:\/\/github.com\/k8snetworkplumbingwg\/multus-cni.git\n使用 第一步 部署crd文件，multus-daemonset-thick-plugin.yml\n--- apiVersion: apiextensions.k8s.io\/v1 kind: CustomResourceDefinition metadata: name: network-attachment-definitions.k8s.cni.cncf.io spec: group: k8s.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">k8sd多网卡方案</h1>
+            <p class="post-meta"><time datetime='2022-04-22T00:00:00Z' itemprop="datePublished">April 22, 2022</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="简介">简介</h2>
+<p>k8s中，默认为每个容器分配一个网卡，（除了lookback回环外），在一些特定场景下，需要指定网卡信息，或者增加网卡，则需要制定多网卡方案。
+场景如下：
+应用启动时候需要检查mac和ip地址和证书验证，此时如果使用默认的动态网卡方案，则签发的证书无法长期生效。</p>
+<h2 id="方案">方案</h2>
+<p>使用方案 multus-cni
+该方案，会在每个节点部署守护进程，根据pod上的注解信息，决定添加自定义网卡。GitHub地址:https://github.com/k8snetworkplumbingwg/multus-cni.git</p>
+<h2 id="使用">使用</h2>
+<h3 id="第一步">第一步</h3>
+<p>部署crd文件，multus-daemonset-thick-plugin.yml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apiextensions.k8s.io/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">CustomResourceDefinition</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">network-attachment-definitions.k8s.cni.cncf.io</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">group</span>: <span style="color:#ae81ff">k8s.cni.cncf.io</span>
+  <span style="color:#f92672">scope</span>: <span style="color:#ae81ff">Namespaced</span>
+  <span style="color:#f92672">names</span>:
+    <span style="color:#f92672">plural</span>: <span style="color:#ae81ff">network-attachment-definitions</span>
+    <span style="color:#f92672">singular</span>: <span style="color:#ae81ff">network-attachment-definition</span>
+    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">NetworkAttachmentDefinition</span>
+    <span style="color:#f92672">shortNames</span>:
+      - <span style="color:#ae81ff">net-attach-def</span>
+  <span style="color:#f92672">versions</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">v1</span>
+      <span style="color:#f92672">served</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#f92672">storage</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#f92672">schema</span>:
+        <span style="color:#f92672">openAPIV3Schema</span>:
+          <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#39;NetworkAttachmentDefinition is a CRD schema specified by the Network Plumbing
+</span><span style="color:#e6db74">            Working Group to express the intent for attaching pods to one or more logical or physical
+</span><span style="color:#e6db74">            networks. More information available at: https://github.com/k8snetworkplumbingwg/multi-net-spec&#39;</span>
+          <span style="color:#f92672">type</span>: <span style="color:#ae81ff">object</span>
+          <span style="color:#f92672">properties</span>:
+            <span style="color:#f92672">apiVersion</span>:
+              <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#39;APIVersion defines the versioned schema of this represen
+</span><span style="color:#e6db74">                tation of an object. Servers should convert recognized schemas to the
+</span><span style="color:#e6db74">                latest internal value, and may reject unrecognized values. More info:
+</span><span style="color:#e6db74">                https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources&#39;</span>
+              <span style="color:#f92672">type</span>: <span style="color:#ae81ff">string</span>
+            <span style="color:#f92672">kind</span>:
+              <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#39;Kind is a string value representing the REST resource this
+</span><span style="color:#e6db74">                object represents. Servers may infer this from the endpoint the client
+</span><span style="color:#e6db74">                submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds&#39;</span>
+              <span style="color:#f92672">type</span>: <span style="color:#ae81ff">string</span>
+            <span style="color:#f92672">metadata</span>:
+              <span style="color:#f92672">type</span>: <span style="color:#ae81ff">object</span>
+            <span style="color:#f92672">spec</span>:
+              <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#39;NetworkAttachmentDefinition spec defines the desired state of a network attachment&#39;</span>
+              <span style="color:#f92672">type</span>: <span style="color:#ae81ff">object</span>
+              <span style="color:#f92672">properties</span>:
+                <span style="color:#f92672">config</span>:
+                  <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#39;NetworkAttachmentDefinition config is a JSON-formatted CNI configuration&#39;</span>
+                  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">string</span>
+---
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRole</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io/v1</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+<span style="color:#f92672">rules</span>:
+  - <span style="color:#f92672">apiGroups</span>: [<span style="color:#e6db74">&#34;k8s.cni.cncf.io&#34;</span>]
+    <span style="color:#f92672">resources</span>:
+      - <span style="color:#e6db74">&#39;*&#39;</span>
+    <span style="color:#f92672">verbs</span>:
+      - <span style="color:#e6db74">&#39;*&#39;</span>
+  - <span style="color:#f92672">apiGroups</span>:
+      - <span style="color:#e6db74">&#34;&#34;</span>
+    <span style="color:#f92672">resources</span>:
+      - <span style="color:#ae81ff">pods</span>
+      - <span style="color:#ae81ff">pods/status</span>
+    <span style="color:#f92672">verbs</span>:
+      - <span style="color:#ae81ff">get</span>
+      - <span style="color:#ae81ff">update</span>
+  - <span style="color:#f92672">apiGroups</span>:
+      - <span style="color:#e6db74">&#34;&#34;</span>
+      - <span style="color:#ae81ff">events.k8s.io</span>
+    <span style="color:#f92672">resources</span>:
+      - <span style="color:#ae81ff">events</span>
+    <span style="color:#f92672">verbs</span>:
+      - <span style="color:#ae81ff">create</span>
+      - <span style="color:#ae81ff">patch</span>
+      - <span style="color:#ae81ff">update</span>
+---
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRoleBinding</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io/v1</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+<span style="color:#f92672">roleRef</span>:
+  <span style="color:#f92672">apiGroup</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io</span>
+  <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRole</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+<span style="color:#f92672">subjects</span>:
+  - <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceAccount</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+    <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">kube-system</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceAccount</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">kube-system</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">DaemonSet</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kube-multus-ds</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">kube-system</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">node</span>
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">multus</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+  <span style="color:#f92672">updateStrategy</span>:
+    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">RollingUpdate</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">node</span>
+        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">multus</span>
+        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">multus</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#f92672">tolerations</span>:
+        - <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">Exists</span>
+          <span style="color:#f92672">effect</span>: <span style="color:#ae81ff">NoSchedule</span>
+        - <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">Exists</span>
+          <span style="color:#f92672">effect</span>: <span style="color:#ae81ff">NoExecute</span>
+      <span style="color:#f92672">serviceAccountName</span>: <span style="color:#ae81ff">multus</span>
+      <span style="color:#f92672">containers</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kube-multus</span>
+          <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ghcr.io/k8snetworkplumbingwg/multus-cni:thick</span>
+          <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;/usr/src/multus-cni/bin/multus-daemon&#34;</span> ]
+          <span style="color:#f92672">args</span>:
+            - <span style="color:#e6db74">&#34;-cni-version=0.3.1&#34;</span>
+            - <span style="color:#e6db74">&#34;-cni-config-dir=/host/etc/cni/net.d&#34;</span>
+            - <span style="color:#e6db74">&#34;-multus-autoconfig-dir=/host/etc/cni/net.d&#34;</span>
+            - <span style="color:#e6db74">&#34;-multus-log-to-stderr=true&#34;</span>
+            - <span style="color:#e6db74">&#34;-multus-log-level=verbose&#34;</span>
+          <span style="color:#f92672">resources</span>:
+            <span style="color:#f92672">requests</span>:
+              <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;100m&#34;</span>
+              <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;50Mi&#34;</span>
+            <span style="color:#f92672">limits</span>:
+              <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;100m&#34;</span>
+              <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;50Mi&#34;</span>
+          <span style="color:#f92672">securityContext</span>:
+            <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">true</span>
+          <span style="color:#f92672">volumeMounts</span>:
+            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cni</span>
+              <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/host/etc/cni/net.d</span>
+            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cnibin</span>
+              <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/host/opt/cni/bin</span>
+      <span style="color:#f92672">initContainers</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">install-multus-binary</span>
+          <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ghcr.io/k8snetworkplumbingwg/multus-cni:thick</span>
+          <span style="color:#f92672">command</span>:
+            - <span style="color:#e6db74">&#34;cp&#34;</span>
+            - <span style="color:#e6db74">&#34;/usr/src/multus-cni/bin/multus&#34;</span>
+            - <span style="color:#e6db74">&#34;/host/opt/cni/bin/multus&#34;</span>
+          <span style="color:#f92672">resources</span>:
+            <span style="color:#f92672">requests</span>:
+              <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;10m&#34;</span>
+              <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;15Mi&#34;</span>
+          <span style="color:#f92672">securityContext</span>:
+            <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">true</span>
+          <span style="color:#f92672">volumeMounts</span>:
+            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cnibin</span>
+              <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/host/opt/cni/bin</span>
+              <span style="color:#f92672">mountPropagation</span>: <span style="color:#ae81ff">Bidirectional</span>
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">generate-kubeconfig</span>
+          <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ghcr.io/k8snetworkplumbingwg/multus-cni:thick</span>
+          <span style="color:#f92672">command</span>:
+            - <span style="color:#e6db74">&#34;/usr/src/multus-cni/bin/generate-kubeconfig&#34;</span>
+          <span style="color:#f92672">args</span>:
+            - <span style="color:#e6db74">&#34;-k8s-service-host=$(KUBERNETES_SERVICE_HOST)&#34;</span>
+            - <span style="color:#e6db74">&#34;-k8s-service-port=$(KUBERNETES_SERVICE_PORT)&#34;</span>
+          <span style="color:#f92672">resources</span>:
+            <span style="color:#f92672">requests</span>:
+              <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;10m&#34;</span>
+              <span style="color:#f92672">memory</span>: <span style="color:#e6db74">&#34;15Mi&#34;</span>
+          <span style="color:#f92672">securityContext</span>:
+            <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">true</span>
+          <span style="color:#f92672">volumeMounts</span>:
+            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cni</span>
+              <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/host/etc/cni/net.d</span>
+              <span style="color:#f92672">mountPropagation</span>: <span style="color:#ae81ff">Bidirectional</span>
+      <span style="color:#f92672">terminationGracePeriodSeconds</span>: <span style="color:#ae81ff">10</span>
+      <span style="color:#f92672">volumes</span>:
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cni</span>
+          <span style="color:#f92672">hostPath</span>:
+            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/cni/net.d</span>
+        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cnibin</span>
+          <span style="color:#f92672">hostPath</span>:
+            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/k8s/bin/</span>
+</code></pre></div><p>注意挂载的宿主机目录，需要cni插件在其中</p>
+<h3 id="使用-1">使用</h3>
+<p>sample.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#e6db74">&#34;k8s.cni.cncf.io/v1&#34;</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">NetworkAttachmentDefinition</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">ip-192</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">config</span>: <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">            &#34;cniVersion&#34;: &#34;0.3.1&#34;,
+</span><span style="color:#e6db74">            &#34;plugins&#34;: [
+</span><span style="color:#e6db74">                {
+</span><span style="color:#e6db74">                    &#34;type&#34;: &#34;macvlan&#34;,
+</span><span style="color:#e6db74">                    &#34;capabilities&#34;: { &#34;ips&#34;: true },
+</span><span style="color:#e6db74">                    &#34;master&#34;: &#34;eth0&#34;,
+</span><span style="color:#e6db74">                    &#34;mode&#34;: &#34;bridge&#34;,
+</span><span style="color:#e6db74">                    &#34;ipam&#34;: {
+</span><span style="color:#e6db74">                        &#34;type&#34;: &#34;static&#34;
+</span><span style="color:#e6db74">                    }
+</span><span style="color:#e6db74">                } ]
+</span><span style="color:#e6db74">        }&#39;</span>
+---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">centos-runtimeconfig</span>
+  <span style="color:#f92672">annotations</span>:
+    <span style="color:#f92672">k8s.v1.cni.cncf.io/networks</span>: <span style="color:#e6db74">&#39;[
+</span><span style="color:#e6db74">            { &#34;name&#34;: &#34;ip-192&#34;,
+</span><span style="color:#e6db74">              &#34;ips&#34;: [ &#34;192.168.111.10/24&#34; ],
+</span><span style="color:#e6db74">              &#34;mac&#34;: &#34;20:01:02:03:04:05&#34; }
+</span><span style="color:#e6db74">    ]&#39;</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">centos-runtimeconfig</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/centos/tools:latest</span>
+    <span style="color:#f92672">command</span>:
+    - <span style="color:#ae81ff">/sbin/init</span>
+    <span style="color:#f92672">securityContext</span>:
+      <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">true</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2022/2022-04-26-linux-namespace-overview/">&laquo; linux network namespace 详解</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2022/2022-04-03-network-policy/">network-policy &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

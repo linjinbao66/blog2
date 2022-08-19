@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>多线程</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:title" content="多线程 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta content="多线程 - 打工笔记" property="og:title">
+<meta content="" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" />
+<meta property="og:site_name" content="打工笔记" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        
+           
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-03-31-pod-configmap/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">pod挂载configmap</h3><span class="post-meta pull-right"><small>March 31, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    nginx.yaml
+apiVersion: v1 kind: Pod metadata: creationTimestamp: null labels: run: nginx name: nginx spec: containers: - image: nginx imagePullPolicy: IfNotPresent name: nginx …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-03-13-mysql-privileges/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">mysql权限高级</h3><span class="post-meta pull-right"><small>March 12, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    问题： 如何创建一个新用户，并屏蔽旧库权限？
+答案： 问题是对mysql的权限理解有问题。 mysql的权限有2个操作符,grant(授予)和revoke(撤销)。旧库的权限是不能屏蔽的，必须每一个剔除允许的列表。
+操作实例
+create user &#39;test&#39;@&#39;%&#39; identified by &#39;123456&#39;; grant all privileges …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-03-10-about-pv-pvc/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">关于pv pvc的新认识</h3><span class="post-meta pull-right"><small>March 10, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    新认识
+ hostpath可以直接使用  apiVersion: v1 kind: Pod metadata: name: pod-hostpath spec: nodeSelector: kubernetes.io/hostname: i-6fns0nua containers: - image: busybox name: app …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-03-03-esxi-cloud-init/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">esxi-cloud-init使用</h3><span class="post-meta pull-right"><small>March 3, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    esxi是虚拟化的常见方案，其直接部署到物理机上，在之上可以虚拟化出来不同的系统。部署一个虚拟机，我们常见的操作方式是登录esxi的控制台或者vcenter的控制台操作，步骤比较繁琐。
+cloud-init是云厂商常用的方案，用于工作在虚拟机初始化的时候。例如，原生部署虚拟机的时候，需要在网页上设置磁盘，用户，网络等等，在cloud-init中，这些不必操 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-02-28-etcd-clean/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">etcd强制删除k8s数据</h3><span class="post-meta pull-right"><small>February 28, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    k8s由于各种原因，导致pod等数据一直处于terminting状态中，可以考虑到etcd中强制删除
+#检索pod数据 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2022/2022-02-16-node-note/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">node节点安装笔记</h3><span class="post-meta pull-right"><small>February 16, 2022</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    node节点安装笔记
+yum install containerd.io cat &amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/containerd.conf overlay br_netfilter EOF sudo modprobe overlay sudo modprobe br_netfilter # …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-11-29-iptables/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">iptables操作实例</h3><span class="post-meta pull-right"><small>November 29, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    4个表:filter,mangle,nat,raw
+3个链:PREROUTING,PREROUTING,PREROUTING
+iptabls基本操作示例 查看规则 查看规则集
+iptables --list -n 加一个-n以数字形式显示IP和端口，而不是默认的服务名称
+修改规则 配置默认规则，不允许数据进入
+iptables -P INPUT DROP 允 …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-10-28-kubeconfig/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">kubeconfig签发</h3><span class="post-meta pull-right"><small>October 28, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    签发一个kubeconfig文件的详细流程 大致步骤：
+ cfssl证书 定义集群 定义用户 定义上下文 绑定角色  cfssl证书 ca-config.json cfssl的配置文件
+{ &amp;#34;signing&amp;#34;: { &amp;#34;default&amp;#34;: { &amp;#34;expiry&amp;#34;: &amp;#34;87600h&amp;#34; }, …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+             
+            <div class="col-md-4 card">
+             <a href="https://amrom66.github.io/2021/2021-08-21-cloudflare-worker/" class="index-anchor">    
+                <div class="panel panel-default">
+                  
+                  
+                  <img width="100%" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="打工笔记">
+                  
+                  
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">cloudflare worker使用</h3><span class="post-meta pull-right"><small>August 21, 2021</small></span>
+                  </div>
+                  
+                  <div class="panel-body"><small>
+                    部署ariang到cloudflare workers
+mkdir -p ariang/public cd ariang/public wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7.zip unzip AriaNg-1.1.7.zip rm -f …</small>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+          
+
+    </div> 
+    
+<div class="row">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+        
+        <ul class="pagination">
+          
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">&laquo; Prev</a></li>
+          
+
+          
+           
+
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">1</a></li>
+            
+          
+            
+              <li class="active"><span><em>2</em></span></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/3/">3</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/4/">4</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/5/">5</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/6/">6</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/7/">7</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/8/">8</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/9/">9</a></li>
+            
+          
+            
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/10/">10</a></li>
+            
+          
+
+          
+            <li><a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/page/3/">Next &raquo;</a></li>
+          
+          </ul>
+        
+
+    </div>
+    <div class="col-md-4">  </div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

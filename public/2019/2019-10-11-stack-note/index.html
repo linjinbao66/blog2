@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>牛客网题目-栈的压入、弹出序列 - 打工笔记</title>
+<meta name="description" content="2019-10-11-栈的压入、弹出序列 题目描述 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+分析 1.辅助栈 2.找到弹出的位置
+代码实现 package nowcoder; import java.util.Stack; /** * 栈的压入、弹出序列 */ public class IsPopOrder { public boolean isPopOrder(int [] pushA,int [] popA) { if (pushA."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-11-stack-note/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="2019-10-11-栈的压入、弹出序列 题目描述 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+分析 1.辅助栈 2.找到弹出的位置
+代码实现 package nowcoder; import java.util.Stack; /** * 栈的压入、弹出序列 */ public class IsPopOrder { public boolean isPopOrder(int [] pushA,int [] popA) { if (pushA." />
+<meta name="twitter:title" content="牛客网题目-栈的压入、弹出序列 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="牛客网题目-栈的压入、弹出序列 - 打工笔记" property="og:title">
+<meta content="2019-10-11-栈的压入、弹出序列 题目描述 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+分析 1.辅助栈 2.找到弹出的位置
+代码实现 package nowcoder; import java.util.Stack; /** * 栈的压入、弹出序列 */ public class IsPopOrder { public boolean isPopOrder(int [] pushA,int [] popA) { if (pushA." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-11-stack-note/" />
+<meta property="og:site_name" content="打工笔记" />
+<meta property="article:section" content="算法" />
+<meta property="article:published_time" content="2019-10-11 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "牛客网题目-栈的压入、弹出序列",
+    "genre": "算法",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-11-stack-note\/",
+    "datePublished": "2019-10-11 00:00:00 \u002b0000 UTC",
+    "description": "2019-10-11-栈的压入、弹出序列 题目描述 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）\n分析 1.辅助栈 2.找到弹出的位置\n代码实现 package nowcoder; import java.util.Stack; \/** * 栈的压入、弹出序列 *\/ public class IsPopOrder { public boolean isPopOrder(int [] pushA,int [] popA) { if (pushA.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">牛客网题目-栈的压入、弹出序列</h1>
+            <p class="post-meta"><time datetime='2019-10-11T00:00:00Z' itemprop="datePublished">October 11, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="2019-10-11-栈的压入弹出序列">2019-10-11-栈的压入、弹出序列</h2>
+<h2 id="题目描述">题目描述</h2>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h2 id="分析">分析</h2>
+<p>1.辅助栈 2.找到弹出的位置</p>
+<h2 id="代码实现">代码实现</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> nowcoder<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.Stack<span style="color:#f92672">;</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 栈的压入、弹出序列
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IsPopOrder</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isPopOrder</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> pushA<span style="color:#f92672">,</span><span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> popA<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>pushA<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">==</span>0 <span style="color:#f92672">||</span> popA<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">==</span>0<span style="color:#f92672">)</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+        Stack<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> stack <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Stack<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">int</span> popIndex <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span> pushA<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++){</span>
+            stack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>pushA<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>stack<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;&amp;</span> stack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">()==</span>popA<span style="color:#f92672">[</span>popIndex<span style="color:#f92672">]){</span>
+                stack<span style="color:#f92672">.</span><span style="color:#a6e22e">pop</span><span style="color:#f92672">();</span>
+                popIndex<span style="color:#f92672">++;</span>
+            <span style="color:#f92672">}</span>
+
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> stack<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-11-dart/">&laquo; Dart学习</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-10-webpack/">webpack学习 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

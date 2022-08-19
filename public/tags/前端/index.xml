@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vue</title>
+      <link>https://amrom66.github.io/2019/2019-06-24-vue/</link>
+      <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-06-24-vue/</guid>
+      <description>vue学习 模板语法   v-html用于输出html代码；
+  v-bind用于设置html属性中的值；
+  指令
+指令是带有v-前缀的特殊属性，指令用于在表达式的值改变时，将某些行为应用到 DOM 上；
+  参数，参数在指令后以冒号指明。例如， v-bind 指令被用来响应地更新 HTML 属性；</description>
+    </item>
+    
+  </channel>
+</rss>

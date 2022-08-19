@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>博客加入访问统计 - 打工笔记</title>
+<meta name="description" content="2019-10-15-博客加入访问计数 博客加入访问统计 使用valine的实现
+步骤  修改comments.html  将以下内容加入：
+&amp;lt;p class=&amp;quot;copyright-item&amp;quot;&amp;gt; &amp;lt;span id=&amp;quot;{{ .RelPermalink | relURL }}&amp;quot; class=&amp;quot;leancloud_visitors&amp;quot; data-flag-title=&amp;quot;{{ .Title }}&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;Reading: 本文累计被阅读 &amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;leancloud-visitors-count&amp;quot;&amp;gt;1000000&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;次&amp;lt;/span&amp;gt; &amp;lt;/span&amp;gt; &amp;lt;/p&amp;gt; 加入后内容如下："/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2019/2019-10-15-view-log-blog/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="2019-10-15-博客加入访问计数 博客加入访问统计 使用valine的实现
+步骤  修改comments.html  将以下内容加入：
+&amp;lt;p class=&amp;quot;copyright-item&amp;quot;&amp;gt; &amp;lt;span id=&amp;quot;{{ .RelPermalink | relURL }}&amp;quot; class=&amp;quot;leancloud_visitors&amp;quot; data-flag-title=&amp;quot;{{ .Title }}&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;Reading: 本文累计被阅读 &amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;leancloud-visitors-count&amp;quot;&amp;gt;1000000&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;次&amp;lt;/span&amp;gt; &amp;lt;/span&amp;gt; &amp;lt;/p&amp;gt; 加入后内容如下：" />
+<meta name="twitter:title" content="博客加入访问统计 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="博客加入访问统计 - 打工笔记" property="og:title">
+<meta content="2019-10-15-博客加入访问计数 博客加入访问统计 使用valine的实现
+步骤  修改comments.html  将以下内容加入：
+&amp;lt;p class=&amp;quot;copyright-item&amp;quot;&amp;gt; &amp;lt;span id=&amp;quot;{{ .RelPermalink | relURL }}&amp;quot; class=&amp;quot;leancloud_visitors&amp;quot; data-flag-title=&amp;quot;{{ .Title }}&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;Reading: 本文累计被阅读 &amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;leancloud-visitors-count&amp;quot;&amp;gt;1000000&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;post-meta-item-text&amp;quot;&amp;gt;次&amp;lt;/span&amp;gt; &amp;lt;/span&amp;gt; &amp;lt;/p&amp;gt; 加入后内容如下：" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2019/2019-10-15-view-log-blog/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2019-10-15 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "博客加入访问统计",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2019\/2019-10-15-view-log-blog\/",
+    "datePublished": "2019-10-15 00:00:00 \u002b0000 UTC",
+    "description": "2019-10-15-博客加入访问计数 博客加入访问统计 使用valine的实现\n步骤  修改comments.html  将以下内容加入：\n\u0026lt;p class=\u0026quot;copyright-item\u0026quot;\u0026gt; \u0026lt;span id=\u0026quot;{{ .RelPermalink | relURL }}\u0026quot; class=\u0026quot;leancloud_visitors\u0026quot; data-flag-title=\u0026quot;{{ .Title }}\u0026quot;\u0026gt; \u0026lt;span class=\u0026quot;post-meta-item-text\u0026quot;\u0026gt;Reading: 本文累计被阅读 \u0026lt;\/span\u0026gt; \u0026lt;span class=\u0026quot;leancloud-visitors-count\u0026quot;\u0026gt;1000000\u0026lt;\/span\u0026gt; \u0026lt;span class=\u0026quot;post-meta-item-text\u0026quot;\u0026gt;次\u0026lt;\/span\u0026gt; \u0026lt;\/span\u0026gt; \u0026lt;\/p\u0026gt; 加入后内容如下：",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">博客加入访问统计</h1>
+            <p class="post-meta"><time datetime='2019-10-15T00:00:00Z' itemprop="datePublished">October 15, 2019</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="2019-10-15-博客加入访问计数">2019-10-15-博客加入访问计数</h2>
+<h2 id="博客加入访问统计">博客加入访问统计</h2>
+<p>使用valine的实现</p>
+<h2 id="步骤">步骤</h2>
+<ol>
+<li>修改<code>comments.html</code></li>
+</ol>
+<p>将以下内容加入：</p>
+<pre><code class="language-markup" data-lang="markup">&lt;p class=&quot;copyright-item&quot;&gt;
+    &lt;span id=&quot;{{ .RelPermalink | relURL }}&quot; class=&quot;leancloud_visitors&quot; data-flag-title=&quot;{{ .Title }}&quot;&gt;
+        &lt;span class=&quot;post-meta-item-text&quot;&gt;Reading: 本文累计被阅读 &lt;/span&gt;
+        &lt;span class=&quot;leancloud-visitors-count&quot;&gt;1000000&lt;/span&gt;
+        &lt;span class=&quot;post-meta-item-text&quot;&gt;次&lt;/span&gt;
+    &lt;/span&gt;
+&lt;/p&gt;
+</code></pre><p>加入后内容如下：</p>
+<pre><code class="language-markup" data-lang="markup">{{- if .Site.Params.valine.enable -}}
+  &lt;!-- id 将作为查询条件 --&gt;  
+&lt;p class=&quot;copyright-item&quot;&gt;
+    &lt;span id=&quot;{{ .RelPermalink | relURL }}&quot; class=&quot;leancloud_visitors&quot; data-flag-title=&quot;{{ .Title }}&quot;&gt;
+        &lt;span class=&quot;post-meta-item-text&quot;&gt;阅读次数: 本文累计被阅读 &lt;/span&gt;
+        &lt;span class=&quot;leancloud-visitors-count&quot;&gt;1000000&lt;/span&gt;
+        &lt;span class=&quot;post-meta-item-text&quot;&gt;次&lt;/span&gt;
+    &lt;/span&gt;
+&lt;/p&gt;
+  &lt;div id=&quot;vcomments&quot;&gt;&lt;/div&gt;
+
+  &lt;script src=&quot;//cdn1.lncld.net/static/js/3.0.4/av-min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src='//unpkg.com/valine/dist/Valine.min.js'&gt;&lt;/script&gt;
+
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    new Valine({
+        el: '#vcomments' ,
+        appId: '{{ .Site.Params.valine.appId }}',
+        appKey: '{{ .Site.Params.valine.appKey }}',
+        notify: '{{ .Site.Params.valine.notify }}', 
+        verify: '{{ .Site.Params.valine.verify }}', 
+        avatar:'{{ .Site.Params.valine.avatar }}', 
+        placeholder: '{{ .Site.Params.valine.placeholder }}',
+        visitor: '{{ .Site.Params.valine.visitor }}'
+    });
+  &lt;/script&gt;
+  {{- end -}}
+</code></pre>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2019/2019-10-15-windows-open-share/">&laquo; windows共享开启</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2019/2019-10-14-java-note/">JAVA并发编程实战-笔记 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

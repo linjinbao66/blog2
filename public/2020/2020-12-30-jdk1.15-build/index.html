@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>jdk1.15编译 - 打工笔记</title>
+<meta name="description" content="jdk1.15编译 github下载项目 https://github.com/openjdk/jdk
+安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum install fontconfig-devel yum install autoconf yum install -y centos-release-scl yum install -y devtoolset-7 yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y yum install cups-devel yum install fontconfig-devel yum install alsa-lib-devel -y 编译 make images"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="jdk1.15编译 github下载项目 https://github.com/openjdk/jdk
+安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum install fontconfig-devel yum install autoconf yum install -y centos-release-scl yum install -y devtoolset-7 yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y yum install cups-devel yum install fontconfig-devel yum install alsa-lib-devel -y 编译 make images" />
+<meta name="twitter:title" content="jdk1.15编译 - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="jdk1.15编译 - 打工笔记" property="og:title">
+<meta content="jdk1.15编译 github下载项目 https://github.com/openjdk/jdk
+安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum install fontconfig-devel yum install autoconf yum install -y centos-release-scl yum install -y devtoolset-7 yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y yum install cups-devel yum install fontconfig-devel yum install alsa-lib-devel -y 编译 make images" property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2020/2020-12-30-jdk1.15-build/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2020-12-30 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "jdk1.15编译",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2020\/2020-12-30-jdk1.15-build\/",
+    "datePublished": "2020-12-30 00:00:00 \u002b0000 UTC",
+    "description": "jdk1.15编译 github下载项目 https:\/\/github.com\/openjdk\/jdk\n安装依赖 yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant yum install libX* yum install fontconfig-devel yum install autoconf yum install -y centos-release-scl yum install -y devtoolset-7 yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y yum install cups-devel yum install fontconfig-devel yum install alsa-lib-devel -y 编译 make images",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">jdk1.15编译</h1>
+            <p class="post-meta"><time datetime='2020-12-30T00:00:00Z' itemprop="datePublished">December 30, 2020</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <h2 id="jdk115编译">jdk1.15编译</h2>
+<h3 id="github下载项目">github下载项目</h3>
+<p><a href="https://github.com/openjdk/jdk">https://github.com/openjdk/jdk</a></p>
+<h3 id="安装依赖">安装依赖</h3>
+<pre><code class="language-code" data-lang="code">yum -y install build-essential gawk m4 libasound2-print-dev binutils libmotif3 libmotif-dev ant
+yum install libX*
+yum install fontconfig-devel
+yum install autoconf
+yum install -y centos-release-scl
+yum install -y devtoolset-7
+yum install libXtst-devel libXt-devel libXrender-devel libXrandr-devel libXi-devel -y
+yum install cups-devel
+yum install fontconfig-devel
+yum install alsa-lib-devel -y
+</code></pre><h3 id="编译">编译</h3>
+<p>make images</p>
+<pre><code class="language-code" data-lang="code">[root@node2 jdk-master]# make 
+Building target 'default (exploded-image)' in configuration 'linux-x86_64-server-release'
+Compiling 8 files for BUILD_TOOLS_LANGTOOLS
+Warning: No SCM configuration present and no .src-rev
+Compiling 7 properties into resource bundles for jdk.jshell
+Compiling 13 properties into resource bundles for jdk.javadoc
+Compiling 12 properties into resource bundles for jdk.jdeps
+Parsing 2 properties into enum-like class for jdk.compiler
+Compiling 16 properties into resource bundles for jdk.compiler
+Compiling 127 files for BUILD_java.compiler.interim
+Compiling 399 files for BUILD_jdk.compiler.interim
+Compiling 225 files for BUILD_jdk.javadoc.interim
+Compiling 186 files for BUILD_TOOLS_JDK
+Compiling 2 files for COMPILE_DEPEND
+Compiling 1 files for BUILD_TOOLS_HOTSPOT
+Compiling 3 files for BUILD_VM_COMPILER_MATCH_PROCESSOR
+Compiling 5 files for BUILD_VM_COMPILER_NODEINFO_PROCESSOR
+Compiling 3 files for BUILD_VM_COMPILER_OPTIONS_PROCESSOR
+Compiling 14 files for BUILD_VM_COMPILER_REPLACEMENTS_PROCESSOR
+Compiling 3 files for BUILD_VM_COMPILER_SERVICEPROVIDER_PROCESSOR
+Creating buildtools/jdk.vm.compiler.match.processor.jar
+Creating buildtools/jdk.vm.compiler.nodeinfo.processor.jar
+Creating buildtools/jdk.vm.compiler.options.processor.jar
+Creating buildtools/jdk.vm.compiler.replacements.verifier.jar
+Creating buildtools/jdk.vm.compiler.serviceprovider.processor.jar
+Creating hotspot/variant-server/tools/adlc/adlc from 13 file(s)
+Compiling 2 files for BUILD_JVMTI_TOOLS
+Compiling 2 files for BUILD_BREAKITERATOR_BASE
+Compiling 2 files for BUILD_BREAKITERATOR_LD
+Creating support/modules_libs/java.base/server/libjvm.so from 1063 file(s)
+ Compiling 11 properties into resource bundles for java.logging
+Compiling 11 properties into resource bundles for java.base
+Compiling 6 properties into resource bundles for java.base
+Compiling 11 properties into resource bundles for jdk.jartool
+Compiling 71 files for COMPILE_CREATE_SYMBOLS
+Creating javadoc element list
+Compiling 11 properties into resource bundles for jdk.management.agent
+Compiling 3 properties into resource bundles for jdk.jdi
+Compiling 5 properties into resource bundles for jdk.jlink
+Compiling 3 properties into resource bundles for jdk.jlink
+Compiling 1 properties into resource bundles for jdk.jlink
+Compiling 224 properties into resource bundles for jdk.localedata
+Compiling 89 properties into resource bundles for java.desktop
+Compiling 3057 files for java.base
+Compiling 127 files for java.compiler
+Compiling 18 files for java.datatransfer
+Creating support/modules_libs/java.base/libverify.so from 1 file(s)
+Creating support/modules_libs/java.base/libjava.so from 60 file(s)
+Creating support/native/java.base/libfdlibm.a from 57 file(s)
+Creating support/modules_libs/java.base/libzip.so from 5 file(s)
+Creating support/modules_libs/java.base/libjimage.so from 6 file(s)
+Creating support/modules_libs/java.base/libjli.so from 8 file(s)
+Creating support/modules_libs/java.base/libnet.so from 21 file(s)
+Creating support/modules_libs/java.base/libnio.so from 21 file(s)
+Creating support/modules_libs/java.base/libjsig.so from 1 file(s)
+Compiling 10 files for java.instrument
+Compiling 35 files for java.logging
+Compiling 330 files for java.management
+Compiling 30 files for java.security.sasl
+Compiling 1845 files for java.xml
+Compiling 141 files for java.net.http
+Compiling 131 files for java.rmi
+Compiling 15 files for java.scripting
+Compiling 5 files for java.transaction.xa
+Compiling 22 files for java.smartcardio
+Compiling 204 files for jdk.internal.vm.ci
+Compiling 24 files for jdk.management
+Compiling 9 files for jdk.unsupported
+Compiling 61 files for jdk.internal.jvmstat
+Compiling 120 files for jdk.charsets
+Compiling 403 files for jdk.compiler
+Compiling 35 files for jdk.crypto.ec
+Compiling 68 files for jdk.dynalink
+Compiling 3 files for jdk.internal.ed
+Compiling 44 files for jdk.httpserver
+Compiling 59 files for jdk.incubator.foreign
+Compiling 50 files for jdk.incubator.vector
+Compiling 100 files for jdk.internal.le
+Compiling 51 files for jdk.internal.opt
+Compiling 30 files for jdk.jartool
+Compiling 225 files for jdk.javadoc
+Compiling 136 files for jdk.jdeps
+Compiling 1 files for jdk.jdwp.agent
+Compiling 203 files for jdk.jfr
+Compiling 4 files for jdk.jsobject
+Compiling 11 files for jdk.jstatd
+Compiling 1806 files for jdk.localedata
+Compiling 14 files for jdk.management.jfr
+Compiling 9 files for jdk.net
+Compiling 2 files for jdk.nio.mapmode
+Compiling 33 files for jdk.sctp
+Compiling 94 files for jdk.xml.dom
+Compiling 14 files for jdk.zipfs
+Compiling 15 files for java.prefs
+Compiling 198 files for java.naming
+Compiling 77 files for java.sql
+Compiling 275 files for java.xml.crypto
+Creating support/modules_libs/java.smartcardio/libj2pcsc.so from 2 file(s)
+Creating support/modules_libs/jdk.management/libmanagement_ext.so from 8 file(s)
+Creating support/modules_cmds/jdk.aot/jaotc from 1 file(s)
+Compiling 15 files for jdk.attach
+Creating support/modules_cmds/jdk.compiler/javac from 1 file(s)
+Creating support/modules_cmds/jdk.compiler/serialver from 1 file(s)
+Compiling 74 files for jdk.crypto.cryptoki
+Creating support/modules_cmds/jdk.hotspot.agent/jhsdb from 1 file(s)
+Creating support/modules_cmds/jdk.jartool/jar from 1 file(s)
+Creating support/modules_cmds/jdk.jartool/jarsigner from 1 file(s)
+Creating support/modules_cmds/jdk.javadoc/javadoc from 1 file(s)
+Compiling 40 files for jdk.jcmd
+Creating support/modules_cmds/jdk.jconsole/jconsole from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jinfo from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jmap from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jps from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jstack from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jstat from 1 file(s)
+Creating support/modules_cmds/jdk.jcmd/jcmd from 1 file(s)
+Creating support/modules_cmds/jdk.jdeps/javap from 1 file(s)
+Creating support/modules_libs/jdk.jdwp.agent/libdt_socket.so from 2 file(s)
+Creating support/modules_libs/jdk.jdwp.agent/libjdwp.so from 43 file(s)
+Creating support/modules_cmds/jdk.jdeps/jdeps from 1 file(s)
+Creating support/modules_cmds/jdk.jdeps/jdeprscan from 1 file(s)
+Compiling 251 files for jdk.jdi
+Creating support/modules_cmds/jdk.jdi/jdb from 1 file(s)
+Creating support/modules_cmds/jdk.jfr/jfr from 1 file(s)
+Compiling 84 files for jdk.jlink
+Creating support/modules_cmds/jdk.jlink/jimage from 1 file(s)
+Creating support/modules_cmds/jdk.jlink/jlink from 1 file(s)
+Creating support/modules_cmds/jdk.jlink/jmod from 1 file(s)
+Creating support/modules_cmds/jdk.jpackage/jpackage from 1 file(s)
+Compiling 95 files for jdk.jshell
+Creating support/modules_cmds/jdk.jshell/jshell from 1 file(s)
+Creating support/modules_cmds/jdk.jstatd/jstatd from 1 file(s)
+Compiling 16 files for jdk.naming.dns
+Compiling 8 files for jdk.naming.rmi
+Creating support/modules_libs/jdk.net/libextnet.so from 1 file(s)
+Creating support/modules_libs/jdk.sctp/libsctp.so from 2 file(s)
+Creating support/modules_cmds/java.base/java from 1 file(s)
+Creating support/modules_cmds/java.base/keytool from 1 file(s)
+Creating support/modules_libs/java.base/jexec from 1 file(s)
+Creating support/modules_libs/java.base/jspawnhelper from 1 file(s)
+Creating support/modules_libs/java.prefs/libprefs.so from 1 file(s)
+Creating support/modules_libs/java.instrument/libinstrument.so from 12 file(s)
+Creating support/modules_libs/java.management/libmanagement.so from 9 file(s)
+Creating support/modules_libs/java.rmi/librmi.so from 1 file(s)
+Creating support/modules_cmds/java.rmi/rmid from 1 file(s)
+Creating support/modules_cmds/java.rmi/rmiregistry from 1 file(s)
+Compiling 16 files for java.management.rmi
+Creating support/modules_cmds/java.scripting/jrunscript from 1 file(s)
+Compiling 2781 files for java.desktop
+Compiling 220 files for java.security.jgss
+Compiling 56 files for java.sql.rowset
+Creating support/modules_libs/jdk.attach/libattach.so from 1 file(s)
+Creating support/modules_libs/jdk.crypto.cryptoki/libj2pkcs11.so from 14 file(s)
+Compiling 31 files for jdk.management.agent
+Compiling 30 files for jdk.security.auth
+Compiling 16 files for jdk.security.jgss
+Creating support/modules_libs/java.security.jgss/libj2gss.so from 3 file(s)
+Creating support/modules_libs/jdk.management.agent/libmanagement_agent.so from 1 file(s)
+Creating support/modules_libs/jdk.security.auth/libjaas.so from 1 file(s)
+Compiling 1644 files for jdk.internal.vm.compiler
+Compiling 107 files for jdk.aot
+Compiling 71 files for COMPILE_CREATE_SYMBOLS
+Compiling 3 files for jdk.internal.vm.compiler.management
+Creating ct.sym classes
+Compiling 1 files for java.se
+Compiling 18 files for jdk.accessibility
+Creating support/modules_libs/java.desktop/libmlib_image.so from 50 file(s)
+Creating support/modules_libs/java.desktop/libawt.so from 72 file(s)
+Creating support/modules_libs/java.desktop/libawt_xawt.so from 51 file(s)
+Creating support/modules_libs/java.desktop/liblcms.so from 27 file(s)
+Creating support/modules_libs/java.desktop/libjavajpeg.so from 46 file(s)
+Creating support/modules_libs/java.desktop/libawt_headless.so from 26 file(s)
+Creating support/modules_libs/java.desktop/libharfbuzz.so from 54 file(s)
+Creating support/modules_libs/java.desktop/libfontmanager.so from 8 file(s)
+Creating support/modules_libs/java.desktop/libjawt.so from 1 file(s)
+Creating support/modules_libs/java.desktop/libsplashscreen.so from 67 file(s)
+Creating support/modules_libs/java.desktop/libjsound.so from 18 file(s)
+Compiling 3 files for jdk.editpad
+Compiling 64 files for jdk.jconsole
+Compiling 950 files for jdk.hotspot.agent
+Compiling 47 files for jdk.jpackage
+Compiling 8 files for jdk.unsupported.desktop
+Creating jdk/modules/jdk.jpackage/jdk/jpackage/internal/resources/jpackageapplauncher from 16 file(s)
+Creating support/modules_libs/jdk.hotspot.agent/libsaproc.so from 10 file(s)
+Compiling 4 files for BUILD_JIGSAW_TOOLS
+Optimizing the exploded image
+Stopping sjavac server
+Finished building target 'default (exploded-image)' in configuration 'linux-x86_64-server-release'
+</code></pre>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-01-28-k8s-in-action-note/">&laquo; k8s in action 阅读笔记</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2020/2020-11-16-containerd-image-import/">containerd手动导入镜像 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>

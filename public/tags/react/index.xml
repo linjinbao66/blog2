@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>React on 打工笔记</title>
+    <link>https://amrom66.github.io/tags/react/</link>
+    <description>Recent content in React on 打工笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://amrom66.github.io/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>React学习笔记</title>
+      <link>https://amrom66.github.io/2019/2019-09-28-react/</link>
+      <pubDate>Sat, 28 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://amrom66.github.io/2019/2019-09-28-react/</guid>
+      <description>React学习 JSF语法概述 const element = &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;; 这个有趣的标签语法既不是字符串也不是 HTML。
+它被称为 JSX，是一个 JavaScript 的语法扩展。我们建议在 React 中配合使用 JSX，JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。JSX 可能会使人联想到模版语言，但它具有 JavaScript 的全部功能。</description>
+    </item>
+    
+  </channel>
+</rss>

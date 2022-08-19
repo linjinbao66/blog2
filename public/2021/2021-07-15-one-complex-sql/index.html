@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>一条复杂的sql - 打工笔记</title>
+<meta name="description" content="USE zentao; SELECT zt_task.id AS &amp;#39;编号&amp;#39;, zt_projectproduct.product AS &amp;#39;所属产品&amp;#39;, zt_product.`name` AS &amp;#39;产品名称&amp;#39;, zt_project.NAME AS &amp;#39;所属项目&amp;#39;, zt_story.title AS &amp;#39;相关需求&amp;#39;, zt_task.NAME AS &amp;#39;任务名称&amp;#39;, CASE zt_task."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://amrom66.github.io/2021/2021-07-15-one-complex-sql/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="USE zentao; SELECT zt_task.id AS &amp;#39;编号&amp;#39;, zt_projectproduct.product AS &amp;#39;所属产品&amp;#39;, zt_product.`name` AS &amp;#39;产品名称&amp;#39;, zt_project.NAME AS &amp;#39;所属项目&amp;#39;, zt_story.title AS &amp;#39;相关需求&amp;#39;, zt_task.NAME AS &amp;#39;任务名称&amp;#39;, CASE zt_task." />
+<meta name="twitter:title" content="一条复杂的sql - 打工笔记" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+
+
+<meta property="og:type" content="article" />
+<meta content="一条复杂的sql - 打工笔记" property="og:title">
+<meta content="USE zentao; SELECT zt_task.id AS &amp;#39;编号&amp;#39;, zt_projectproduct.product AS &amp;#39;所属产品&amp;#39;, zt_product.`name` AS &amp;#39;产品名称&amp;#39;, zt_project.NAME AS &amp;#39;所属项目&amp;#39;, zt_story.title AS &amp;#39;相关需求&amp;#39;, zt_task.NAME AS &amp;#39;任务名称&amp;#39;, CASE zt_task." property="og:description">
+<meta property="og:url" content="https://amrom66.github.io/2021/2021-07-15-one-complex-sql/" />
+<meta property="og:site_name" content="打工笔记" />
+
+<meta property="article:published_time" content="2021-07-15 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+<script type="application/ld+json">
+{ 
+    "@context": "http://schema.org", 
+    "@type": "BlogPosting",
+    "headline": "一条复杂的sql",
+    "genre": "",  
+    "url": "https:\/\/amrom66.github.io\/2021\/2021-07-15-one-complex-sql\/",
+    "datePublished": "2021-07-15 00:00:00 \u002b0000 UTC",
+    "description": "USE zentao; SELECT zt_task.id AS \u0026#39;编号\u0026#39;, zt_projectproduct.product AS \u0026#39;所属产品\u0026#39;, zt_product.`name` AS \u0026#39;产品名称\u0026#39;, zt_project.NAME AS \u0026#39;所属项目\u0026#39;, zt_story.title AS \u0026#39;相关需求\u0026#39;, zt_task.NAME AS \u0026#39;任务名称\u0026#39;, CASE zt_task.",
+    "author": {
+        "@type": "Person",
+        "name": ""
+    }
+ }
+</script>
+
+
+
+
+<link rel="stylesheet" href="/sass/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://amrom66.github.io">打工笔记</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://amrom66.github.iopages/about/">About</a></li>
+        <li><a href="https://amrom66.github.iopages/contact/">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a target="_blank" href="https://github.com/bul-ikana/hugo-cards">Project</a></li>
+            <li><a href="https://github.com/bul-ikana/hugo-cards.git">Download</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a target="_blank" href="https://themes.gohugo.io/">More Themes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+    <div class="container">
+      <div class="wrapper">
+        
+<div class="row">
+<div class="col-md-8">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+          <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">一条复杂的sql</h1>
+            <p class="post-meta"><time datetime='2021-07-15T00:00:00Z' itemprop="datePublished">July 15, 2021</time></p>
+                 
+          </header>
+
+          <div class="post-content" itemprop="articleBody">
+            <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE zentao;
+<span style="color:#66d9ef">SELECT</span>
+ zt_task.id <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;编号&#39;</span>,
+ zt_projectproduct.product <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属产品&#39;</span>,
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;产品名称&#39;</span>,
+ zt_project.NAME <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属项目&#39;</span>,
+ zt_story.title <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;相关需求&#39;</span>,
+ zt_task.NAME <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;任务名称&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_task.STATUS 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;closed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;关闭&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;done&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;完成&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;cancel&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;取消&#39;</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#e6db74">&#39;未知&#39;</span> 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;任务状态&#39;</span>,
+ zt_task.estimate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;最初预计&#39;</span>,
+ zt_task.consumed <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;总消耗&#39;</span>,
+ zt_task.openedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;创建日期&#39;</span>,
+ zt_task.finishedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;实际完成&#39;</span> 
+<span style="color:#66d9ef">FROM</span>
+ zt_task
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_project <span style="color:#66d9ef">ON</span> zt_task.project <span style="color:#f92672">=</span> zt_project.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_story <span style="color:#66d9ef">ON</span> zt_task.story <span style="color:#f92672">=</span> zt_story.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_projectproduct <span style="color:#66d9ef">ON</span> zt_project.id <span style="color:#f92672">=</span> zt_projectproduct.project
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_product <span style="color:#66d9ef">ON</span> zt_projectproduct.product <span style="color:#f92672">=</span> zt_product.id 
+<span style="color:#66d9ef">WHERE</span>
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%数栖%&#39;</span> 
+ <span style="color:#66d9ef">AND</span> zt_task.openedDate <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;2020-04-05 00:00:00&#39;</span>
+ <span style="color:#66d9ef">AND</span> zt_task.parent <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 导出需求跟踪表
+</span><span style="color:#75715e"></span>USE zentao;
+<span style="color:#66d9ef">SELECT</span>
+ zt_story.id <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;编号&#39;</span>,
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属产品&#39;</span>,
+ zt_module.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属模块&#39;</span>,
+ zt_productplan.title <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;计划&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_story.<span style="color:#66d9ef">source</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;market&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;市场&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;bug&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;Bug&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;other&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;其他&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;project&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;项目&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;research&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;内研&#39;</span> <span style="color:#66d9ef">ELSE</span> zt_story.<span style="color:#66d9ef">source</span> 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;需求来源&#39;</span>,
+ zt_story.sourceNote <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;来源备注&#39;</span>,
+ zt_story.title <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;需求名称&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_story.<span style="color:#f92672">`</span>status<span style="color:#f92672">`</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;changed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已变更&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;active&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;激活&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;draft&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;草稿&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;closed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已关闭&#39;</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#e6db74">&#39;空&#39;</span> 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;当前状态&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_story.stage 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;wait&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;未开始&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;planned&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已计划&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;projected&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已立项&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;developing&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;研发中&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;developed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;研发完毕&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;testing&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;测试中&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;tested&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;测试完毕&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;verified&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已验收&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;released&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已发布&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;closed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已关闭&#39;</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#e6db74">&#39;空&#39;</span> 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所处阶段&#39;</span>,
+ zt_user.realname <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;由谁创建&#39;</span>,
+ zt_story.openedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;创建日期&#39;</span>,
+ zt_story.closedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;关闭日期&#39;</span> 
+<span style="color:#66d9ef">FROM</span>
+ zt_story
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_product <span style="color:#66d9ef">ON</span> zt_story.product <span style="color:#f92672">=</span> zt_product.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_module <span style="color:#66d9ef">ON</span> zt_story.module <span style="color:#f92672">=</span> zt_module.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_productplan <span style="color:#66d9ef">ON</span> zt_story.plan <span style="color:#f92672">=</span> zt_productplan.id 
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_user <span style="color:#66d9ef">ON</span> zt_story.openedBy <span style="color:#f92672">=</span> zt_user.account
+<span style="color:#66d9ef">WHERE</span>
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%数栖%&#39;</span> 
+ <span style="color:#66d9ef">AND</span> zt_story.openedDate <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;2020-04-05 00:00:00&#39;</span>;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 导出缺陷跟踪清单
+</span><span style="color:#75715e"></span>USE zentao;
+<span style="color:#66d9ef">SELECT</span>
+ zt_bug.id <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;Bug编号&#39;</span>,
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属产品&#39;</span>,
+ zt_module.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属模块&#39;</span>,
+ zt_project.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;所属项目&#39;</span>,
+ zt_bug.title <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;Bug标题&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_bug.severity 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;P1&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;P2&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;P3&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">4</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;P4&#39;</span> <span style="color:#66d9ef">ELSE</span> zt_bug.severity 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;严重程度&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_bug.<span style="color:#f92672">`</span>status<span style="color:#f92672">`</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;closed&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已关闭&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;active&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;激活&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#e6db74">&#39;resolved&#39;</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已解决&#39;</span> <span style="color:#66d9ef">ELSE</span> zt_bug.<span style="color:#f92672">`</span>status<span style="color:#f92672">`</span> 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;Bug状态&#39;</span>,
+<span style="color:#66d9ef">CASE</span>
+  zt_bug.confirmed 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;已确认&#39;</span> 
+  <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span>
+  <span style="color:#e6db74">&#39;未确认&#39;</span> <span style="color:#66d9ef">ELSE</span> zt_bug.confirmed 
+ <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;是否确认&#39;</span>,
+ zt_bug.openedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;创建日期&#39;</span>,
+ zt_user.realname <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;解决者&#39;</span>,
+ zt_bug.closedDate <span style="color:#66d9ef">AS</span> <span style="color:#e6db74">&#39;解决日期&#39;</span> 
+<span style="color:#66d9ef">FROM</span>
+ zt_bug
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_product <span style="color:#66d9ef">ON</span> zt_bug.product <span style="color:#f92672">=</span> zt_product.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_module <span style="color:#66d9ef">ON</span> zt_bug.module <span style="color:#f92672">=</span> zt_module.id
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_project <span style="color:#66d9ef">ON</span> zt_bug.project <span style="color:#f92672">=</span> zt_project.id 
+ <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span> zt_user <span style="color:#66d9ef">ON</span> zt_bug.resolvedBy <span style="color:#f92672">=</span> zt_user.account
+<span style="color:#66d9ef">WHERE</span>
+ zt_product.<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%数栖%&#39;</span> 
+ <span style="color:#66d9ef">AND</span> zt_bug.openedDate <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;2020-04-05 00:00:00&#39;</span>
+</code></pre></div>
+          </div>
+
+    </article>
+    <div class="row">
+        
+    </div>
+    
+    <div class="row">
+            <ul class="pager">
+             
+                    <li><a class="next" href="https://amrom66.github.io/2021/2021-08-05-bubble-ports/">&laquo; 冒号端口</a></li>
+              
+              
+                <li><a class="previous" href="https://amrom66.github.io/2021/2021-06-30-kubernetes-contexts/">kubernetes多用户切换 &raquo;</a></li>
+              
+            </ul>
+    </div>
+</div>
+
+
+<div class="col-md-4 mt20">
+        <div class="post-img">
+            
+            <img width="600" src="https://amrom66.github.ioimages/wallhaven-q2ypkl.jpg" alt="webjeda">
+            
+        </div>
+            
+        
+        <div class="mt10 recent">
+            <h2>Recent articles</h2>        
+             <ul>
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-08-16-mvn-generate-project/">mvn-generate-project</a><small>&nbsp;&nbsp;August 16, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-07-14-mysql-1k-columns/">mysql生成宽表脚本</a><small>&nbsp;&nbsp;July 14, 2022</small></p>
+                      </li>
+
+                
+
+                      <li>
+                      <p><a href="https://amrom66.github.io/2022/2022-06-11-multiple-container-in-one-pod/">multiple-container-in-one-pod</a><small>&nbsp;&nbsp;June 11, 2022</small></p>
+                      </li>
+
+                
+              </ul>
+        </div>
+        
+        <br>
+
+</div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="row p20">
+            
+
+            <div class="col-md-4 text-center mt25" >
+                
+            </div>
+            <div class="col-md-4 text-center mt25">
+               
+               
+               
+               
+               
+            </div>
+
+        </div> 
+    </div>
+</footer>
+    
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://amrom66.github.io/js/bootstrap.min.js"></script>
+  
+  </body>
+
+</html>
